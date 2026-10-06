@@ -1,0 +1,42 @@
+---
+title: "4 · Ejercicio aplicado"
+subtitle: "Tu propio mapa a partir del Censo 2024"
+---
+
+::: {.callout-important}
+## Entrega
+**Fecha:** _por definir_ · **Formato:** un archivo PDF o Word + el archivo exportado · **Trabajo:** individual o en parejas
+:::
+
+## Objetivo
+
+Aplicar el flujo de la clase a **una pregunta propia** sobre la Región Metropolitana: elegir una variable, construir un indicador, mapearlo con criterios cartográficos e interpretar el resultado con sus limitaciones.
+
+## Instrucciones
+
+1. **Formula una pregunta** territorial breve. Ejemplo: *¿dónde se concentra la población de primera infancia en la RM?*
+2. **Elige una variable** de la base por manzana y construye una **tasa** (no un conteo). Puedes partir del notebook de la clase y cambiar solo el Bloque 2 y el cálculo del Bloque 8.
+3. **Produce un mapa** (PNG o JPG) con todos los elementos vistos en clase: título que comunique el hallazgo, leyenda con unidades y método de clasificación, escala, norte, fuente y mapa base.
+4. **Exporta un segundo producto** en el formato que prefieras: HTML interactivo, KMZ, Shapefile o GeoPackage.
+5. **Escribe una interpretación** de 150 a 250 palabras: qué patrón observas, una hipótesis que lo explique y **una limitación** del mapa (MAUP, falacia ecológica, números pequeños, clasificación, etc.).
+
+### Variables sugeridas
+
+Revisa los nombres exactos en el diccionario de variables del INE (el Bloque 3 lista las columnas del archivo).
+
+| Indicador | Numerador | Denominador |
+|---|---|---|
+| % primera infancia (0 a 5 años) | `n_edad_0_5` | `n_per` |
+| % personas con discapacidad | `n_discapacidad` | `n_per` |
+| % viviendas hacinadas | `n_viv_hacinadas` | `n_vp` (viviendas) |
+| % hogares con jefatura femenina | `n_jefatura_mujer` | total de hogares (ver diccionario) |
+| Escolaridad promedio | `prom_escolaridad18` | ya es un promedio |
+
+## Rúbrica
+
+| Criterio | Logrado (3) | En desarrollo (2) | Inicial (1) | Peso |
+|---|---|---|---|---|
+| **Indicador** | Tasa bien construida y justificada para la pregunta | Tasa correcta sin justificación | Usa conteos o el cálculo tiene errores | 25% |
+| **Mapa** | Incluye todos los elementos cartográficos; jerarquía visual clara | Falta uno o dos elementos | Faltan tres o más elementos | 30% |
+| **Exportación** | Archivo funcional que abre correctamente en el programa indicado | Abre con problemas menores (tildes, nombres) | No abre o no se entrega | 15% |
+| **Interpretación** | Describe el patrón, plantea una hipótesis y reconoce una limitación pertinente | Describe el patrón sin hipótesis o sin limitación | Solo describe colores del mapa | 30% |

@@ -1,0 +1,55 @@
+---
+title: "Mapeo de variables censales en la Región Metropolitana"
+subtitle: "Introducción al análisis espacial cuantitativo para las ciencias sociales"
+toc: true
+---
+
+::: {.pregunta}
+**Pregunta guía:** ¿dónde se concentran las personas mayores (60 años y más) en la Región Metropolitana, y qué patrón territorial muestran?
+:::
+
+Esta clase introduce el uso de **mapas como herramienta de análisis cuantitativo**. No se requiere experiencia previa en sistemas de información geográfica (SIG) ni en programación espacial.
+
+Usamos el umbral de 60 años porque es la definición legal de persona mayor en Chile (Ley 19.828) y porque la base por manzana del Censo 2024 trae la variable `n_edad_60_mas`.
+
+## Qué vamos a hacer
+
+1. **Entender** los conceptos mínimos para trabajar con datos espaciales: datum, coordenadas, proyecciones, modelos de datos y SIG.
+2. **Procesar** la cartografía del Censo 2024 en Python: filtrar la RM, calcular una tasa y agregarla por comuna.
+3. **Visualizar** el fenómeno en un gráfico, un mapa interactivo sobre OpenStreetMap y un mapa estático por manzana.
+4. **Exportar** los resultados a distintos formatos: HTML, PNG/JPG, Shapefile, GeoPackage y KMZ (Google Earth).
+5. **Comunicar y criticar**: qué hace profesional a un mapa y cómo puede engañar.
+
+## Agenda (120 minutos)
+
+| Minuto | Momento | Contenido |
+|---|---|---|
+| 0–10 | Apertura | Mismo dato, dos mapas distintos. ¿Cuál dice la verdad? |
+| 10–30 | [Conceptos](01-conceptos.qmd) | De la forma de la Tierra a un SIG, en una sola línea argumental |
+| 30–40 | [Ecosistema técnico](01-conceptos.qmd#ecosistema-técnico) | Software, lenguajes y formatos de archivo |
+| 40–90 | [Ejercicio](02-ejercicio.qmd) | Del GeoParquet del INE al mapa, en bloques de código |
+| 90–110 | [Cartografía](03-cartografia.qmd) | Elementos de un mapa profesional y lectura crítica |
+| 110–120 | [Cierre y tarea](04-tarea.qmd) | Errores comunes y ejercicio aplicado |
+
+## Cómo usar este material
+
+La clase se trabaja en **Google Colab**: Python en el navegador, sin instalar nada. Solo necesitas una cuenta de Google.
+
+| Necesitas | Dónde está |
+|---|---|
+| El notebook de la clase | [Abrir en Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/clase_censo_rm.ipynb) · [descargar `.ipynb`](codigo/clase_censo_rm.ipynb) |
+| Los datos | Se descargan del INE y se suben a tu Google Drive. Ver [Recursos](recursos.qmd) |
+| El código en R (opcional, de referencia) | [`codigo/clase_censo_rm.R`](codigo/clase_censo_rm.R), para RStudio. No se usa en clase |
+
+## Productos de la clase
+
+Al terminar el ejercicio, el Bloque 18 descarga un zip con estos archivos:
+
+| Archivo | Formato | Se abre con |
+|---|---|---|
+| `mapa_interactivo_60mas.html` | HTML | Cualquier navegador web |
+| `mapa_60mas_manzanas.png` / `.jpg` | Imagen | Informes, presentaciones |
+| `grafico_envejecimiento_escolaridad.png` | Imagen | Informes, presentaciones |
+| `shp/comunas_rm_60mas.shp` | Shapefile | ArcGIS, QGIS |
+| `censo2024_rm_60mas.gpkg` | GeoPackage | ArcGIS, QGIS |
+| `comunas_rm_60mas.kmz` | KMZ | Google Earth |

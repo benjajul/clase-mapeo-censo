@@ -1,0 +1,63 @@
+---
+title: "Recursos"
+---
+
+## Datos
+
+| Recurso | Enlace |
+|---|---|
+| Cartografía País Censo 2024 (GeoParquet) — **descargar y subir a Drive antes de la clase** | _[enlace de descarga INE: completar]_ |
+| Portal Censo 2024 (INE) | <https://censo2024.ine.gob.cl/> |
+| Censo de Población y Vivienda (INE) | <https://www.ine.gob.cl/estadisticas-por-tema/demografia-y-poblacion/censo-de-poblacion-y-vivienda> |
+
+El archivo de manzanas pesa cientos de MB y tiene cerca de 200 variables. El código lee solo las columnas necesarias para no saturar la memoria de Colab.
+
+## Código de la clase
+
+- Notebook Python para Google Colab: [Abrir en Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/clase_censo_rm.ipynb) · [descargar `.ipynb`](codigo/clase_censo_rm.ipynb)
+- Script R para RStudio (opcional, de referencia): [`codigo/clase_censo_rm.R`](codigo/clase_censo_rm.R)
+
+## Antes de la clase
+
+1. Ten una cuenta de Google y entra a [Google Colab](https://colab.research.google.com/).
+2. Descarga la cartografía del Censo 2024 desde el INE y descomprímela.
+3. En tu Google Drive, crea la carpeta `censo2024` dentro de *Mi unidad* y sube ahí la carpeta descomprimida.
+4. Abre el notebook en Colab y ejecuta los Bloques 0 a 3. Si ves el nombre del archivo de manzanas y la lista de columnas, estás listo.
+
+No se instala nada en el computador: Colab ya trae Python y casi todas las librerías, y el Bloque 0 agrega las que faltan.
+
+::: {.callout-note collapse="true"}
+## Si prefieres R (opcional)
+Instala [R](https://cran.r-project.org/) y [RStudio](https://posit.co/download/rstudio-desktop/), y luego ejecuta en RStudio:
+
+```r
+install.packages(c("arrow", "sf", "dplyr", "ggplot2", "ggspatial", "prettymapr",
+                   "leaflet", "htmlwidgets", "classInt", "jsonlite", "zip"))
+```
+:::
+
+## Software
+
+| Programa | Enlace |
+|---|---|
+| QGIS (gratuito) | <https://qgis.org/> |
+| Google Earth Pro (escritorio) | <https://www.google.com/earth/about/versions/> |
+| Google Colab | <https://colab.research.google.com/> |
+| RStudio (opcional) | <https://posit.co/download/rstudio-desktop/> |
+
+## Documentación de librerías
+
+| Librería | Documentación |
+|---|---|
+| geopandas | <https://geopandas.org/> |
+| folium | <https://python-visualization.github.io/folium/> |
+| contextily | <https://contextily.readthedocs.io/> |
+| mapclassify | <https://pysal.org/mapclassify/> |
+| sf (R) | <https://r-spatial.github.io/sf/> |
+
+## Para profundizar
+
+- Monmonier, M. (2018). *How to Lie with Maps* (3.ª ed.). University of Chicago Press.
+- Rey, S., Arribas-Bel, D. y Wolf, L. J. (2023). *Geographic Data Science with Python*. CRC Press. Versión abierta: <https://geographicdata.science/book/>
+- Lovelace, R., Nowosad, J. y Muenchow, J. (2025). *Geocomputation with R* (2.ª ed.). Versión abierta: <https://r.geocompx.org/>
+- Tobler, W. (1970). A computer movie simulating urban growth in the Detroit region. *Economic Geography*, 46, 234–240.

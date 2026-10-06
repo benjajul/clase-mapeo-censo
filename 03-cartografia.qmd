@@ -1,0 +1,66 @@
+---
+title: "3 · Cartografía: del mapa exploratorio al mapa profesional"
+subtitle: "Qué necesita un mapa para comunicar, y cómo puede engañar"
+---
+
+Un mapa para explorar datos sirve a quien lo hace. Un mapa para comunicar debe funcionar **sin que su autor esté presente**: quien lo lee tiene que saber qué muestra, dónde, cuándo, con qué datos y a qué escala.
+
+## Elementos de un mapa
+
+| Elemento | Para qué sirve | En el código (Bloque 14) |
+|---|---|---|
+| **Título** | Comunicar el hallazgo, no solo el tema | `TITULO = ...` |
+| **Subtítulo** | Indicador, unidad territorial y territorio | `ax.text(...)` |
+| **Leyenda** | Traducir colores a valores, con unidades | `legend=True` |
+| **Escala** | Dar idea de distancias (gráfica, no numérica: sobrevive a cambios de tamaño) | barra de 10 km |
+| **Norte** | Orientar a quien lee (obligatorio si el mapa no está orientado al norte) | `ax.annotate("N", ...)` |
+| **Grilla / coordenadas** | Ubicar el mapa en el mundo y declarar la proyección | `ax.grid(...)` |
+| **Mapa base** | Dar contexto (calles, cerros, ríos) sin competir con el dato | `cx.add_basemap(...)` |
+| **Fuente y créditos** | Origen de los datos, año, exclusiones, proyección y atribución del mapa base | `fig.text(...)` |
+| **Etiquetas** | Nombrar los lugares clave (con moderación) | comunas en el gráfico |
+
+::: {.callout-tip}
+## Jerarquía visual
+El dato es protagonista. El mapa base, la grilla y los límites van en tonos suaves. Si el mapa base "grita", aclararlo (`alpha`) o usar una versión en gris.
+:::
+
+## Ejercicio en clase: criticar nuestro propio mapa
+
+Compara el mapa del **Bloque 13** (exploratorio) con el del **Bloque 14** (profesional), y responde:
+
+1. Sin leer el código, ¿se entiende qué muestra el mapa del Bloque 13?
+2. ¿Qué información le falta para usarlo en un informe?
+3. ¿El título del Bloque 14 describe el tema o el hallazgo? Escribe uno mejor a partir de lo que ves.
+
+## Cómo puede engañar un mapa social
+
+Todo mapa es una selección. Estas son las decisiones que más cambian lo que un mapa "dice".
+
+### 1. Conteos o tasas
+
+Un mapa de **cantidad** de personas mayores es casi un mapa de **población**: las comunas grandes siempre destacan. Para comparar territorios se usan **tasas** (porcentajes, densidades). Los conteos se representan mejor con símbolos proporcionales que con colores.
+
+### 2. Método de clasificación
+
+El mismo dato con *cuantiles*, *intervalos iguales* o *cortes naturales* produce mapas distintos (Bloque 11). Los cuantiles reparten los colores por igual y exageran diferencias pequeñas; los intervalos iguales pueden dejar casi todo en un color. **Siempre declarar el método en la leyenda.**
+
+### 3. Unidad territorial (MAUP)
+
+El **problema de la unidad de área modificable** (MAUP): los resultados cambian según cómo se agrupen los datos. El promedio comunal (Bloque 12) esconde la diversidad interna que muestran las manzanas (Bloque 14). Ninguna escala es "la verdadera": cada una responde preguntas distintas.
+
+### 4. Falacia ecológica
+
+Un patrón territorial **no describe a cada persona**. Que una comuna tenga alta escolaridad y alta proporción de personas mayores no significa que las personas mayores tengan alta escolaridad.
+
+### 5. Números pequeños
+
+En una manzana con 8 personas, una persona mayor más cambia la tasa en 12 puntos. Por eso el ejercicio excluye manzanas con menos de 20 personas: sus tasas son inestables. Además, el INE suprime algunos datos por **confidencialidad estadística**.
+
+### 6. Color y estigmatización
+
+El rojo comunica "peligro" o "problema". Mapear un rasgo de la población con colores alarmantes puede **estigmatizar territorios**. Elegir paletas acordes al mensaje, y preguntarse quién leerá el mapa y qué decisiones tomará con él. ¿Es adecuada la paleta amarillo-rojo que usamos en el ejercicio para hablar de personas mayores?
+
+::: {.callout-note}
+## Para seguir leyendo
+Monmonier, M. (2018). *How to Lie with Maps* (3.ª ed.). University of Chicago Press.
+:::

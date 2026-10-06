@@ -1,0 +1,43 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+  resources:
+    - codigo/
+
+lang: es
+
+website:
+  title: "Mapeo de variables censales"
+  description: "Clase aplicada: análisis espacial de datos del Censo 2024 en la Región Metropolitana"
+  page-navigation: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Inicio
+      - href: 01-conceptos.qmd
+        text: "1 · Conceptos"
+      - href: 02-ejercicio.qmd
+        text: "2 · Ejercicio"
+      - href: 03-cartografia.qmd
+        text: "3 · Cartografía"
+      - href: 04-tarea.qmd
+        text: "4 · Tarea"
+      - href: recursos.qmd
+        text: Recursos
+  page-footer:
+    center: "Datos: INE, Censo de Población y Vivienda 2024 · Mapas base © OpenStreetMap contributors"
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    css: styles.css
+    include-after-body: colab-link.html
+    toc: true
+    toc-title: "En esta página"
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github

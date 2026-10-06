@@ -1,0 +1,555 @@
+---
+title: "Ejercicio aplicado en Python"
+subtitle: "Del GeoParquet del INE al mapa, bloque a bloque"
+---
+
+[Abrir en Google Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/clase_censo_rm.ipynb){.btn .btn-warning role="button"}
+
+::: {.callout-tip}
+## Antes de empezar
+1. Descarga la **Cartografía País Censo 2024 (GeoParquet)** desde el portal del INE ([Recursos](recursos.qmd)), descomprímela y súbela a tu Google Drive en la carpeta `Mi unidad/censo2024`.
+2. Abre el notebook con el botón **Abrir en Colab** y guarda una copia en tu Drive (*Archivo → Guardar una copia en Drive*).
+3. Ejecuta los bloques en orden. Solo se revisa el **Bloque 2**.
+:::
+
+::: {.callout-note collapse="true"}
+## ¿Prefieres R? (opcional, de referencia)
+El script [`clase_censo_rm.R`](codigo/clase_censo_rm.R) reproduce los mismos bloques en RStudio. No se usa en clase.
+:::
+
+```{mermaid}
+flowchart LR
+  A[GeoParquet INE<br>manzanas] --> B[Filtrar RM<br>y limpiar]
+  B --> C[Tasa % 60+<br>por manzana]
+  C --> D[Agregar<br>por comuna]
+  D --> E[Gráfico]
+  D --> F[Mapa HTML<br>OSM]
+  C --> G[Mapa PNG/JPG<br>por manzana]
+  D --> H[SHP · GPKG · KMZ]
+  H --> Z[ZIP descargable]
+  F --> Z
+  G --> Z
+```
+
+## Bloque 0 · Preparar Google Colab
+
+Trabajamos en **Google Colab**: Python en el navegador, sin instalar nada en el computador. Colab ya trae
+casi todas las librerías; este bloque agrega las dos que faltan. Se ejecuta **al inicio de cada sesión**.
+
+| Librería | Para qué sirve |
+|---|---|
+| `geopandas` | Tablas con geometría: leer, filtrar, unir y exportar datos espaciales |
+| `pyarrow` | Leer archivos Parquet / GeoParquet (formato del Censo 2024) |
+| `mapclassify` | Clasificar valores en rangos (cuantiles, cortes naturales…) |
+| `folium` | Mapas web interactivos sobre OpenStreetMap |
+| `contextily` | Agregar un mapa base (OSM) a mapas estáticos |
+| `matplotlib` | Gráficos y mapas estáticos |
+
+```python
+%pip install -q mapclassify contextily
+```
+
+## Bloque 1 · Importar librerías
+
+Cargamos las herramientas. Si alguna línea da error `ModuleNotFoundError`, vuelve a ejecutar el Bloque 0.
+
+```python
+import json
+import shutil
+import zipfile
+import urllib.request
+from pathlib import Path
+from xml.sax.saxutils import escape
+
+import pandas as pd
+import geopandas as gpd
+import pyarrow.parquet as pq
+import mapclassify
+import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
+import contextily as cx
+
+pd.set_option("display.max_columns", 50)
+print("geopandas", gpd.__version__)
+```
+
+## Bloque 2 · Conectar los datos y definir parámetros
+
+**Este es el único bloque que debes revisar.** Hay dos formas de traer la cartografía del Censo 2024:
+
+- **`"drive"` (recomendada):** sube una vez la carpeta descomprimida del INE a tu Google Drive, en
+  `Mi unidad/censo2024`. Al ejecutar, Colab pedirá permiso para acceder a tu Drive.
+- **`"url"`:** si el docente entrega un enlace de descarga directa, Colab baja el archivo solo.
+
+No hace falta escribir la ruta completa del archivo: el código busca el GeoParquet de manzanas dentro de la carpeta.
+Los nombres de columnas están en variables: para analizar otra variable, solo se cambia aquí.
+
+```python
+# --- Origen de los datos (REVISAR) -----------------------------------------
+FUENTE        = "drive"                              # "drive" o "url"
+CARPETA_DRIVE = "/content/drive/MyDrive/censo2024"   # carpeta en tu Drive con los archivos del INE
+URL_DESCARGA  = ""                                   # solo si FUENTE = "url"
+
+if FUENTE == "drive":
+    from google.colab import drive
+    drive.mount("/content/drive")
+    CARPETA_DATOS = Path(CARPETA_DRIVE)
+elif FUENTE == "url":
+    CARPETA_DATOS = Path("/content/datos")
+    CARPETA_DATOS.mkdir(exist_ok=True)
+    descarga = CARPETA_DATOS / URL_DESCARGA.split("/")[-1].split("?")[0]
+    if not descarga.exists():
+        print("Descargando…")
+        urllib.request.urlretrieve(URL_DESCARGA, descarga)
+    if descarga.suffix == ".zip":
+        zipfile.ZipFile(descarga).extractall(CARPETA_DATOS)
+else:
+    CARPETA_DATOS = Path(CARPETA_DRIVE)
+
+# Buscamos los archivos dentro de la carpeta
+parquets = sorted(CARPETA_DATOS.rglob("*.parquet"))
+RUTA_MANZANAS = next(p for p in parquets if "manzana" in p.name.lower())
+RUTA_COMUNAS  = next((p for p in parquets if "comuna" in p.name.lower()), None)  # opcional
+print("Manzanas:", RUTA_MANZANAS.name)
+print("Comunas: ", RUTA_COMUNAS.name if RUTA_COMUNAS else "no encontrada (se construirán desde las manzanas)")
+
+CARPETA_SALIDA = Path("resultados")
+CARPETA_SALIDA.mkdir(exist_ok=True)
+
+# --- Columnas de la base (según diccionario INE) ---------------------------
+COL_CUT      = "CUT"                  # código único territorial de la comuna (5 dígitos)
+COL_COMUNA   = "COMUNA"               # nombre de la comuna
+COL_POB      = "n_per"                # total de personas
+COL_MAYORES  = "n_edad_60_mas"        # personas de 60 años y más
+COL_ESCOLAR  = "prom_escolaridad18"   # años de escolaridad promedio (18+)
+
+# --- Parámetros de análisis ------------------------------------------------
+CODIGO_REGION = "13"     # 13 = Región Metropolitana
+MIN_PERSONAS  = 20       # manzanas con menos personas no se usan para tasas
+CRS_METROS    = 32719    # WGS 84 / UTM zona 19S: proyección en metros para Chile central
+```
+
+## Bloque 3 · Explorar el archivo antes de cargarlo
+
+El archivo nacional tiene cerca de 200 columnas y cientos de miles de manzanas. Antes de cargarlo, leemos solo
+su **esquema** (lista de columnas) para saber qué variables trae. Así evitamos llenar la memoria de Colab (unos 12 GB en la versión gratuita).
+
+```python
+esquema = pq.read_schema(RUTA_MANZANAS)
+columnas = esquema.names
+print(f"El archivo tiene {len(columnas)} columnas")
+
+# Columna de geometría declarada en los metadatos GeoParquet
+geo_meta = json.loads(esquema.metadata[b"geo"])
+COL_GEOM = geo_meta["primary_column"]
+print("Columna de geometría:", COL_GEOM)
+
+# ¿Qué variables de edad existen?
+print([c for c in columnas if "edad" in c.lower()])
+```
+
+## Bloque 4 · Cargar solo las columnas necesarias
+
+Leemos el GeoParquet con `geopandas`, pidiendo únicamente las columnas que usaremos. El resultado es un
+**GeoDataFrame**: una tabla como Excel, pero con una columna de geometría (el polígono de cada manzana).
+
+```python
+columnas_usar = [COL_CUT, COL_COMUNA, COL_POB, COL_MAYORES, COL_ESCOLAR, COL_GEOM]
+manzanas = gpd.read_parquet(RUTA_MANZANAS, columns=columnas_usar)
+if manzanas.geometry.name != "geometry":          # usamos siempre el nombre estándar "geometry"
+    manzanas = manzanas.rename_geometry("geometry")
+
+print(manzanas.shape)
+manzanas.head()
+```
+
+## Bloque 5 · Filtrar la Región Metropolitana
+
+Los códigos territoriales se tratan como **texto**, no como números: si `CUT` se lee como número, la comuna
+`05101` pierde el cero inicial y los cruces fallan. Las comunas de la RM empiezan con `13`.
+
+```python
+manzanas[COL_CUT] = manzanas[COL_CUT].astype(str).str.zfill(5)
+
+rm = manzanas[manzanas[COL_CUT].str.startswith(CODIGO_REGION)].copy()
+del manzanas  # liberamos memoria
+
+print(f"Manzanas en la RM: {len(rm):,}")
+print(f"Comunas: {rm[COL_CUT].nunique()}")
+```
+
+## Bloque 6 · Revisar el sistema de coordenadas
+
+Todo dato espacial tiene un **sistema de referencia de coordenadas (CRS)**. La cartografía viene en
+coordenadas geográficas (grados de latitud y longitud). Para medir áreas o distancias necesitamos una
+**proyección en metros**: usamos UTM zona 19 Sur (EPSG:32719).
+
+Compara el área calculada en grados con el área en km²: la primera no tiene sentido físico.
+
+```python
+print("CRS original:", rm.crs.name if rm.crs else "sin CRS", "| EPSG:", rm.crs.to_epsg() if rm.crs else "-")
+if rm.crs is None:                      # por seguridad, si el archivo no declara CRS
+    rm = rm.set_crs(4326)
+
+# Área en coordenadas geográficas: el resultado está en "grados cuadrados" (sin sentido físico)
+print("Área 1ª manzana en grados²:", rm.geometry.iloc[0].area)
+
+rm = rm.to_crs(CRS_METROS)
+print("Área 1ª manzana en m²:     ", round(rm.geometry.iloc[0].area))
+print("CRS de trabajo:", rm.crs.name, "| EPSG:", rm.crs.to_epsg())
+
+rm["area_km2"] = rm.geometry.area / 1_000_000
+print(rm["area_km2"].describe().round(4))
+```
+
+## Bloque 7 · Limpiar los datos
+
+Por confidencialidad, el INE puede **suprimir valores** en manzanas con muy pocas personas (quedan vacíos o con
+códigos negativos). Los convertimos en valores faltantes y marcamos las manzanas demasiado pequeñas para
+calcular una tasa confiable.
+
+```python
+for col in [COL_POB, COL_MAYORES, COL_ESCOLAR]:
+    rm[col] = pd.to_numeric(rm[col], errors="coerce")
+    rm[col] = rm[col].mask(rm[col] < 0)        # valores negativos → faltantes
+
+rm["valida"] = rm[COL_POB] >= MIN_PERSONAS
+print(f"Manzanas con al menos {MIN_PERSONAS} personas: {rm['valida'].sum():,} de {len(rm):,}")
+print(rm[[COL_POB, COL_MAYORES, COL_ESCOLAR]].isna().sum())
+```
+
+## Bloque 8 · Calcular el indicador por manzana
+
+Un mapa de **conteos** solo muestra dónde vive más gente. Para comparar territorios usamos una **tasa**:
+porcentaje de personas de 60 años y más sobre la población total de la manzana.
+
+```python
+rm["pct_60"] = (rm[COL_MAYORES] / rm[COL_POB] * 100).where(rm["valida"])
+rm["pct_60"].describe().round(1)
+```
+
+## Bloque 9 · Agregar a nivel comunal
+
+Sumamos personas por comuna (**agregación**) y recalculamos la tasa. La escolaridad promedio comunal se
+aproxima ponderando el promedio de cada manzana por su población.
+
+Luego unimos esa tabla con la geometría de las comunas mediante el código `CUT` (**unión por atributo**).
+Si no hay capa de comunas, se construye disolviendo las manzanas.
+
+```python
+rm["_escol_x_pob"] = rm[COL_ESCOLAR] * rm[COL_POB]
+rm["_pob_escol"]   = rm[COL_POB].where(rm[COL_ESCOLAR].notna())   # población con dato de escolaridad
+
+tabla = (rm.groupby([COL_CUT, COL_COMUNA], as_index=False)
+           .agg(poblacion=(COL_POB, "sum"),
+                mayores=(COL_MAYORES, "sum"),
+                _escol=("_escol_x_pob", "sum"),
+                _pob_escol=("_pob_escol", "sum")))
+tabla["pct_60"]  = tabla["mayores"] / tabla["poblacion"] * 100
+tabla["escolar"] = tabla["_escol"] / tabla["_pob_escol"]
+tabla = tabla.drop(columns=["_escol", "_pob_escol"])
+
+if RUTA_COMUNAS:
+    capa = gpd.read_parquet(RUTA_COMUNAS).to_crs(CRS_METROS)
+    if capa.geometry.name != "geometry":
+        capa = capa.rename_geometry("geometry")
+    col_cut_capa = next(c for c in capa.columns if c.upper() in ("CUT", "COD_COMUNA", "CODIGO_COMUNA"))
+    capa[col_cut_capa] = capa[col_cut_capa].astype(str).str.zfill(5)
+    comunas = capa[[col_cut_capa, "geometry"]].rename(columns={col_cut_capa: COL_CUT})
+else:
+    comunas = rm[[COL_CUT, "geometry"]].dissolve(by=COL_CUT).reset_index()
+
+comunas = comunas.merge(tabla, on=COL_CUT, how="inner")
+comunas["densidad"] = comunas["poblacion"] / (comunas.geometry.area / 1_000_000)
+comunas["geometry"] = comunas.geometry.simplify(25)   # aligera el archivo (tolerancia 25 m)
+
+print(f"{len(comunas)} comunas")
+comunas.drop(columns="geometry").sort_values("pct_60", ascending=False).head(10).round(1)
+```
+
+## Bloque 10 · Gráfico: envejecimiento y escolaridad por comuna
+
+Antes del mapa, una mirada **no espacial**: ¿se relaciona el envejecimiento con el nivel educativo de la
+comuna? Cada burbuja es una comuna; su tamaño es la población.
+
+```python
+fig, ax = plt.subplots(figsize=(9, 6))
+ax.scatter(comunas["escolar"], comunas["pct_60"],
+           s=comunas["poblacion"] / 2500, alpha=0.6,
+           color="#c2410c", edgecolor="white", linewidth=0.8)
+
+# Etiquetamos las 5 comunas más y menos envejecidas
+extremos = pd.concat([comunas.nlargest(5, "pct_60"), comunas.nsmallest(5, "pct_60")])
+for _, f in extremos.iterrows():
+    ax.annotate(f[COL_COMUNA].title(), (f["escolar"], f["pct_60"]),
+                xytext=(5, 3), textcoords="offset points", fontsize=8)
+
+promedio_rm = comunas["mayores"].sum() / comunas["poblacion"].sum() * 100
+ax.axhline(promedio_rm, color="grey", linestyle="--", linewidth=0.8)
+ax.text(ax.get_xlim()[0], promedio_rm, f" promedio RM {promedio_rm:.1f}%", va="bottom", fontsize=8, color="grey")
+
+ax.set_xlabel("Años de escolaridad promedio (personas de 18 años y más)")
+ax.set_ylabel("Personas de 60 años y más (%)")
+ax.set_title("Comunas de la RM: envejecimiento y escolaridad", loc="left", fontweight="bold")
+ax.spines[["top", "right"]].set_visible(False)
+fig.text(0.01, 0.01, "Fuente: INE, Censo de Población y Vivienda 2024. Tamaño = población comunal.", fontsize=8, color="grey")
+plt.tight_layout()
+fig.savefig(CARPETA_SALIDA / "grafico_envejecimiento_escolaridad.png", dpi=200)
+plt.show()
+```
+
+## Bloque 11 · Mismo dato, distinto mapa: métodos de clasificación
+
+Un mapa coroplético agrupa valores en rangos. **El método elegido cambia el mensaje.** Comparamos
+*cuantiles* (igual número de comunas por color) con *intervalos iguales* (rangos del mismo ancho).
+
+```python
+fig, axes = plt.subplots(1, 2, figsize=(13, 6))
+for ax, esquema, titulo in zip(axes, ["Quantiles", "EqualInterval"], ["Cuantiles", "Intervalos iguales"]):
+    comunas.plot(column="pct_60", scheme=esquema, k=5, cmap="YlOrRd",
+                 edgecolor="white", linewidth=0.3, legend=True, ax=ax,
+                 legend_kwds={"loc": "lower left", "fontsize": 8, "title": "% 60+", "fmt": "{:.1f}"})
+    ax.set_title(titulo, fontweight="bold")
+    ax.set_axis_off()
+plt.suptitle("¿Cuál de los dos mapas 'dice la verdad'?")
+plt.tight_layout()
+plt.show()
+```
+
+## Bloque 12 · Mapa interactivo sobre OpenStreetMap (HTML)
+
+`explore()` crea un mapa web con **folium/Leaflet** sobre OpenStreetMap. Se puede hacer zoom y, al pasar el
+mouse, ver los datos de cada comuna. Se guarda como **HTML**: una vez descargado (Bloque 18) se abre con doble clic en cualquier navegador y
+se puede enviar por correo o subir a una web.
+
+```python
+mapa_web = comunas.explore(
+    column="pct_60", scheme="Quantiles", k=5, cmap="YlOrRd",
+    tiles="OpenStreetMap",
+    tooltip=[COL_COMUNA, "pct_60", "poblacion", "escolar"],
+    tooltip_kwds={"aliases": ["Comuna", "% 60+", "Población", "Escolaridad"], "localize": True},
+    style_kwds={"weight": 0.6, "color": "white", "fillOpacity": 0.75},
+    legend_kwds={"caption": "Personas de 60 años y más (%)", "fmt": "{:.1f}"},
+)
+mapa_web.save(CARPETA_SALIDA / "mapa_interactivo_60mas.html")
+mapa_web
+```
+
+## Bloque 13 · Mapa estático por manzana con mapa base OSM
+
+Cambiamos de escala: de 52 comunas a decenas de miles de manzanas. Aparecen patrones **dentro** de las
+comunas que el promedio comunal escondía. Este primer mapa está **incompleto a propósito**: lo
+terminaremos en la parte de cartografía.
+
+```python
+GRAN_SANTIAGO = gpd.GeoSeries.from_xy([-70.85, -70.45], [-33.65, -33.30], crs=4326).to_crs(CRS_METROS)
+xmin, xmax = GRAN_SANTIAGO.x.sort_values()
+ymin, ymax = GRAN_SANTIAGO.y.sort_values()
+
+fig, ax = plt.subplots(figsize=(10, 10))
+rm[rm["valida"]].plot(column="pct_60", scheme="Quantiles", k=5, cmap="YlOrRd",
+                      linewidth=0, alpha=0.85, ax=ax, legend=True)
+ax.set_xlim(xmin, xmax); ax.set_ylim(ymin, ymax)
+try:
+    cx.add_basemap(ax, crs=rm.crs, source=cx.providers.OpenStreetMap.Mapnik, alpha=0.6)
+except Exception as e:
+    print("Sin mapa base (¿sin internet?):", e)
+plt.show()
+```
+
+## Bloque 14 · Mapa profesional: elementos cartográficos (PNG / JPG)
+
+Agregamos lo que distingue un mapa de un gráfico: **título** que comunica el hallazgo, **leyenda** con
+unidades, **escala gráfica**, **norte**, **grilla** de coordenadas, **fuente** y **mapa base** con su
+atribución. Se exporta como imagen para informes y presentaciones.
+
+```python
+fig, ax = plt.subplots(figsize=(10, 11))
+rm[rm["valida"]].plot(
+    column="pct_60", scheme="Quantiles", k=5, cmap="YlOrRd", linewidth=0, alpha=0.85, ax=ax,
+    legend=True, legend_kwds={"title": "Personas de 60+ (%)\nquintiles por manzana",
+                              "loc": "lower right", "fontsize": 9, "fmt": "{:.1f}", "frameon": True})
+comunas.boundary.plot(ax=ax, color="#444444", linewidth=0.4)
+ax.set_xlim(xmin, xmax); ax.set_ylim(ymin, ymax)
+try:
+    cx.add_basemap(ax, crs=rm.crs, source=cx.providers.OpenStreetMap.Mapnik, alpha=0.5, attribution=False)
+except Exception as e:
+    print("Sin mapa base:", e)
+
+# Título y subtítulo: un buen título comunica el HALLAZGO, no solo el tema.
+# Reemplázalo por lo que muestran tus datos (ej. "Las personas mayores se concentran en ...").
+TITULO = "¿Dónde viven las personas mayores en el Gran Santiago?"
+ax.set_title(TITULO, loc="left", fontsize=13, fontweight="bold", pad=22)
+ax.text(0, 1.01, "Porcentaje de personas de 60 años y más por manzana censal, Gran Santiago",
+        transform=ax.transAxes, fontsize=9, color="dimgrey", va="bottom")
+
+# Grilla en km (coordenadas UTM 19S)
+ax.grid(True, linestyle=":", linewidth=0.5, color="grey")
+ax.xaxis.set_major_formatter(lambda v, _: f"{v/1000:.0f}")
+ax.yaxis.set_major_formatter(lambda v, _: f"{v/1000:.0f}")
+ax.set_xlabel("Este (km, UTM 19S)", fontsize=8); ax.set_ylabel("Norte (km, UTM 19S)", fontsize=8)
+ax.tick_params(labelsize=7)
+
+# Escala gráfica de 10 km (el eje está en metros)
+x0, y0 = xmin + 2_000, ymin + 2_500
+ax.plot([x0, x0 + 10_000], [y0, y0], color="black", linewidth=3)
+ax.plot([x0, x0 + 5_000], [y0, y0], color="white", linewidth=1.5)
+ax.text(x0 + 5_000, y0 + 600, "10 km", ha="center", fontsize=9)
+
+# Flecha norte
+ax.annotate("N", xy=(0.95, 0.95), xytext=(0.95, 0.87), xycoords="axes fraction",
+            ha="center", fontsize=12, fontweight="bold",
+            arrowprops=dict(facecolor="black", width=4, headwidth=12))
+
+# Fuente
+fig.text(0.02, 0.015,
+         "Fuente: INE, Censo de Población y Vivienda 2024. Manzanas con menos de "
+         f"{MIN_PERSONAS} personas excluidas.\nMapa base: © OpenStreetMap contributors. "
+         f"Proyección: WGS 84 / UTM zona 19S (EPSG:{CRS_METROS}).", fontsize=7, color="dimgrey")
+
+plt.tight_layout(rect=(0, 0.03, 1, 1))
+fig.savefig(CARPETA_SALIDA / "mapa_60mas_manzanas.png", dpi=250)
+fig.savefig(CARPETA_SALIDA / "mapa_60mas_manzanas.jpg", dpi=250, pil_kwargs={"quality": 90})
+plt.show()
+```
+
+## Bloque 15 · Exportar a Shapefile y GeoPackage (ArcGIS / QGIS)
+
+El **Shapefile** es el formato más difundido, pero tiene límites de los años 90: nombres de columna de máximo
+10 caracteres, varios archivos por capa (`.shp`, `.shx`, `.dbf`, `.prj`, `.cpg`) y problemas con tildes.
+El **GeoPackage** (`.gpkg`) es el estándar moderno: un solo archivo, sin esas restricciones. Ambos abren en
+ArcGIS y QGIS.
+
+```python
+salida = comunas.rename(columns={COL_COMUNA: "comuna", "poblacion": "pob", "mayores": "pob_60mas",
+                                 "pct_60": "pct_60mas", "escolar": "escolarid", "densidad": "dens_km2"})
+
+carpeta_shp = CARPETA_SALIDA / "shp"
+carpeta_shp.mkdir(exist_ok=True)
+salida.to_file(carpeta_shp / "comunas_rm_60mas.shp", encoding="utf-8")
+
+salida.to_file(CARPETA_SALIDA / "censo2024_rm_60mas.gpkg", layer="comunas", driver="GPKG")
+rm[rm["valida"]][[COL_CUT, COL_COMUNA, COL_POB, COL_MAYORES, "pct_60", "geometry"]].to_file(
+    CARPETA_SALIDA / "censo2024_rm_60mas.gpkg", layer="manzanas", driver="GPKG")
+
+print(sorted(p.name for p in carpeta_shp.iterdir()))
+```
+
+## Bloque 16 · Exportar a KMZ (Google Earth)
+
+El **KML/KMZ** es el formato de Google Earth. Exige coordenadas geográficas WGS 84 (EPSG:4326), así que
+reproyectamos. Escribimos el KML directamente para incluir **los colores de cada comuna y una leyenda**
+(la exportación estándar no guarda colores). No es necesario entender la función línea a línea.
+
+```python
+def a_color_kml(hex_color, opacidad=0.75):
+    r, g, b = (int(hex_color[i:i + 2], 16) for i in (1, 3, 5))
+    return f"{int(opacidad * 255):02x}{b:02x}{g:02x}{r:02x}"     # KML usa aabbggrr
+
+def anillo(coords):
+    return " ".join(f"{x:.6f},{y:.6f},0" for x, y in coords)
+
+def poligono_kml(poly):
+    texto = f"<Polygon><outerBoundaryIs><LinearRing><coordinates>{anillo(poly.exterior.coords)}</coordinates></LinearRing></outerBoundaryIs>"
+    for hueco in poly.interiors:
+        texto += f"<innerBoundaryIs><LinearRing><coordinates>{anillo(hueco.coords)}</coordinates></LinearRing></innerBoundaryIs>"
+    return texto + "</Polygon>"
+
+def exportar_kmz(gdf, columna, columna_nombre, ruta, titulo, k=5, cmap="YlOrRd"):
+    g = gdf.to_crs(4326)
+    clasif = mapclassify.Quantiles(g[columna], k=k)
+    colores = [mcolors.to_hex(c) for c in plt.get_cmap(cmap, k)(range(k))]
+    limites = [g[columna].min(), *clasif.bins]
+
+    estilos = "".join(
+        f'<Style id="c{i}"><LineStyle><color>ffffffff</color><width>1</width></LineStyle>'
+        f'<PolyStyle><color>{a_color_kml(col)}</color></PolyStyle></Style>' for i, col in enumerate(colores))
+
+    marcas = []
+    for (_, fila), clase in zip(g.iterrows(), clasif.yb):
+        geom = fila.geometry
+        partes = geom.geoms if geom.geom_type == "MultiPolygon" else [geom]
+        cuerpo = "".join(poligono_kml(p) for p in partes)
+        marcas.append(
+            f"<Placemark><name>{escape(str(fila[columna_nombre]).title())}</name>"
+            f"<description>{escape(columna)}: {fila[columna]:.1f}</description>"
+            f"<styleUrl>#c{clase}</styleUrl><MultiGeometry>{cuerpo}</MultiGeometry></Placemark>")
+
+    # Leyenda como imagen superpuesta en la pantalla de Google Earth
+    fig, ax = plt.subplots(figsize=(2.6, 0.35 * k + 0.6))
+    for i, col in enumerate(colores):
+        ax.add_patch(plt.Rectangle((0, k - 1 - i), 0.6, 0.8, color=col))
+        ax.text(0.8, k - 0.6 - i, f"{limites[i]:.1f} – {limites[i + 1]:.1f}", va="center", fontsize=9)
+    ax.set_xlim(0, 3); ax.set_ylim(-0.2, k + 0.6); ax.axis("off")
+    ax.text(0, k + 0.2, titulo, fontsize=9, fontweight="bold")
+    fig.savefig("leyenda.png", dpi=150, bbox_inches="tight", facecolor="white"); plt.close(fig)
+
+    kml = ('<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document>'
+           f"<name>{escape(titulo)}</name>{estilos}"
+           '<ScreenOverlay><name>Leyenda</name><Icon><href>leyenda.png</href></Icon>'
+           '<overlayXY x="0" y="0" xunits="fraction" yunits="fraction"/>'
+           '<screenXY x="0.02" y="0.05" xunits="fraction" yunits="fraction"/></ScreenOverlay>'
+           + "".join(marcas) + "</Document></kml>")
+
+    with zipfile.ZipFile(ruta, "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr("doc.kml", kml)
+        z.write("leyenda.png")
+    Path("leyenda.png").unlink()
+    print("KMZ guardado en", ruta)
+
+exportar_kmz(comunas, "pct_60", COL_COMUNA, CARPETA_SALIDA / "comunas_rm_60mas.kmz",
+             titulo="% personas de 60+ (Censo 2024)")
+```
+
+## Bloque 17 (opcional) · ¿Hay patrón espacial? Autocorrelación espacial {.opcional}
+
+Para ir más lejos: el **índice de Moran** mide si manzanas vecinas se parecen más de lo esperable por azar
+(valor cercano a 0 = aleatorio; positivo = agrupamiento). El análisis **LISA** localiza los grupos: zonas
+*alto-alto* (manzanas envejecidas rodeadas de manzanas envejecidas) y *bajo-bajo*.
+Requiere instalar dos librerías más (primera línea del bloque).
+
+```python
+%pip install -q esda libpysal
+from libpysal.weights import KNN
+from esda.moran import Moran, Moran_Local
+
+base = rm[rm["valida"] & rm["pct_60"].notna()].cx[xmin:xmax, ymin:ymax].copy()
+w = KNN.from_dataframe(base, k=8, use_index=False)    # cada manzana con sus 8 vecinas más cercanas
+w.transform = "r"
+
+moran = Moran(base["pct_60"], w)
+print(f"I de Moran = {moran.I:.3f}  (p = {moran.p_sim:.3f})")
+
+lisa = Moran_Local(base["pct_60"], w, seed=1)
+etiquetas = {1: "Alto-Alto", 2: "Bajo-Alto", 3: "Bajo-Bajo", 4: "Alto-Bajo"}
+base["lisa"] = [etiquetas[q] if p < 0.05 else "No significativo" for q, p in zip(lisa.q, lisa.p_sim)]
+
+colores_lisa = {"Alto-Alto": "#d7191c", "Bajo-Bajo": "#2c7bb6", "Alto-Bajo": "#fdae61",
+                "Bajo-Alto": "#abd9e9", "No significativo": "#eeeeee"}
+fig, ax = plt.subplots(figsize=(9, 9))
+for cat, color in colores_lisa.items():
+    base[base["lisa"] == cat].plot(ax=ax, color=color, linewidth=0, label=cat)
+ax.legend(loc="lower right", fontsize=8); ax.set_axis_off()
+ax.set_title("Agrupamientos de envejecimiento (LISA, p < 0,05)", loc="left", fontweight="bold")
+plt.show()
+```
+
+## Bloque 18 · Guardar y descargar los resultados
+
+Los archivos creados en Colab **se borran al cerrar la sesión**. Este bloque comprime la carpeta
+`resultados/` en un zip y lo descarga a tu computador. Si trabajas con Drive, además deja una copia ahí.
+
+```python
+archivo_zip = shutil.make_archive("resultados_censo_rm", "zip", CARPETA_SALIDA)
+print("Contenido:", sorted(p.name for p in CARPETA_SALIDA.rglob("*") if p.is_file()))
+
+if FUENTE == "drive":
+    shutil.copy(archivo_zip, CARPETA_DRIVE)
+    print("Copia guardada en Drive:", CARPETA_DRIVE)
+
+try:
+    from google.colab import files
+    files.download(archivo_zip)
+except ImportError:
+    print("Archivo listo:", archivo_zip)
+```
