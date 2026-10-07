@@ -10,7 +10,7 @@ lang: es
 
 website:
   title: "Mapeo de variables censales"
-  description: "Clase aplicada: análisis espacial de datos del Censo 2024 en la Región Metropolitana"
+  description: "Clase aplicada: análisis espacial de datos del Censo 2024 en el Gran Santiago"
   page-navigation: true
   navbar:
     left:
@@ -27,7 +27,8 @@ website:
       - href: recursos.qmd
         text: Recursos
   page-footer:
-    center: "Datos: INE, Censo de Población y Vivienda 2024 · Mapas base © OpenStreetMap contributors"
+    left: "Benjamín Julio · Ingeniería Civil en Geografía, Minor en Ciencia de Datos · Universidad de Santiago de Chile"
+    right: "Datos: INE, Censo de Población y Vivienda 2024"
 
 format:
   html:
@@ -36,6 +37,8 @@ format:
       dark: darkly
     css: styles.css
     include-after-body: colab-link.html
+    link-external-newwindow: true
+    link-external-icon: true
     toc: true
     toc-title: "En esta página"
     code-copy: true

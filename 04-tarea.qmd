@@ -1,24 +1,25 @@
 ---
 title: "4 · Ejercicio aplicado"
-subtitle: "Tu propio mapa a partir del Censo 2024"
+subtitle: "Informe ejecutivo con cartografía a partir del Censo 2024"
 ---
 
 ::: {.callout-important}
 ## Entrega
-**Fecha:** _por definir_ · **Formato:** un archivo PDF o Word + el archivo exportado · **Trabajo:** individual o en parejas
+**Fecha:** _por definir_ · **Trabajo:** individual o en parejas · **Formato:** un solo archivo `.zip` con el informe en Word y un archivo cartográfico (detalle abajo)
 :::
 
 ## Objetivo
 
-Aplicar el flujo de la clase a **una pregunta propia** sobre la Región Metropolitana: elegir una variable, construir un indicador, mapearlo con criterios cartográficos e interpretar el resultado con sus limitaciones.
+Aplicar el flujo de la clase a **una problemática propia** del Gran Santiago: elegir una variable del Censo 2024, construir un indicador, mapearlo con criterios cartográficos profesionales y comunicar el resultado en un **informe ejecutivo**, con una reflexión crítica sobre lo que el mapa muestra y lo que no.
 
-## Instrucciones
+## Pasos
 
-1. **Formula una pregunta** territorial breve. Ejemplo: *¿dónde se concentra la población de primera infancia en la RM?*
-2. **Elige una variable** de la base por manzana y construye una **tasa** (no un conteo). Puedes partir del notebook de la clase y cambiar solo el Bloque 2 y el cálculo del Bloque 8.
-3. **Produce un mapa** (PNG o JPG) con todos los elementos vistos en clase: título que comunique el hallazgo, leyenda con unidades y método de clasificación, escala, norte, fuente y mapa base.
-4. **Exporta un segundo producto** en el formato que prefieras: HTML interactivo, KMZ, Shapefile o GeoPackage.
-5. **Escribe una interpretación** de 150 a 250 palabras: qué patrón observas, una hipótesis que lo explique y **una limitación** del mapa (MAUP, falacia ecológica, números pequeños, clasificación, etc.).
+1. **Elige una problemática** y la variable que la representa. Ejemplo: *¿dónde se concentra la población de primera infancia en el Gran Santiago?*
+2. **Construye una tasa** (no un conteo) a partir de la base por manzana. Parte del notebook de la clase: en el **Bloque 2** cambia las columnas (`COL_MAYORES` por tu variable; `COL_POB` si el denominador es otro) y ajusta títulos y etiquetas.
+3. **Produce la cartografía** en PNG o JPG con todos los elementos vistos en clase (Bloque 15 o 16).
+4. **Exporta un archivo cartográfico** en KMZ, Shapefile o HTML (Bloques 13, 17 o 18).
+5. **Escribe el informe** en Word con el formato indicado abajo.
+6. **Comprime** el informe y el archivo cartográfico en un `.zip` y entrégalo.
 
 ### Variables sugeridas
 
@@ -32,11 +33,75 @@ Revisa los nombres exactos en el diccionario de variables del INE (el Bloque 3 l
 | % hogares con jefatura femenina | `n_jefatura_mujer` | total de hogares (ver diccionario) |
 | Escolaridad promedio | `prom_escolaridad18` | ya es un promedio |
 
+## Entregable 1 · Informe ejecutivo (Word)
+
+Un informe ejecutivo es breve y está pensado para alguien que debe **tomar decisiones**: va directo al hallazgo, lo respalda con evidencia y explica qué significa.
+
+### Formato
+
+| Elemento | Indicación |
+|---|---|
+| Archivo | Word (`.docx`) |
+| Extensión | 3 a 5 páginas, sin contar portada, referencias ni anexos |
+| Página | Tamaño carta, márgenes de 2,5 cm, páginas numeradas |
+| Texto | Arial o Calibri 11, interlineado 1,15, texto justificado |
+| Títulos | Numerados (1, 2, 3…), en negrita |
+| Figuras y tablas | Numeradas ("Figura 1", "Tabla 1"), con título arriba y fuente abajo |
+| Citas y referencias | Normas APA 7.ª edición |
+
+### Portada
+
+- **Título del informe**, que comunique el hallazgo (no solo el tema).
+- Nombre(s) de quien(es) entrega(n).
+- Programa de magíster y nombre del curso.
+- Docente: Benjamín Julio.
+- Universidad y fecha de entrega.
+
+### Estructura
+
+1. **Resumen ejecutivo** (máximo 150 palabras): la problemática, el hallazgo principal con una cifra y su implicancia.
+2. **Problemática y justificación**: por qué importa esta variable, para quién y en qué contexto. Incluye al menos una fuente que respalde la relevancia del tema.
+3. **Datos y método**: fuente (INE, Censo 2024), variable e indicador con su fórmula, área de estudio, unidad territorial (manzana o comuna), método de clasificación del mapa y datos excluidos.
+4. **Cartografía**: el mapa en PNG o JPG insertado en el documento, como Figura 1, con todos los elementos cartográficos (título, leyenda, escala, norte, grilla o coordenadas, fuente y mapa base).
+5. **Análisis de resultados**: qué patrón se observa, dónde están los valores altos y bajos, con cifras concretas (por ejemplo, las comunas con mayor y menor valor).
+6. **Reflexión**:
+    - ¿Tiene sentido lo que muestra el mapa? ¿Coincide con lo que se esperaba?
+    - ¿A qué se puede deber esta distribución? (historia urbana, mercado de suelo, políticas de vivienda, ciclo de vida de los barrios, etc.)
+    - ¿Qué otras variables intervienen en el fenómeno y no alcanzamos a observar?
+    - ¿Qué limitaciones tiene el mapa? (unidad territorial y MAUP, falacia ecológica, números pequeños, método de clasificación, datos suprimidos).
+7. **Conclusiones y recomendaciones**: qué se concluye y qué se recomienda para la política pública o para una investigación posterior.
+8. **Referencias** en formato APA 7.
+
+## Entregable 2 · Archivo cartográfico
+
+Un archivo distinto al Word que permita abrir el mapa en otro programa. Elige **uno**:
+
+| Formato | Qué entregar | Se revisa en |
+|---|---|---|
+| KMZ | El archivo `.kmz` | Google Earth |
+| Shapefile | **Todos** sus componentes: `.shp`, `.shx`, `.dbf`, `.prj` y `.cpg` | QGIS o ArcGIS |
+| HTML | El mapa interactivo `.html` | Navegador web |
+
+## Entregable 3 · Archivo comprimido
+
+Todo va en **un solo archivo `.zip`**, nombrado así:
+
+- Individual: `Apellido_Nombre_InformeMapeo.zip`
+- En pareja: `Apellido1_Apellido2_InformeMapeo.zip`
+
+```
+Apellido_Nombre_InformeMapeo.zip
+├── Apellido_Nombre_Informe.docx
+└── archivo cartográfico (.kmz, carpeta shp/ o .html)
+```
+
 ## Rúbrica
 
 | Criterio | Logrado (3) | En desarrollo (2) | Inicial (1) | Peso |
 |---|---|---|---|---|
-| **Indicador** | Tasa bien construida y justificada para la pregunta | Tasa correcta sin justificación | Usa conteos o el cálculo tiene errores | 25% |
-| **Mapa** | Incluye todos los elementos cartográficos; jerarquía visual clara | Falta uno o dos elementos | Faltan tres o más elementos | 30% |
-| **Exportación** | Archivo funcional que abre correctamente en el programa indicado | Abre con problemas menores (tildes, nombres) | No abre o no se entrega | 15% |
-| **Interpretación** | Describe el patrón, plantea una hipótesis y reconoce una limitación pertinente | Describe el patrón sin hipótesis o sin limitación | Solo describe colores del mapa | 30% |
+| **Problemática y justificación** | Problema claro, relevante y respaldado con al menos una fuente | Problema claro, sin respaldo | Problema difuso o ausente | 15% |
+| **Datos y método** | Indicador (tasa) bien construido, fórmula y decisiones explicadas | Indicador correcto, decisiones poco explicadas | Usa conteos o el cálculo tiene errores | 15% |
+| **Cartografía** | Mapa con todos los elementos, legible y con jerarquía visual clara | Falta uno o dos elementos | Faltan tres o más elementos | 25% |
+| **Análisis de resultados** | Describe el patrón con cifras y lugares concretos | Describe el patrón sin cifras | Solo describe colores del mapa | 20% |
+| **Reflexión** | Explica posibles causas, identifica variables no observadas y limitaciones pertinentes | Aborda solo una de esas dimensiones | Sin reflexión crítica | 15% |
+| **Formato y entrega** | Cumple formato, archivo cartográfico funcional y zip bien nombrado | Incumple un aspecto | Incumple dos o más aspectos | 10% |

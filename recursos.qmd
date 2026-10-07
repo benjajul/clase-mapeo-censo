@@ -6,11 +6,11 @@ title: "Recursos"
 
 | Recurso | Enlace |
 |---|---|
-| Cartografía País Censo 2024 (GeoParquet) — **descargar y subir a Drive antes de la clase** | _[enlace de descarga INE: completar]_ |
-| Portal Censo 2024 (INE) | <https://censo2024.ine.gob.cl/> |
-| Censo de Población y Vivienda (INE) | <https://www.ine.gob.cl/estadisticas-por-tema/demografia-y-poblacion/censo-de-poblacion-y-vivienda> |
+| Cartografía País Censo 2024 (GeoParquet), fuente oficial | [INE, resultados Censo 2024](https://censo2024.ine.gob.cl/resultados/) |
+| Copia de los archivos para la clase (la usa el notebook) | [Carpeta compartida del docente en Google Drive](https://drive.google.com/drive/folders/1qzYq0RzuFlMieopEV03JyfpTOxxxWjij) |
+| Censo de Población y Vivienda (INE) | [Portal del INE](https://www.ine.gob.cl/estadisticas-por-tema/demografia-y-poblacion/censo-de-poblacion-y-vivienda) |
 
-El archivo de manzanas pesa cientos de MB y tiene cerca de 200 variables. El código lee solo las columnas necesarias para no saturar la memoria de Colab.
+El archivo de manzanas pesa cientos de MB y tiene cerca de 200 variables. El notebook lo descarga solo desde la carpeta del docente (Bloque 2) y lee únicamente las columnas necesarias para no saturar la memoria de Colab.
 
 ## Código de la clase
 
@@ -19,10 +19,30 @@ El archivo de manzanas pesa cientos de MB y tiene cerca de 200 variables. El có
 
 ## Antes de la clase
 
-1. Ten una cuenta de Google y entra a [Google Colab](https://colab.research.google.com/).
-2. Descarga la cartografía del Censo 2024 desde el INE y descomprímela.
-3. En tu Google Drive, crea la carpeta `censo2024` dentro de *Mi unidad* y sube ahí la carpeta descomprimida.
-4. Abre el notebook en Colab y ejecuta los Bloques 0 a 3. Si ves el nombre del archivo de manzanas y la lista de columnas, estás listo.
+### 1. Habilitar Google Colab en tu cuenta de Google
+
+Colab es una aplicación que se conecta a Google Drive. Si nunca la has usado, hay que habilitarla una vez:
+
+1. Entra a [Google Drive](https://drive.google.com/) con tu cuenta de Google.
+2. Haz clic en **+ Nuevo → Más → Conectar más aplicaciones**.
+3. Busca **Colaboratory** y haz clic en **Instalar**. Acepta los permisos.
+4. Comprueba que ahora aparece en **+ Nuevo → Más → Google Colaboratory**.
+
+::: {.callout-warning}
+## Cuentas institucionales
+Algunas cuentas de universidades o empresas tienen Colab bloqueado por el administrador. Si no puedes instalarlo, usa una cuenta personal de Gmail.
+:::
+
+### 2. Probar el notebook
+
+1. Abre el notebook con el botón **Abrir en Colab** y guarda una copia: *Archivo → Guardar una copia en Drive*.
+2. Ejecuta los **Bloques 0 a 3** (botón ▶ o `Shift + Enter`). El Bloque 2 descarga los datos; puede tardar unos minutos la primera vez.
+3. Si ves el nombre del archivo de manzanas y la lista de columnas, estás listo.
+
+::: {.callout-tip}
+## Si la descarga falla
+Google limita las descargas cuando muchas personas bajan el mismo archivo a la vez. En ese caso, abre la [carpeta del docente](https://drive.google.com/drive/folders/1qzYq0RzuFlMieopEV03JyfpTOxxxWjij), descarga los archivos, súbelos a tu Drive en `Mi unidad/censo2024` y en el Bloque 2 cambia `FUENTE = "drive"`.
+:::
 
 No se instala nada en el computador: Colab ya trae Python y casi todas las librerías, y el Bloque 0 agrega las que faltan.
 
@@ -34,6 +54,8 @@ Instala [R](https://cran.r-project.org/) y [RStudio](https://posit.co/download/r
 install.packages(c("arrow", "sf", "dplyr", "ggplot2", "ggspatial", "prettymapr",
                    "leaflet", "htmlwidgets", "classInt", "jsonlite", "zip"))
 ```
+
+Descarga los datos desde la carpeta del docente y escribe la ruta del archivo en el Bloque 2 del script.
 :::
 
 ## Software

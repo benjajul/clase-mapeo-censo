@@ -1,3 +1,5 @@
 h2.opcional::after, .opcional > h2::after { content: " · opcional"; font-size: .6em; color: #888; }
 .pregunta { font-size: 1.25rem; border-left: 4px solid #c2410c; padding: .6rem 1rem; margin: 1.2rem 0; }
 table { font-size: .92rem; }
+.docente { border: 1px solid #e3e0da; border-radius: 8px; padding: .7rem 1rem .1rem; margin: 1rem 0; font-size: .95rem; }
+.quarto-figure img { border-radius: 6px; }

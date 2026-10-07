@@ -7,7 +7,7 @@ Un mapa para explorar datos sirve a quien lo hace. Un mapa para comunicar debe f
 
 ## Elementos de un mapa
 
-| Elemento | Para qué sirve | En el código (Bloque 14) |
+| Elemento | Para qué sirve | En el código (Bloque 15) |
 |---|---|---|
 | **Título** | Comunicar el hallazgo, no solo el tema | `TITULO = ...` |
 | **Subtítulo** | Indicador, unidad territorial y territorio | `ax.text(...)` |
@@ -15,7 +15,7 @@ Un mapa para explorar datos sirve a quien lo hace. Un mapa para comunicar debe f
 | **Escala** | Dar idea de distancias (gráfica, no numérica: sobrevive a cambios de tamaño) | barra de 10 km |
 | **Norte** | Orientar a quien lee (obligatorio si el mapa no está orientado al norte) | `ax.annotate("N", ...)` |
 | **Grilla / coordenadas** | Ubicar el mapa en el mundo y declarar la proyección | `ax.grid(...)` |
-| **Mapa base** | Dar contexto (calles, cerros, ríos) sin competir con el dato | `cx.add_basemap(...)` |
+| **Mapa base** | Dar contexto (calles, cerros, ríos) sin competir con el dato. Usamos el gris de Esri: OpenStreetMap bloquea este tipo de uso ("Access blocked") | `cx.add_basemap(...)` |
 | **Fuente y créditos** | Origen de los datos, año, exclusiones, proyección y atribución del mapa base | `fig.text(...)` |
 | **Etiquetas** | Nombrar los lugares clave (con moderación) | comunas en el gráfico |
 
@@ -26,11 +26,27 @@ El dato es protagonista. El mapa base, la grilla y los límites van en tonos sua
 
 ## Ejercicio en clase: criticar nuestro propio mapa
 
-Compara el mapa del **Bloque 13** (exploratorio) con el del **Bloque 14** (profesional), y responde:
+Compara el mapa del **Bloque 14** (exploratorio) con el del **Bloque 15** (profesional), y responde:
 
-1. Sin leer el código, ¿se entiende qué muestra el mapa del Bloque 13?
+1. Sin leer el código, ¿se entiende qué muestra el mapa del Bloque 14?
 2. ¿Qué información le falta para usarlo en un informe?
-3. ¿El título del Bloque 14 describe el tema o el hallazgo? Escribe uno mejor a partir de lo que ves.
+3. ¿El título del Bloque 15 describe el tema o el hallazgo? Escribe uno mejor a partir de lo que ves.
+
+## Mapas bivariados: dos variables en un mapa
+
+El **mapa bivariado** (Bloques 12 y 16) combina dos variables en una grilla de 3 × 3 colores. Permite ver dónde **coinciden** dos fenómenos y dónde **se separan**.
+
+| Cómo leerlo | Qué significa |
+|---|---|
+| Gris claro (abajo a la izquierda) | Bajo % de personas mayores y baja escolaridad |
+| Rojo (abajo a la derecha) | Alto % de personas mayores, baja escolaridad |
+| Azul (arriba a la izquierda) | Bajo % de personas mayores, alta escolaridad |
+| Oscuro (arriba a la derecha) | Alto en ambas variables |
+
+::: {.callout-warning}
+## Cuidado
+Más de 9 colores ya no se distinguen, por eso se usan terciles. Y que dos variables coincidan en el territorio **no prueba** que una cause la otra: ambas pueden depender de una tercera (por ejemplo, el nivel de ingresos o la antigüedad del barrio).
+:::
 
 ## Cómo puede engañar un mapa social
 
@@ -46,7 +62,7 @@ El mismo dato con *cuantiles*, *intervalos iguales* o *cortes naturales* produce
 
 ### 3. Unidad territorial (MAUP)
 
-El **problema de la unidad de área modificable** (MAUP): los resultados cambian según cómo se agrupen los datos. El promedio comunal (Bloque 12) esconde la diversidad interna que muestran las manzanas (Bloque 14). Ninguna escala es "la verdadera": cada una responde preguntas distintas.
+El **problema de la unidad de área modificable** (MAUP): los resultados cambian según cómo se agrupen los datos. El promedio comunal (Bloque 13) esconde la diversidad interna que muestran las manzanas (Bloque 15). Ninguna escala es "la verdadera": cada una responde preguntas distintas.
 
 ### 4. Falacia ecológica
 

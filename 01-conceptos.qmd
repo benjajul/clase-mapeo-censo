@@ -7,6 +7,7 @@ Para ubicar un dato social en un mapa hay que resolver una cadena de problemas. 
 
 | Problema | Concepto que lo resuelve |
 |---|---|
+| ¿Qué tengo y qué quiero saber? | [Datos e información](#datos-información-y-conocimiento) |
 | ¿Qué forma tiene la Tierra? | [Geoide y elipsoide](#la-forma-de-la-tierra-geoide-y-elipsoide) |
 | ¿Dónde anclo ese modelo? | [Datum](#el-datum-anclar-el-modelo-a-la-tierra) |
 | ¿Cómo nombro un lugar? | [Coordenadas y códigos EPSG](#coordenadas-nombrar-un-lugar) |
@@ -14,17 +15,39 @@ Para ubicar un dato social en un mapa hay que resolver una cadena de problemas. 
 | ¿Cómo guardo la realidad? | [Modelos vector y ráster](#modelos-de-datos-vector-y-ráster) |
 | ¿Cómo lo analizo todo junto? | [SIG](#sig-todo-junto) |
 
-## 0. ¿Por qué mapear un fenómeno social?
+## 1. ¿Por qué mapear un fenómeno social?
 
 Los fenómenos sociales ocurren en algún lugar, y **el lugar no es neutro**: la segregación, el acceso a servicios o el envejecimiento de un barrio tienen una geografía. La llamada *primera ley de la geografía* (Tobler, 1970) lo resume así: *todo está relacionado con todo, pero las cosas cercanas están más relacionadas que las lejanas*.
 
+![Paraisópolis (izquierda) y Morumbí (derecha), São Paulo, Brasil. Un muro separa una de las favelas más grandes de la ciudad de un barrio de altos ingresos. Fotografía: Tuca Vieira.](img/paraisopolis_morumbi.png){fig-alt="Fotografía aérea: a la izquierda viviendas autoconstruidas de Paraisópolis; a la derecha un edificio de lujo de Morumbí con piscinas en cada balcón y canchas de tenis." width="85%"}
+
+La imagen muestra la **desigualdad como un hecho espacial**: dos realidades sociales opuestas a pocos metros de distancia. Un promedio de la ciudad escondería ese contraste; un mapa con la escala adecuada lo hace visible.
+
 Un mapa permite pasar de preguntar **cuánto** a preguntar **dónde**, y de ahí a **por qué ahí**.
 
-## 1. La forma de la Tierra: geoide y elipsoide
+## 2. Datos, información y conocimiento
 
-La Tierra no es una esfera: está achatada en los polos y su superficie es irregular. El **geoide** es su forma "real" (la superficie del nivel medio del mar), pero es demasiado irregular para hacer cálculos. Por eso se usa un **elipsoide**: una figura matemática simple que se le parece mucho.
+No es lo mismo tener datos que tener información. El ejercicio de la clase recorre exactamente ese camino:
 
-## 2. El datum: anclar el modelo a la Tierra
+| Nivel | Qué es | En el ejercicio |
+|---|---|---|
+| **Datos** | Registros brutos, sin interpretar. Por sí solos no responden una pregunta | La base del Censo: en la manzana X viven 312 personas y 74 tienen 60 años o más |
+| **Información** | Datos procesados, ordenados y puestos en contexto para responder una pregunta | El porcentaje de personas mayores por manzana y por comuna, clasificado y mapeado |
+| **Conocimiento** | Interpretación de la información a la luz de teoría y experiencia: explica y orienta decisiones | Explicar por qué las personas mayores se concentran donde se concentran, y qué implica para la red de cuidados, salud o transporte |
+
+El paso de datos a información **no es neutro**: elegir la variable, la unidad territorial, la tasa y la clasificación son decisiones del analista. Por eso la última parte de la clase está dedicada a leer los mapas críticamente.
+
+## 3. La forma de la Tierra: geoide y elipsoide
+
+La Tierra no es una esfera: está achatada en los polos y su superficie es irregular. El **geoide** es su forma "real" (la superficie del nivel medio del mar, que depende de la gravedad), pero es demasiado irregular para hacer cálculos. Por eso se usa un **elipsoide**: una figura matemática simple que se le parece mucho.
+
+::: {layout-ncol=2}
+![Geoide: superficie irregular definida por la gravedad terrestre (relieve muy exagerado; los colores indican desviaciones respecto del elipsoide).](img/geoide.png){fig-alt="Globo terrestre deformado y coloreado de rojo a azul según la gravedad."}
+
+![Elipsoide: figura matemática con ejes x, y, z. La imagen exagera la forma; el elipsoide terrestre es casi una esfera, apenas achatada en los polos (unos 21 km de diferencia entre radios).](img/elipsoide.png){fig-alt="Elipsoide alargado dibujado con una malla sobre tres ejes."}
+:::
+
+## 4. El datum: anclar el modelo a la Tierra
 
 Un **datum** fija un elipsoide en una posición concreta respecto de la Tierra real. Es el punto de partida de todas las coordenadas.
 
@@ -39,7 +62,7 @@ Un **datum** fija un elipsoide en una posición concreta respecto de la Tierra r
 Mezclar capas con distinto datum sin transformarlas: las manzanas aparecen desplazadas varias cuadras respecto del mapa base.
 :::
 
-## 3. Coordenadas: nombrar un lugar
+## 5. Coordenadas: nombrar un lugar
 
 Con un datum, cada punto tiene **coordenadas geográficas**: latitud y longitud en grados. Por ejemplo, la Plaza de Armas de Santiago está cerca de −33,44° (latitud) y −70,65° (longitud).
 
@@ -51,7 +74,7 @@ Cada combinación de datum y sistema de coordenadas tiene un código **EPSG**, q
 | EPSG:32719 | WGS 84 / UTM zona 19 Sur | metros |
 | EPSG:3857 | Web Mercator (mapas web) | metros "deformados" |
 
-## 4. Proyección: de la esfera al plano
+## 6. Proyección: de la esfera al plano
 
 Una pantalla o una hoja son planas; la Tierra no. **Proyectar** es transformar la superficie curva en un plano, y **toda proyección distorsiona algo**: área, forma, distancia o dirección. Hay que elegir qué conservar según el análisis.
 
@@ -63,7 +86,7 @@ Una pantalla o una hoja son planas; la Tierra no. **Proyectar** es transformar l
 El Bloque 6 calcula el área de una manzana en grados y luego en metros. Solo la segunda tiene sentido: para medir, hay que proyectar.
 :::
 
-## 5. Modelos de datos: vector y ráster
+## 7. Modelos de datos: vector y ráster
 
 Una vez que sabemos *dónde*, hay que decidir *cómo guardar* la realidad.
 
@@ -71,6 +94,8 @@ Una vez que sabemos *dónde*, hay que decidir *cómo guardar* la realidad.
 |---|---|---|
 | **Vector** | Objetos discretos: puntos, líneas, polígonos | Colegios (puntos), calles (líneas), manzanas y comunas (polígonos) |
 | **Ráster** | Superficies continuas en una grilla de píxeles | Imagen satelital, temperatura, altitud |
+
+![El mismo territorio en los dos modelos: en ráster, cada celda de la grilla tiene un valor; en vector, cada objeto es un punto, una línea o un polígono.](img/raster_vector.png){fig-alt="Comparación lado a lado de un modelo ráster en grilla de celdas y un modelo vectorial con puntos, una línea y polígonos." width="90%"}
 
 Los datos censales son **vectoriales**: polígonos con una **tabla de atributos** (población, edad, escolaridad…) asociada a cada uno.
 
@@ -85,19 +110,27 @@ flowchart TD
   C --> RU["Área rural:<br>localidad → entidad"]
 ```
 
-## 6. SIG: todo junto
+## 8. SIG: todo junto
 
-Un **Sistema de Información Geográfica (SIG)** combina datos espaciales, software, métodos y personas para responder preguntas sobre el territorio. Sus operaciones básicas son las que haremos en el ejercicio:
+Un **Sistema de Información Geográfica (SIG)** no es solo un programa: combina datos espaciales, software, hardware, procedimientos y personas para responder preguntas sobre el territorio. Su lógica central es la **superposición de capas**: cada capa representa un tema (manzanas, calles, ríos, relieve) sobre la misma referencia espacial, y el análisis surge de cruzarlas.
+
+::: {layout-ncol=2}
+![Componentes de un SIG.](img/sig_componentes.png){fig-alt="Diagrama con SIG al centro rodeado de datos, procedimientos, recurso humano, software y hardware."}
+
+![Un SIG organiza la información en capas temáticas superpuestas. Fuente: AVR Consultores.](img/sig_capas.png){fig-alt="Capas apiladas: propiedades, vías, hidrología, uso de suelo, puntos de control, elevaciones e imágenes."}
+:::
+
+Sus operaciones básicas son las que haremos en el ejercicio:
 
 | Operación | Qué hace | Bloque |
 |---|---|---|
-| Selección por atributo | Filtrar las manzanas de la RM | 5 |
+| Selección por atributo | Filtrar las manzanas del Gran Santiago | 5 |
 | Reproyección | Pasar de grados a metros | 6 |
 | Cálculo de campos | Crear la tasa de personas mayores | 8 |
 | Agregación / disolución | Sumar manzanas por comuna | 9 |
 | Unión por atributo (*join*) | Unir la tabla comunal con la geometría por código | 9 |
-| Clasificación y simbología | Agrupar valores en rangos y colores | 11 |
-| Exportación | Guardar en distintos formatos | 12–16 |
+| Clasificación y simbología | Agrupar valores en rangos y colores (univariado y bivariado) | 11–12 |
+| Exportación | Guardar en distintos formatos | 13–18 |
 
 ## Ecosistema técnico
 

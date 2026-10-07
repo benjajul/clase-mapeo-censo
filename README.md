@@ -1,8 +1,10 @@
-# Mapeo de variables censales en la Región Metropolitana
+# Mapeo de variables censales en el Gran Santiago
 
 Material de la clase aplicada **Introducción al análisis espacial cuantitativo para las ciencias sociales**.
 
-**Pregunta guía:** ¿dónde se concentran las personas mayores (60 años y más) en la RM, y qué patrón territorial muestran?
+**Pregunta guía:** ¿dónde se concentran las personas mayores (60 años y más) en el Gran Santiago, y qué patrón territorial muestran?
+
+**Docente:** Benjamín Julio · Ingeniería Civil en Geografía, Minor en Ciencia de Datos · Universidad de Santiago de Chile
 Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana).
 
 ## Contenido
@@ -15,8 +17,9 @@ Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana
 ├── 04-tarea.qmd         Ejercicio aplicado y rúbrica
 ├── recursos.qmd         Datos, software, lecturas
 ├── codigo/
-│   ├── clase_censo_rm.ipynb   Notebook Python para Google Colab (19 bloques)
+│   ├── clase_censo_rm.ipynb   Notebook Python para Google Colab (21 bloques)
 │   └── clase_censo_rm.R       Script R para RStudio (opcional, de referencia)
+├── img/                 Imágenes de la página de conceptos
 ├── datos/               Vacía: los datos se descargan del INE
 └── .github/workflows/publish.yml   Publicación automática en GitHub Pages
 ```
@@ -25,10 +28,10 @@ Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana
 
 La clase se trabaja en **Google Colab** (no requiere instalar nada).
 
-1. Descarga la cartografía del Censo 2024 (ver `recursos.qmd` o el sitio) y súbela a Google Drive en `Mi unidad/censo2024`.
-2. Abre el notebook en Colab:
+1. Habilita Google Colab en tu cuenta de Google (ver `recursos.qmd`).
+2. Abre el notebook en Colab (descarga los datos solo desde la carpeta compartida del docente):
    `https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/clase_censo_rm.ipynb`
-3. Ejecuta los bloques en orden. El Bloque 18 descarga los resultados en un zip.
+3. Ejecuta los bloques en orden. El Bloque 20 descarga los resultados en un zip.
 
 ## Publicar el sitio en GitHub Pages
 
@@ -44,7 +47,7 @@ Vista previa local (opcional, requiere [Quarto](https://quarto.org/docs/get-star
 ## Notas para el docente
 
 - Los botones "Abrir en Colab" del sitio se completan solos con tu usuario y repositorio (`colab-link.html`). El repositorio debe ser **público** para que funcionen.
-- Si consigues un enlace de descarga directa del INE, ponlo en `URL_DESCARGA` del Bloque 2 y cambia `FUENTE = "url"`: los estudiantes no tendrán que subir nada a Drive.
+- Los datos se descargan desde la carpeta pública de Drive del docente (`FUENTE = "docente"` en el Bloque 2). La carpeta debe seguir compartida como "Cualquier persona con el enlace".
 - El sitio **no ejecuta código** al renderizar: muestra los bloques como texto. Así se publica sin necesitar los datos.
 - `02-ejercicio.qmd` y el notebook comparten los mismos bloques; si editas uno, actualiza el otro.
 - El script R fue probado en sus bloques de procesamiento, gráfico, exportación y KMZ; la lectura con `arrow`, el mapa `leaflet` y el mapa base de `ggspatial` deben probarse con los datos reales.
