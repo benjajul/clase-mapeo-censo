@@ -18,7 +18,7 @@
 
 # Bloque 0 · Instalación de librerías -----------------------------------------
 # Ejecutar solo una vez por computador (quita el # de la línea siguiente):
-# install.packages(c("arrow", "sf", "dplyr", "ggplot2", "ggspatial", "prettymapr",
+# install.packages(c("arrow", "sf", "dplyr", "ggplot2", "ggrepel", "ggspatial", "prettymapr",
 #                    "leaflet", "htmlwidgets", "classInt", "jsonlite", "zip"))
 
 
@@ -27,7 +27,8 @@ library(arrow)       # leer Parquet / GeoParquet
 library(sf)          # datos espaciales (simple features)
 library(dplyr)       # manipulación de tablas
 library(ggplot2)     # gráficos y mapas estáticos
-library(ggspatial)   # mapa base, escala y norte para ggplot
+library(ggrepel)     # etiquetas que no se superponen
+library(ggspatial)   # mapa base para ggplot
 library(leaflet)     # mapas web interactivos
 library(htmlwidgets) # guardar el mapa web como HTML
 library(classInt)    # clasificación de valores (cuantiles, etc.)
@@ -154,8 +155,8 @@ g <- ggplot(comunas, aes(escolar, pct_60)) +
   geom_hline(data = data.frame(y = promedio_gs, etiqueta = sprintf("Promedio Gran Santiago (%.1f%%)", promedio_gs)),
              aes(yintercept = y, linetype = etiqueta), colour = "grey50") +
   geom_point(aes(size = poblacion), colour = "#c2410c", alpha = 0.6) +
-  geom_text(data = extremos, aes(label = tools::toTitleCase(tolower(comuna))),
-            hjust = -0.15, vjust = -0.5, size = 3) +
+  geom_text_repel(data = extremos, aes(label = tools::toTitleCase(tolower(comuna))), size = 3,
+                  min.segment.length = 0, segment.colour = "grey50", box.padding = 0.5, seed = 1) +
   scale_size_area(max_size = 12, breaks = c(1e5, 3e5, 5e5), limits = c(0, max(6e5, comunas$poblacion)),
                   labels = c("100 mil habitantes", "300 mil habitantes", "500 mil habitantes"),
                   name = "Cada burbuja es una comuna\nTamaño = población") +
@@ -244,21 +245,35 @@ saveWidget(mapa_bi, file.path(normalizePath(CARPETA_SALIDA), "mapa_interactivo_b
 
 
 # Bloque 14-15 · Mapa profesional por manzana (PNG / JPG) ----------------------
+# La leyenda, la escala y el norte van FUERA del marco del mapa (a la derecha), para no tapar manzanas.
 TITULO <- "¿Dónde viven las personas mayores en el Gran Santiago?"   # reemplazar por el hallazgo
 CAPTION <- paste0("Fuente: INE, Censo 2024. Manzanas con menos de ", MIN_PERSONAS, " personas excluidas.\n",
                   "Mapa base: ", CREDITO_MAPA_BASE, ". Proyección: UTM 19S (EPSG:32719).")
-ALTO <- 9 * diff(lim_y) / diff(lim_x) + 2.2
+dx <- diff(lim_x); dy <- diff(lim_y)
+ANCHO <- 12
+ALTO <- 8.5 * dy / dx + 1.8
 
-# Elementos comunes: mapa base, límites comunales, escala, norte, grilla y encuadre
+# Elementos comunes: mapa base, límites, escala de 5 km y norte a la derecha del mapa, grilla y encuadre
 elementos_cartograficos <- function() {
+  x0 <- lim_x[2] + 0.06 * dx; y0 <- lim_y[1] + 0.06 * dy
   list(
     annotation_map_tile(type = URL_MAPA_BASE, zoomin = 0, progress = "none"),
-    annotation_scale(location = "bl", width_hint = 0.25, style = "ticks"),
-    annotation_north_arrow(location = "tr", style = north_arrow_fancy_orienteering()),
-    coord_sf(crs = CRS_METROS, datum = CRS_METROS, xlim = lim_x, ylim = lim_y, expand = FALSE),
+    geom_sf(data = comunas, fill = NA, colour = "grey30", linewidth = 0.2),
+    # Escala gráfica: 4 tramos de 1,25 km
+    annotate("rect", xmin = x0 + (0:3) * 1250, xmax = x0 + (1:4) * 1250, ymin = y0, ymax = y0 + 0.012 * dy,
+             fill = c("black", "white", "black", "white"), colour = "black", linewidth = 0.3),
+    annotate("text", x = x0 + c(0, 2500, 5000), y = y0 - 0.015 * dy, label = c("0", "2,5", "5 km"), size = 3),
+    # Flecha norte
+    annotate("segment", x = x0 + 2500, xend = x0 + 2500, y = y0 + 0.10 * dy, yend = y0 + 0.19 * dy,
+             arrow = arrow(length = unit(0.35, "cm"), type = "closed"), linewidth = 1.2),
+    annotate("text", x = x0 + 2500, y = y0 + 0.075 * dy, label = "N", fontface = "bold", size = 4.5),
+    coord_sf(crs = CRS_METROS, datum = CRS_METROS, xlim = lim_x, ylim = lim_y, expand = FALSE, clip = "off"),
     theme_minimal(base_size = 10),
     theme(plot.title = element_text(face = "bold"),
-          panel.grid = element_line(linetype = "dotted", colour = "grey60"))
+          panel.grid = element_line(linetype = "dotted", colour = "grey60"),
+          legend.position = "right", legend.justification = "top",
+          plot.margin = margin(10, 45, 10, 10)),
+    labs(x = NULL, y = NULL)
   )
 }
 
@@ -267,36 +282,33 @@ validas$clase <- clasificar(validas$pct_60, "quantile")
 
 mapa <- ggplot() +
   elementos_cartograficos()[1] +
-  geom_sf(data = validas, aes(fill = clase), colour = NA, alpha = 0.85) +
-  geom_sf(data = comunas, fill = NA, colour = "grey30", linewidth = 0.2) +
+  geom_sf(data = validas, aes(fill = clase), colour = NA, alpha = 0.9) +
   scale_fill_brewer(palette = "YlOrRd", name = "Personas de 60+ (%)\nquintiles por manzana") +
   elementos_cartograficos()[-1] +
   labs(title = TITULO, caption = CAPTION,
-       subtitle = "Porcentaje de personas de 60 años y más por manzana censal, Gran Santiago") +
-  theme(legend.position = "inside", legend.position.inside = c(0.88, 0.15),
-        legend.background = element_rect(fill = "white", colour = "grey80"))
+       subtitle = "Porcentaje de personas de 60 años y más por manzana censal, Gran Santiago")
 print(mapa)
-ggsave(file.path(CARPETA_SALIDA, "mapa_60mas_manzanas.png"), mapa, width = 10, height = ALTO, dpi = 250, bg = "white")
-ggsave(file.path(CARPETA_SALIDA, "mapa_60mas_manzanas.jpg"), mapa, width = 10, height = ALTO, dpi = 250, bg = "white")
+ggsave(file.path(CARPETA_SALIDA, "mapa_60mas_manzanas.png"), mapa, width = ANCHO, height = ALTO, dpi = 250, bg = "white")
+ggsave(file.path(CARPETA_SALIDA, "mapa_60mas_manzanas.jpg"), mapa, width = ANCHO, height = ALTO, dpi = 250, bg = "white")
 
 
 # Bloque 16 · Mapa bivariado profesional (PNG / JPG) ---------------------------
 con_bi <- gs[!is.na(gs$bi_color), ]
-ancho_ley <- diff(lim_x) * 0.2
+lado <- 0.24 * dx                       # tamaño de la leyenda 3 × 3, a la derecha del mapa
 mapa_bi_png <- ggplot() +
   elementos_cartograficos()[1] +
   geom_sf(data = con_bi, aes(fill = bi_color), colour = NA, alpha = 0.9) +
-  geom_sf(data = comunas, fill = NA, colour = "grey30", linewidth = 0.2) +
   scale_fill_identity() +
-  annotation_custom(ggplotGrob(leyenda_bivariada()),
-                    xmin = lim_x[2] - ancho_ley * 1.1, xmax = lim_x[2] - ancho_ley * 0.05,
-                    ymin = lim_y[1] + diff(lim_y) * 0.03, ymax = lim_y[1] + diff(lim_y) * 0.03 + ancho_ley) +
+  annotation_custom(ggplotGrob(leyenda_bivariada() + labs(title = "Envejecimiento\ny escolaridad")),
+                    xmin = lim_x[2] + 0.03 * dx, xmax = lim_x[2] + 0.03 * dx + lado,
+                    ymin = lim_y[2] - lado * 1.25, ymax = lim_y[2]) +
   elementos_cartograficos()[-1] +
+  theme(plot.margin = margin(10, 0.3 * ANCHO * 72, 10, 10)) +   # espacio a la derecha para la leyenda
   labs(title = "Envejecimiento y escolaridad en el Gran Santiago", caption = CAPTION,
        subtitle = "Terciles de % de personas de 60 años y más y de escolaridad promedio (18+) por manzana censal")
 print(mapa_bi_png)
-ggsave(file.path(CARPETA_SALIDA, "mapa_bivariado_manzanas.png"), mapa_bi_png, width = 10, height = ALTO, dpi = 250, bg = "white")
-ggsave(file.path(CARPETA_SALIDA, "mapa_bivariado_manzanas.jpg"), mapa_bi_png, width = 10, height = ALTO, dpi = 250, bg = "white")
+ggsave(file.path(CARPETA_SALIDA, "mapa_bivariado_manzanas.png"), mapa_bi_png, width = ANCHO, height = ALTO, dpi = 250, bg = "white")
+ggsave(file.path(CARPETA_SALIDA, "mapa_bivariado_manzanas.jpg"), mapa_bi_png, width = ANCHO, height = ALTO, dpi = 250, bg = "white")
 
 
 # Bloque 17 · Exportar a Shapefile y GeoPackage --------------------------------

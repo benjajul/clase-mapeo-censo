@@ -19,7 +19,7 @@ Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana
 ├── codigo/
 │   ├── clase_censo_rm.ipynb   Notebook Python para Google Colab (21 bloques)
 │   └── clase_censo_rm.R       Script R para RStudio (opcional, de referencia)
-├── img/                 Imágenes de la página de conceptos
+├── img/                 Imágenes de conceptos y resultados (resultado_*.png/jpg)
 ├── datos/               Vacía: los datos se descargan del INE
 └── .github/workflows/publish.yml   Publicación automática en GitHub Pages
 ```

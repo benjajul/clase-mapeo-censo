@@ -47,6 +47,25 @@ La clase se trabaja en **Google Colab**: Python en el navegador, sin instalar na
 | Los datos | El notebook los descarga solo desde la [carpeta compartida del docente](https://drive.google.com/drive/folders/1qzYq0RzuFlMieopEV03JyfpTOxxxWjij). Fuente original: [INE, resultados Censo 2024](https://censo2024.ine.gob.cl/resultados/) |
 | El código en R (opcional, de referencia) | [`codigo/clase_censo_rm.R`](codigo/clase_censo_rm.R), para RStudio. No se usa en clase |
 
+## Resultados del ejercicio
+
+Así se ven los productos con los datos del Censo 2024 (haz clic en una imagen para ampliarla).
+
+::: {layout-ncol=2}
+![Porcentaje de personas de 60 años y más por manzana.](img/resultado_mapa_60mas.jpg){.lightbox group="resultados"}
+
+![Mapa bivariado: envejecimiento y escolaridad por manzana.](img/resultado_mapa_bivariado.jpg){.lightbox group="resultados"}
+:::
+
+![Envejecimiento y escolaridad por comuna.](img/resultado_grafico.png){.lightbox group="resultados" width="85%"}
+
+::: {.callout-note}
+## Preguntas para discutir
+- La comuna de Santiago tiene el menor porcentaje de personas mayores del Gran Santiago, pese a su escolaridad sobre el promedio. ¿Qué procesos urbanos podrían explicarlo?
+- Vitacura, Las Condes y La Reina combinan alta escolaridad y alto envejecimiento, pero Pedro Aguirre Cerda tiene el porcentaje más alto con baja escolaridad. ¿Es el mismo fenómeno en ambos casos?
+- ¿Qué cambia al pasar del promedio comunal (gráfico) al mapa por manzana?
+:::
+
 ## Productos de la clase
 
 Al terminar el ejercicio, el Bloque 20 descarga un zip con estos archivos:
