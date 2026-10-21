@@ -21,6 +21,18 @@ Ingeniería Civil en Geografía · Minor en Ciencia de Datos\
 Universidad de Santiago de Chile
 :::
 
+## Del territorio al dato
+
+::: {.capsula}
+Mi camino empezó en la geografía, aprendiendo a leer el territorio como algo más que el fondo donde ocurren las cosas. Después llegaron los datos: programar en Python y R me permitió pasar de mirar mapas a construirlos, y de construirlos a preguntarles por qué dicen lo que dicen.
+
+Desarrollando plataformas geoespaciales para instituciones públicas, y ordenando información espacial dispersa para que otros puedan usarla, aprendí que un mapa nunca es neutral. Decidir qué se mide, a qué escala y con qué colores también es decidir qué se ve y qué queda fuera.
+
+Esa tensión atraviesa mi trabajo sobre movilidad y vulnerabilidad urbana, y me acompañará en un observatorio municipal, donde los datos territoriales terminan convertidos en decisiones sobre personas.
+
+Hoy les propongo recorrer ese mismo camino en dos horas: partir de una base censal, convertirla en mapas y, sobre todo, aprender a sospechar de ellos.
+:::
+
 ## Qué vamos a hacer
 
 1. **Entender** los conceptos mínimos para trabajar con datos espaciales: datos e información, datum, coordenadas, proyecciones, modelos de datos y SIG.
@@ -33,7 +45,7 @@ Universidad de Santiago de Chile
 
 | Minuto | Momento | Contenido |
 |---|---|---|
-| 0–10 | Apertura | Mismo dato, dos mapas distintos. ¿Cuál dice la verdad? |
+| 0–10 | Apertura | Del territorio al dato (presentación). Mismo dato, dos mapas distintos: ¿cuál dice la verdad? |
 | 10–30 | [Conceptos](01-conceptos.qmd) | De los datos a la información; de la forma de la Tierra a un SIG |
 | 30–40 | [Ecosistema técnico](01-conceptos.qmd#ecosistema-técnico) | Software, lenguajes y formatos de archivo |
 | 40–90 | [Ejercicio](02-ejercicio.qmd) | Del GeoParquet del INE al mapa, en bloques de código |
