@@ -28,6 +28,7 @@ website:
         text: Recursos
   page-footer:
     left: "Benjamín Julio · Ingeniería Civil en Geografía, Minor en Ciencia de Datos · Universidad de Santiago de Chile"
+    center: "Magíster en Metodologías Críticas para la Investigación Social · 21 de octubre de 2026"
     right: "Datos: INE, Censo de Población y Vivienda 2024"
 
 format:

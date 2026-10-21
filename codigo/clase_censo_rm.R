@@ -2,6 +2,7 @@
 # Mapeo de variables censales en el Gran Santiago
 # ¿Dónde se concentran las personas mayores (60 años y más) en el Gran Santiago?
 #
+# Magíster en Metodologías Críticas para la Investigación Social · Clase del 21 de octubre de 2026
 # Docente: Benjamín Julio · Ingeniería Civil en Geografía, Minor en Ciencia de Datos
 #          Universidad de Santiago de Chile
 #

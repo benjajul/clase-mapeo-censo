@@ -13,6 +13,9 @@ Esta clase introduce el uso de **mapas como herramienta de análisis cuantitativ
 El área de estudio es el **Gran Santiago**: las 32 comunas de la Provincia de Santiago, más Puente Alto y San Bernardo. Usamos el umbral de 60 años porque es la definición legal de persona mayor en Chile (Ley 19.828) y porque la base por manzana del Censo 2024 trae la variable `n_edad_60_mas`.
 
 ::: {.docente}
+**Magíster en Metodologías Críticas para la Investigación Social**\
+Clase del 21 de octubre de 2026
+
 **Docente:** Benjamín Julio\
 Ingeniería Civil en Geografía · Minor en Ciencia de Datos\
 Universidad de Santiago de Chile

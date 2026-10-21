@@ -53,7 +53,7 @@ Un informe ejecutivo es breve y está pensado para alguien que debe **tomar deci
 
 - **Título del informe**, que comunique el hallazgo (no solo el tema).
 - Nombre(s) de quien(es) entrega(n).
-- Programa de magíster y nombre del curso.
+- Programa: Magíster en Metodologías Críticas para la Investigación Social.
 - Docente: Benjamín Julio.
 - Universidad y fecha de entrega.
 

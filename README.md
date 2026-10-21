@@ -1,6 +1,6 @@
 # Mapeo de variables censales en el Gran Santiago
 
-Material de la clase aplicada **Introducción al análisis espacial cuantitativo para las ciencias sociales**.
+Material de la clase aplicada **Introducción al análisis espacial cuantitativo para las ciencias sociales**, Magíster en Metodologías Críticas para la Investigación Social (21 de octubre de 2026).
 
 **Pregunta guía:** ¿dónde se concentran las personas mayores (60 años y más) en el Gran Santiago, y qué patrón territorial muestran?
 
