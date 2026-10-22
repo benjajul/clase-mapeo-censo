@@ -5,3 +5,22 @@ table { font-size: .92rem; }
 .quarto-figure img { border-radius: 6px; }
 .capsula { border-left: 4px solid #c2410c; padding: .4rem 1.1rem; margin: 1rem 0 1.5rem; font-size: 1.05rem; font-style: italic; }
 .capsula p { margin: .6rem 0; }
+
+/* Prompts de la tarea: siempre visibles completos, sin barra horizontal */
+.code-with-filename pre, .code-with-filename pre code {
+  white-space: pre-wrap !important;
+  word-break: normal;
+  overflow-x: hidden;
+}
+
+/* Tarjetas de la guía de Colab */
+.tarjeta {
+  height: 100%;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(0,0,0,.12);
+  border-top: 4px solid #e8590c;
+  border-radius: 10px;
+  background: rgba(232,89,12,.04);
+}
+.tarjeta p:last-child { margin-bottom: 0; }
+img[src*="img/guia/"] { border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,.12); background: white; }

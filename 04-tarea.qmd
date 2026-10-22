@@ -1,107 +1,164 @@
 ---
 title: "4 · Ejercicio aplicado"
-subtitle: "Informe ejecutivo con cartografía a partir del Censo 2024"
+subtitle: "Tu mapa del Censo 2024 en dos bloques, con apoyo de inteligencia artificial"
 ---
 
 ::: {.callout-important}
 ## Entrega
-**Fecha:** _por definir_ · **Trabajo:** individual o en parejas · **Formato:** un solo archivo `.zip` con el informe en Word y un archivo cartográfico (detalle abajo)
+**Fecha:** _por definir_ · **Trabajo:** individual · **Formato:** un `.zip` con el informe (Word o PDF) y las dos imágenes JPEG generadas
 :::
 
-## Objetivo
+## La idea
 
-Aplicar el flujo de la clase a **una problemática propia** del Gran Santiago: elegir una variable del Censo 2024, construir un indicador, mapearlo con criterios cartográficos profesionales y comunicar el resultado en un **informe ejecutivo**, con una reflexión crítica sobre lo que el mapa muestra y lo que no.
+No necesitas programar. El notebook de la tarea tiene **solo dos bloques**: el primero carga los datos y el segundo es un **formulario**. La inteligencia artificial (Gemini) te ayuda a lo que antes exigía código: **traducir tu pregunta a variables del Censo**, usando el diccionario de variables del INE, y anticipar los problemas de los datos.
 
-## Pasos
+Puedes trabajar **cualquier territorio de Chile**, a la escala que elijas:
 
-1. **Elige una problemática** y la variable que la representa. Ejemplo: *¿dónde se concentra la población de primera infancia en el Gran Santiago?*
-2. **Construye una tasa** (no un conteo) a partir de la base por manzana. Parte del notebook de la clase: en el **Bloque 2** cambia las columnas (`COL_MAYORES` por tu variable; `COL_POB` si el denominador es otro) y ajusta títulos y etiquetas.
-3. **Produce la cartografía** en PNG o JPG con todos los elementos vistos en clase (Bloque 15 o 16).
-4. **Exporta un archivo cartográfico** en KMZ, Shapefile o HTML (Bloques 13, 17 o 18).
-5. **Escribe el informe** en Word con el formato indicado abajo.
-6. **Comprime** el informe y el archivo cartográfico en un `.zip` y entrégalo.
-
-### Variables sugeridas
-
-Revisa los nombres exactos en el diccionario de variables del INE (el Bloque 3 lista las columnas del archivo).
-
-| Indicador | Numerador | Denominador |
+| Escala | Territorio | Unidad que se mapea (automática) |
 |---|---|---|
-| % primera infancia (0 a 5 años) | `n_edad_0_5` | `n_per` |
-| % personas con discapacidad | `n_discapacidad` | `n_per` |
-| % viviendas hacinadas | `n_viv_hacinadas` | `n_vp` (viviendas) |
-| % hogares con jefatura femenina | `n_jefatura_mujer` | total de hogares (ver diccionario) |
-| Escolaridad promedio | `prom_escolaridad18` | ya es un promedio |
+| Regional | Una región | Comunas |
+| Provincial | Una provincia | Comunas (o manzanas si la provincia tiene menos de 6 comunas) |
+| Comunal | Una comuna | Manzanas censales |
 
-## Entregable 1 · Informe ejecutivo (Word)
+Obtienes dos productos, listos para tu informe:
 
-Un informe ejecutivo es breve y está pensado para alguien que debe **tomar decisiones**: va directo al hallazgo, lo respalda con evidencia y explica qué significa.
+1. **Un mapa profesional** en JPEG, de **una variable** (quintiles) o de **dos variables** (mapa bivariado 3 × 3).
+2. **Un gráfico complementario** elegido según el caso: *ranking* de comunas, *distribución* de las manzanas o *dispersión* entre dos variables.
 
-### Formato
+[Abrir el notebook de la tarea en Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/tarea_cartografia.ipynb){.btn .btn-warning role="button"}
+[Guía ilustrada: Colab y Gemini](guia-colab.qmd){.btn .btn-outline-secondary role="button"}
+
+## Paso a paso
+
+::: {.panel-tabset}
+
+### 1 · Bloque 1
+
+Abre el notebook, guarda una copia (*Archivo → Guardar una copia en Drive*) y ejecuta el **Bloque 1** con ▶.
+Al terminar verás las regiones y provincias disponibles, las columnas de la base y una vista del diccionario.
+
+En la carpeta 📁 de la izquierda aparece **`diccionario_para_IA.txt`**. Ábrelo con doble clic, selecciona todo (`Ctrl + A`) y cópialo (`Ctrl + C`).
+
+### 2 · Gemini
+
+Abre **Gemini** (botón ✦ de Colab, o [gemini.google.com](https://gemini.google.com/)). Copia el **prompt tipo** de abajo, completa los corchetes `[ ]` con tu pregunta y territorio, y pega al final el contenido del diccionario.
+
+Gemini te devolverá los valores del formulario y una justificación. **Revísala**: tú decides si la variable responde a tu pregunta.
+
+### 3 · Bloque 2
+
+Escribe en el **formulario del Bloque 2** los valores que te propuso Gemini (a la derecha del bloque) y ejecútalo con ▶.
+
+Si un nombre está mal escrito, el bloque te avisa y sugiere los más parecidos. Si quieres un mapa de una sola variable, deja vacía la `VARIABLE_2`.
+
+### 4 · Resultados
+
+Se descargan dos archivos: `mapa_….jpg` y `grafico_….jpg`. Puedes volver a ejecutar el Bloque 2 cuantas veces quieras con otros valores: no es necesario repetir el Bloque 1.
+
+:::
+
+## Prompt tipo para Gemini
+
+Cópialo completo (botón de copiar, arriba a la derecha) y completa lo que está entre corchetes.
+
+```{.text filename="Prompt 1 · Elegir y traducir las variables"}
+Actúa como asesor(a) en análisis territorial y cartografía censal. Trabajo con la base por manzana del Censo de Población y Vivienda 2024 de Chile (INE). Al final te entrego la lista de columnas disponibles y el diccionario de variables.
+
+MI PREGUNTA DE INVESTIGACIÓN: [escribe tu pregunta]
+ESCALA: [Regional / Provincial / Comunal]
+TERRITORIO: [nombre de la región, provincia o comuna]
+TIPO DE MAPA: [una variable / dos variables]
+
+Necesito completar un formulario de Google Colab que genera el mapa y el gráfico de forma automática. Sigue estas reglas:
+1. Usa SOLO nombres de columna que aparezcan textualmente en la lista de columnas. No inventes nombres. Si ninguna columna responde bien a mi pregunta, dímelo y propone la más cercana.
+2. Si la variable es un conteo (empieza con n_), propone un DENOMINADOR con el mismo universo para obtener un porcentaje. Usa la columna "Denominador sugerido" del diccionario como punto de partida. El denominador puede ser una suma o resta de columnas escrita sin espacios (por ejemplo n_ocupado+n_desocupado+n_fuera_fuerza_trabajo para personas de 15 años o más). Si la variable es un promedio (prom_), usa el denominador sugerido como ponderador o déjalo vacío. Si el diccionario no sugiere denominador, explícame por qué y propone uno.
+3. Explica en una frase qué mide cada variable y cuál es su universo (por ejemplo, "personas de 18 años y más").
+4. Anticipa los problemas de limpieza y procesamiento: datos suprimidos o negativos, números pequeños, universos que no coinciden entre numerador y denominador, variables que solo aplican a una parte de la población y la cobertura urbana/rural de las manzanas.
+5. Si son dos variables, que no sean redundantes (una no debe contener a la otra) y que su cruce tenga sentido para mi pregunta.
+6. Responde primero con este bloque, exactamente en este formato, para copiarlo al formulario:
+
+ESCALA =
+TERRITORIO =
+UNIDAD = Automática
+VARIABLE_1 =
+DENOMINADOR_1 =
+NOMBRE_1 = (etiqueta breve en español, máximo 40 caracteres)
+VARIABLE_2 = (vacío si es una sola variable)
+DENOMINADOR_2 =
+NOMBRE_2 =
+TITULO = (un título que plantee la pregunta, sin afirmar resultados que aún no conocemos)
+
+Después agrega: (a) justificación de la elección en máximo 5 líneas; (b) advertencias de limpieza y procesamiento; (c) qué gráfico complementario se generará (ranking de comunas, distribución de manzanas o dispersión entre dos variables) y cómo leerlo.
+
+LISTA DE COLUMNAS Y DICCIONARIO:
+[pega aquí todo el contenido de diccionario_para_IA.txt]
+```
+
+Cuando tengas el mapa y el gráfico, puedes usar este segundo prompt para **discutir** tus resultados. En [gemini.google.com](https://gemini.google.com/) puedes adjuntar las dos imágenes JPEG.
+
+```{.text filename="Prompt 2 · Discutir los resultados (opcional)"}
+Te adjunto el mapa y el gráfico que generé con [variable(s)] para [territorio], a escala [escala], con datos del Censo 2024. Mi pregunta era: [tu pregunta].
+1. Describe los patrones territoriales que se observan (dónde se concentran los valores altos y bajos, si hay agrupamientos o contrastes), sin inventar causas.
+2. Propón tres hipótesis que podrían explicar el patrón y qué dato adicional permitiría ponerlas a prueba.
+3. Señala los límites de esta lectura: problema de la unidad de área modificable (MAUP), falacia ecológica, números pequeños y lo que el Censo no mide sobre este fenómeno.
+
+No escribas mi interpretación: hazme preguntas que me ayuden a construirla.
+```
+
+::: {.callout-warning}
+## La IA ayuda, pero la decisión es tuya
+Gemini puede equivocarse: confundir variables, inventar columnas o proponer denominadores con universos distintos. El Bloque 2 detecta los nombres inexistentes, pero **no puede saber si la variable responde a tu pregunta**. Esa evaluación, y la interpretación del mapa, son el centro de la tarea.
+:::
+
+## El informe
+
+Un documento breve (Word o PDF), pensado para alguien que debe **entender el territorio y tomar decisiones**.
 
 | Elemento | Indicación |
 |---|---|
-| Archivo | Word (`.docx`) |
-| Extensión | 3 a 5 páginas, sin contar portada, referencias ni anexos |
-| Página | Tamaño carta, márgenes de 2,5 cm, páginas numeradas |
-| Texto | Arial o Calibri 11, interlineado 1,15, texto justificado |
-| Títulos | Numerados (1, 2, 3…), en negrita |
-| Figuras y tablas | Numeradas ("Figura 1", "Tabla 1"), con título arriba y fuente abajo |
-| Citas y referencias | Normas APA 7.ª edición |
+| Extensión | 2 a 3 páginas, sin contar portada ni anexo |
+| Formato | Carta, márgenes de 2,5 cm, Arial o Calibri 11, interlineado 1,15 |
+| Figuras | Numeradas ("Figura 1"), con título arriba y fuente abajo |
+| Referencias | APA 7.ª edición |
 
-### Portada
+**Portada:** título que comunique el hallazgo, nombre, programa (Magíster en Metodologías Críticas para la Investigación Social), docente (Benjamín Julio) y fecha.
 
-- **Título del informe**, que comunique el hallazgo (no solo el tema).
-- Nombre(s) de quien(es) entrega(n).
-- Programa: Magíster en Metodologías Críticas para la Investigación Social.
-- Docente: Benjamín Julio.
-- Universidad y fecha de entrega.
+**Contenido:**
 
-### Estructura
+1. **Pregunta y justificación** (½ página): qué quieres saber, por qué en ese territorio y a esa escala, y por qué esas variables y ese denominador.
+2. **Resultados** (1 página): el mapa y el gráfico, con una descripción de los patrones que muestran.
+3. **Interpretación y reflexión crítica** (1 página): qué podría explicar el patrón, qué cambiaría a otra escala, qué no puede decir el mapa y qué voces o datos quedan fuera.
+4. **Anexo · Uso de IA**: copia de los prompts que usaste y de la respuesta de Gemini, y una línea sobre qué aceptaste, qué corregiste y por qué.
 
-1. **Resumen ejecutivo** (máximo 150 palabras): la problemática, el hallazgo principal con una cifra y su implicancia.
-2. **Problemática y justificación**: por qué importa esta variable, para quién y en qué contexto. Incluye al menos una fuente que respalde la relevancia del tema.
-3. **Datos y método**: fuente (INE, Censo 2024), variable e indicador con su fórmula, área de estudio, unidad territorial (manzana o comuna), método de clasificación del mapa y datos excluidos.
-4. **Cartografía**: el mapa en PNG o JPG insertado en el documento, como Figura 1, con todos los elementos cartográficos (título, leyenda, escala, norte, grilla o coordenadas, fuente y mapa base).
-5. **Análisis de resultados**: qué patrón se observa, dónde están los valores altos y bajos, con cifras concretas (por ejemplo, las comunas con mayor y menor valor).
-6. **Reflexión**:
-    - ¿Tiene sentido lo que muestra el mapa? ¿Coincide con lo que se esperaba?
-    - ¿A qué se puede deber esta distribución? (historia urbana, mercado de suelo, políticas de vivienda, ciclo de vida de los barrios, etc.)
-    - ¿Qué otras variables intervienen en el fenómeno y no alcanzamos a observar?
-    - ¿Qué limitaciones tiene el mapa? (unidad territorial y MAUP, falacia ecológica, números pequeños, método de clasificación, datos suprimidos).
-7. **Conclusiones y recomendaciones**: qué se concluye y qué se recomienda para la política pública o para una investigación posterior.
-8. **Referencias** en formato APA 7.
-
-## Entregable 2 · Archivo cartográfico
-
-Un archivo distinto al Word que permita abrir el mapa en otro programa. Elige **uno**:
-
-| Formato | Qué entregar | Se revisa en |
-|---|---|---|
-| KMZ | El archivo `.kmz` | Google Earth |
-| Shapefile | **Todos** sus componentes: `.shp`, `.shx`, `.dbf`, `.prj` y `.cpg` | QGIS o ArcGIS |
-| HTML | El mapa interactivo `.html` | Navegador web |
-
-## Entregable 3 · Archivo comprimido
-
-Todo va en **un solo archivo `.zip`**, nombrado así:
-
-- Individual: `Apellido_Nombre_InformeMapeo.zip`
-- En pareja: `Apellido1_Apellido2_InformeMapeo.zip`
-
-```
-Apellido_Nombre_InformeMapeo.zip
-├── Apellido_Nombre_Informe.docx
-└── archivo cartográfico (.kmz, carpeta shp/ o .html)
-```
+El `.zip` se llama `Apellido_Nombre_Tarea.zip` y contiene el informe y los dos archivos JPEG.
 
 ## Rúbrica
 
-| Criterio | Logrado (3) | En desarrollo (2) | Inicial (1) | Peso |
-|---|---|---|---|---|
-| **Problemática y justificación** | Problema claro, relevante y respaldado con al menos una fuente | Problema claro, sin respaldo | Problema difuso o ausente | 15% |
-| **Datos y método** | Indicador (tasa) bien construido, fórmula y decisiones explicadas | Indicador correcto, decisiones poco explicadas | Usa conteos o el cálculo tiene errores | 15% |
-| **Cartografía** | Mapa con todos los elementos, legible y con jerarquía visual clara | Falta uno o dos elementos | Faltan tres o más elementos | 25% |
-| **Análisis de resultados** | Describe el patrón con cifras y lugares concretos | Describe el patrón sin cifras | Solo describe colores del mapa | 20% |
-| **Reflexión** | Explica posibles causas, identifica variables no observadas y limitaciones pertinentes | Aborda solo una de esas dimensiones | Sin reflexión crítica | 15% |
-| **Formato y entrega** | Cumple formato, archivo cartográfico funcional y zip bien nombrado | Incumple un aspecto | Incumple dos o más aspectos | 10% |
+| Criterio | Peso | Logrado |
+|---|---|---|
+| Pregunta y elección de variables | 25 % | La pregunta es clara; variable, denominador, territorio y escala son coherentes con ella y están justificados |
+| Productos | 20 % | Mapa y gráfico correctos, legibles e integrados al texto con número, título y fuente |
+| Interpretación | 30 % | Describe patrones con evidencia del mapa y del gráfico; distingue descripción de explicación |
+| Reflexión crítica | 15 % | Discute escala, unidad de análisis y límites del dato censal |
+| Transparencia en el uso de IA | 10 % | Anexo completo; muestra criterio propio frente a las propuestas de la IA |
+
+## Si algo falla
+
+| Mensaje | Qué hacer |
+|---|---|
+| "No encontré '…' en la escala …" | Revisa el nombre con la lista del Bloque 1 o usa una de las sugerencias. Las tildes y mayúsculas no importan |
+| "El campo variable 1: '…' no existe" | Copia el nombre exacto de la lista de columnas. Pídele a Gemini que use solo esa lista |
+| "Solo hay N unidades con datos" | Muy pocas comunas para clasificar: cambia `UNIDAD` a `Manzana` o elige una escala mayor |
+| `NameError` (por ejemplo, `CATALOGO`) | No ejecutaste el Bloque 1 o la sesión se reinició: ejecútalo de nuevo |
+| La descarga de datos falla | Ver [la guía de Colab](guia-colab.qmd#si-la-descarga-falla) |
+
+::: {.callout-note collapse="true"}
+## Qué hace el Bloque 2 por dentro
+1. Filtra el territorio por su código comunal (CUT) y reproyecta a la zona UTM que corresponde.
+2. Convierte en vacío los valores negativos (datos suprimidos por el INE) y, a escala de manzana, excluye las manzanas con menos de 20 personas.
+3. Calcula la tasa como suma del numerador sobre suma del denominador (× 100); el denominador puede ser una suma o resta de columnas. Los promedios se agregan por comuna ponderados por su universo (el denominador) o, si no se indica, por población.
+4. Clasifica en quintiles (una variable) o terciles cruzados (dos variables) y dibuja el mapa con título, subtítulo, leyenda, escala, norte, grilla, fuente y proyección.
+5. Elige el gráfico: *ranking* (una variable por comuna), *histograma* coloreado con las clases del mapa (una variable por manzana) o *dispersión* con correlación de Pearson y terciles (dos variables).
+
+La base incluye manzanas urbanas y entidades rurales (`AREA_C`). Con `AREA = Solo urbana` se mapean solo las manzanas urbanas. Los registros comunales sin manzana asociada (`CONTENEDOR_COMUNAL`) se suman en los totales por comuna, pero no se dibujan a escala de manzana.
+:::

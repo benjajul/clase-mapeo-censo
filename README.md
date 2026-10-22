@@ -14,10 +14,12 @@ Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana
 ├── 01-conceptos.qmd     Conceptos geoespaciales + ecosistema técnico
 ├── 02-ejercicio.qmd     Ejercicio en Python, por bloques
 ├── 03-cartografia.qmd   Elementos cartográficos y lectura crítica
-├── 04-tarea.qmd         Ejercicio aplicado y rúbrica
+├── 04-tarea.qmd         Ejercicio aplicado (2 bloques + prompt tipo para Gemini) y rúbrica
+├── guia-colab.qmd       Guía rápida: habilitar Colab y usar Gemini
 ├── recursos.qmd         Datos, software, lecturas
 ├── codigo/
 │   ├── clase_censo_rm.ipynb   Notebook Python para Google Colab (21 bloques)
+│   ├── tarea_cartografia.ipynb Notebook de la tarea: Bloque 1 fijo + Bloque 2 formulario
 │   └── clase_censo_rm.R       Script R para RStudio (opcional, de referencia)
 ├── img/                 Imágenes de conceptos y resultados (resultado_*.png/jpg)
 ├── datos/               Vacía: los datos se descargan del INE
@@ -48,6 +50,8 @@ Vista previa local (opcional, requiere [Quarto](https://quarto.org/docs/get-star
 
 - Los botones "Abrir en Colab" del sitio se completan solos con tu usuario y repositorio (`colab-link.html`). El repositorio debe ser **público** para que funcionen.
 - Los datos se descargan desde la carpeta pública de Drive del docente (`FUENTE = "docente"` en el Bloque 2). La carpeta debe seguir compartida como "Cualquier persona con el enlace".
+- **Diccionario de variables:** súbelo a la carpeta compartida de Drive con la palabra `diccionario` en el nombre (Excel o CSV de preferencia). El Bloque 1 de la tarea lo detecta, lo muestra y genera `diccionario_para_IA.txt`.
+- El notebook de la tarea busca regiones, provincias y comunas por nombre (sin importar tildes ni mayúsculas) y funciona para todo Chile.
 - El sitio **no ejecuta código** al renderizar: muestra los bloques como texto. Así se publica sin necesitar los datos.
 - `02-ejercicio.qmd` y el notebook comparten los mismos bloques; si editas uno, actualiza el otro.
 - El script R fue probado en sus bloques de procesamiento, gráfico, exportación y KMZ; la lectura con `arrow`, el mapa `leaflet` y el mapa base de `ggspatial` deben probarse con los datos reales.

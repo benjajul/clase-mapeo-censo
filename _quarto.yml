@@ -24,6 +24,8 @@ website:
         text: "3 · Cartografía"
       - href: 04-tarea.qmd
         text: "4 · Tarea"
+      - href: guia-colab.qmd
+        text: "Guía Colab"
       - href: recursos.qmd
         text: Recursos
   page-footer:

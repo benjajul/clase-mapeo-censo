@@ -21,6 +21,8 @@ El archivo de manzanas pesa cientos de MB y tiene cerca de 200 variables. El not
 
 ### 1. Habilitar Google Colab en tu cuenta de Google
 
+Versión resumida, incluido Gemini: [Guía rápida de Colab y Gemini](guia-colab.qmd).
+
 Colab es una aplicación que se conecta a Google Drive. Si nunca la has usado, hay que habilitarla una vez:
 
 1. Entra a [Google Drive](https://drive.google.com/) con tu cuenta de Google.
