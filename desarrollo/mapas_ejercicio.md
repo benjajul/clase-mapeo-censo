@@ -8,6 +8,9 @@ Variables (universos distintos: personas, viviendas y hogares):
 | 2 | `n_viv_hacinadas` | `n_vp_ocupada` | Viviendas hacinadas |
 | 3 | `n_jefatura_mujer` | `n_hog` | Hogares con jefatura femenina |
 
+**Opción directa (recomendada):** abrir `codigo/mapas_ejercicio_docente.ipynb` en Colab y ejecutar todo (*Entorno de ejecución → Ejecutar todas*). Se genera con `desarrollo/mapas_docente_build.py`.
+
+**Opción con Gemini:**
 1. Abrir `codigo/desafio_cartografia.ipynb` en Colab y ejecutar el Bloque 1.
 2. Pegar en Gemini (Colab) el prompt de abajo, o ejecutar directamente la celda de respaldo.
 3. Descomprimir `mapas_ejercicio.zip` y copiar los 6 JPEG en `img/ejercicio/` (mismos nombres).
@@ -26,11 +29,11 @@ Variables (numeradas 1, 2 y 3, en este orden):
 
 Territorios:
 a) Gran Santiago: escala="Provincial", territorio="Gran Santiago"
-b) Pudahuel: escala="Comunal", territorio="13124"
+b) Recoleta: escala="Comunal", territorio="13127"
 
-En todas las llamadas usa además: unidad="Manzana", area="Solo urbana", autor="Benjamín Julio", descargar="no" y archivo="gran_santiago_N" o "pudahuel_N" (N = número de la variable).
+En todas las llamadas usa además: unidad="Manzana", area="Solo urbana", autor="Benjamín Julio", descargar="no" y archivo="gran_santiago_N" o "recoleta_N" (N = número de la variable).
 
-Cada llamada guarda el mapa en CARPETA_SALIDA / f"mapa_{archivo}.jpg". Agrega cada mapa a un zip llamado mapas_ejercicio.zip con el nombre gran_santiago_N.jpg o pudahuel_N.jpg (sin el prefijo "mapa_") y, al final, descarga el zip con google.colab.files.download. Muéstrame la celda antes de ejecutarla.
+Cada llamada guarda el mapa en CARPETA_SALIDA / f"mapa_{archivo}.jpg". Agrega cada mapa a un zip llamado mapas_ejercicio.zip con el nombre gran_santiago_N.jpg o recoleta_N.jpg (sin el prefijo "mapa_") y, al final, descarga el zip con google.colab.files.download. Muéstrame la celda antes de ejecutarla.
 ```
 
 ## Celda de respaldo (lo que Gemini debería entregar)
@@ -44,7 +47,7 @@ VARIABLES = [
     ("n_viv_hacinadas", "n_vp_ocupada", "Viviendas hacinadas"),
     ("n_jefatura_mujer", "n_hog", "Hogares con jefatura femenina"),
 ]
-TERRITORIOS = [("Gran Santiago", "Provincial", "gran_santiago"), ("13124", "Comunal", "pudahuel")]
+TERRITORIOS = [("Gran Santiago", "Provincial", "gran_santiago"), ("13127", "Comunal", "recoleta")]
 
 destino = CARPETA_SALIDA / "mapas_ejercicio.zip"
 with zipfile.ZipFile(destino, "w") as z:

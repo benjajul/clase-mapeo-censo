@@ -50,7 +50,7 @@ Hoy les propongo recorrer ese mismo camino en dos horas: partir de una base cens
 | 30–40 | [Ecosistema técnico](01-conceptos.qmd#ecosistema-técnico) | Software, lenguajes y formatos de archivo |
 | 40–90 | [Ejercicio](02-ejercicio.qmd) | Del GeoParquet del INE al mapa, en bloques de código |
 | 90–110 | [Cartografía](03-cartografia.qmd) | Elementos de un mapa profesional y lectura crítica |
-| 110–120 | [Cierre y después de la clase](04-tarea.qmd) | Errores comunes. Ejercicio aplicado (análisis crítico de cartografías), recurso CensoLab y desafío para seguir aprendiendo con Colab + Gemini |
+| 110–120 | [Cierre y después de la clase](04-tarea.qmd) | Errores comunes. Ejercicio aplicado: análisis crítico de cartografías del Gran Santiago y de Recoleta. Para quien quiera más: [Para seguir aprendiendo](seguir-aprendiendo.qmd) |
 
 ## Cómo usar este material
 

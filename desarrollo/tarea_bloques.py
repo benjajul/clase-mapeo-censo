@@ -413,8 +413,18 @@ def _hacer_mapa(ESCALA, TERRITORIO, VARIABLE_1, DENOMINADOR_1, NOMBRE_1, VARIABL
         datos = datos.rename_geometry("geometry")
     datos["CUT"] = cut5(datos["CUT"])
     datos = datos[datos["CUT"].isin(CUTS)].copy()
+    if datos.empty:
+        avisar(f"No encontré manzanas para {NOMBRE_TERRITORIO.title()} en la base. Revisa el código del territorio.")
     if AREA == "Solo urbana" and "AREA_C" in datos:
-        datos = datos[pd.to_numeric(datos["AREA_C"], errors="coerce") == 1]
+        # AREA_C puede venir como número (1 = urbano) o como texto ("1", "Urbano", "URBANA")
+        area_txt = datos["AREA_C"].astype(str).str.strip().str.upper()
+        urbano = area_txt.isin(["1", "1.0"]) | area_txt.str.startswith("URB")
+        if urbano.any():
+            datos = datos[urbano]
+        else:
+            caja("ojo", "No pude identificar las manzanas urbanas",
+                 "Valores encontrados en AREA_C: " + ", ".join(area_txt.value_counts().index[:5])
+                 + ". Se usan todas las manzanas (urbanas y rurales).")
     numericas = [c for c in dict.fromkeys(["n_per", V1, V2, *cols_den]) if c]
     for c in numericas:
         datos[c] = pd.to_numeric(datos[c], errors="coerce")
@@ -425,6 +435,9 @@ def _hacer_mapa(ESCALA, TERRITORIO, VARIABLE_1, DENOMINADOR_1, NOMBRE_1, VARIABL
             datos[f"den_{i}"] = sum((1 if s == "+" else -1) * datos[c] for s, c in partes)
     D1, D2 = ("den_1" if D1[0] else ""), ("den_2" if D2[0] else "")
     D1_TXT, D2_TXT = DENOMINADOR_1.strip(), DENOMINADOR_2.strip()
+    datos = datos[datos.geometry.notna() & ~datos.geometry.is_empty]
+    if datos.empty:
+        avisar("Las manzanas de este territorio no tienen geometría válida en la base.")
     CRS_METROS = datos.estimate_utm_crs()
     datos = datos.to_crs(CRS_METROS)
     datos["geometry"] = datos.buffer(0)

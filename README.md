@@ -14,7 +14,8 @@ Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana
 ├── 01-conceptos.qmd     Conceptos geoespaciales + ecosistema técnico
 ├── 02-ejercicio.qmd     Ejercicio en Python, por bloques
 ├── 03-cartografia.qmd   Elementos cartográficos y lectura crítica
-├── 04-tarea.qmd         Después de la clase: ejercicio aplicado (análisis crítico), CensoLab y desafío para seguir aprendiendo
+├── 04-tarea.qmd         Después de la clase: ejercicio aplicado (análisis crítico de mapas, Gran Santiago y Recoleta)
+├── seguir-aprendiendo.qmd  Para seguir aprendiendo: recurso CensoLab y desafío Colab + Gemini
 ├── desafio-colab.qmd    Desafío para seguir aprendiendo: tu propio mapa con Colab + Gemini
 ├── _variables.yml       Nombres de las variables de los mapas del ejercicio y fecha de entrega
 │                        (cómo generar los 6 mapas: desarrollo/mapas_ejercicio.md)
@@ -23,6 +24,7 @@ Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana
 ├── recursos.qmd         Datos, software, lecturas
 ├── codigo/
 │   ├── clase_censo_rm.ipynb   Notebook Python para Google Colab (21 bloques)
+│   ├── mapas_ejercicio_docente.ipynb  (Docente) Crea los 6 mapas del ejercicio aplicado de una vez
 │   ├── desafio_cartografia.ipynb Notebook de la tarea: Bloque 1 fijo + Bloque 2 formulario
 │   └── clase_censo_rm.R       Script R para RStudio (opcional, de referencia)
 ├── img/                 Imágenes de conceptos y resultados; img/ejercicio: mapas del ejercicio aplicado; img/guia y img/guia_oscuro: ilustraciones de la guía

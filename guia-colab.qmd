@@ -5,11 +5,11 @@ toc: true
 ---
 
 ::: {.light-content}
-![](img/guia/00_recorrido.svg){fig-alt="Recorrido en cinco pasos: abrir Colab, Bloque 1, Gemini, ejecutar la línea, mapa y gráfico"}
+![](img/guia/00_recorrido.svg){fig-alt="Recorrido en cinco pasos: abrir Colab, bloques 1 a 3, Gemini (bloque 4), tu mapa (bloque 5), resultados"}
 :::
 
 ::: {.dark-content}
-![](img/guia_oscuro/00_recorrido.svg){fig-alt="Recorrido en cinco pasos: abrir Colab, Bloque 1, Gemini, ejecutar la línea, mapa y gráfico"}
+![](img/guia_oscuro/00_recorrido.svg){fig-alt="Recorrido en cinco pasos: abrir Colab, bloques 1 a 3, Gemini (bloque 4), tu mapa (bloque 5), resultados"}
 :::
 
 ## Antes de empezar: tres ideas
@@ -87,13 +87,19 @@ Algunas cuentas necesitan activar Colab una vez, como una "aplicación" de Googl
 
 :::
 
-## Paso 2 · Ejecutar el Bloque 1
+## Paso 2 · Preparar: bloques 1, 2 y 3
 
-El Bloque 1 descarga los datos del Censo y prepara todo. **No tienes que cambiar nada**: solo ejecutarlo.
+El notebook está ordenado en **7 bloques**, de arriba hacia abajo. Cada uno tiene arriba una tarjeta que dice **qué hace, qué debes ver y cuánto tarda**. Los tres primeros preparan todo: **no tienes que cambiar nada**, solo ejecutarlos en orden.
 
-1. Pasa el mouse sobre el bloque: a la izquierda aparece el botón **▶**. Haz clic.
-2. Espera. Mientras trabaja, el botón gira. La primera vez tarda **1 a 3 minutos**.
-3. Al terminar aparece un **✓** verde, un recuadro verde que dice **«Listo»** y, debajo, el **armador del mensaje para Gemini** (paso 3).
+| Bloque | Qué hace | Tiempo |
+|:--:|---|:--:|
+| 1 | Prepara Colab | 30 s |
+| 2 | Descarga los datos del Censo | 1–3 min |
+| 3 | Prepara el diccionario y la herramienta de mapas | 10 s |
+
+1. Pasa el mouse sobre el **Bloque 1**: a la izquierda aparece el botón **▶**. Haz clic.
+2. Espera el recuadro **verde** («Bloque 1 listo») y repite con el **Bloque 2** y el **Bloque 3**.
+3. Si te saltas un bloque, no pasa nada: el siguiente te avisará con un recuadro amarillo cuál falta.
 
 ::: {.light-content}
 ![Los tres estados de un bloque.](img/guia/04_ejecutar.svg){fig-alt="Un bloque antes, durante y después de ejecutarse"}
@@ -122,15 +128,15 @@ Google limita las descargas cuando muchas personas bajan los datos al mismo tiem
 
 Todo ocurre **dentro de Colab**: no necesitas otra pestaña ni adjuntar archivos.
 
-1. Baja hasta el **armador del mensaje para Gemini**, al final del resultado del Bloque 1. Responde con tus palabras: **qué quieres mapear** (o toca una de las 23 ideas), **dónde**, si lo quieres **cruzar con otro tema**, tu pregunta (opcional) y **tu nombre**.
+1. Ejecuta el **Bloque 4**: aparece el **armador del mensaje para Gemini**. Responde con tus palabras: **qué quieres mapear** (o toca una de las 23 ideas), **dónde**, si lo quieres **cruzar con otro tema**, tu pregunta (opcional) y **tu nombre**.
 2. Presiona **📋 Copiar mensaje para Gemini**. El mensaje ya incluye el diccionario de variables y los códigos de los territorios.
 
 ::: {.light-content}
-![El armador aparece al final del Bloque 1.](img/guia/06_armador.svg){fig-alt="Armador del mensaje para Gemini con ideas, preguntas y botón Copiar"}
+![El armador del Bloque 4.](img/guia/06_armador.svg){fig-alt="Armador del mensaje para Gemini con ideas, preguntas y botón Copiar"}
 :::
 
 ::: {.dark-content}
-![El armador aparece al final del Bloque 1.](img/guia_oscuro/06_armador.svg){fig-alt="Armador del mensaje para Gemini con ideas, preguntas y botón Copiar"}
+![El armador del Bloque 4.](img/guia_oscuro/06_armador.svg){fig-alt="Armador del mensaje para Gemini con ideas, preguntas y botón Copiar"}
 :::
 
 3. Haz clic en **✦ Gemini**, arriba a la derecha de Colab: se abre un chat al costado. Pega el mensaje (**Ctrl + V**) y presiona **Enter**.
@@ -168,11 +174,12 @@ Gemini no es un buscador: es una **conversación**. Su primera respuesta es un p
 4. **Guarda la conversación** (copia el texto en un documento): la necesitas para el anexo de uso de IA del informe.
 :::
 
-## Paso 4 · Ejecutar la línea de Gemini
+## Paso 4 · Tu mapa: Bloque 5
 
-1. Junto a la línea `hacer_mapa(...)`, Gemini muestra botones para usar el código: **▶ Ejecutar** o **+ Insertar** (agrega la línea como una celda nueva). Los nombres pueden variar un poco.
-2. Si la insertaste, presiona **▶** en esa celda nueva. Si no ves botones, copia la línea, crea una celda con **+ Código** (arriba a la izquierda), pégala y presiona **▶**.
+1. En el **Bloque 5**, borra la línea de ejemplo y **pega la línea** `hacer_mapa(...)` que te dio Gemini. Presiona **▶**.
+2. Si Gemini te muestra un botón para usar el código (**▶ Ejecutar** o **+ Insertar**), también puedes usarlo: hace lo mismo.
 3. Lee los recuadros de colores: **verde** confirma el territorio, **azul** te dice qué se completó solo y **amarillo** te dice qué revisar.
+4. ¿Aún no tienes tu línea? Presiona ▶ igual: el Bloque 5 trae un **ejemplo** para que veas cómo funciona.
 
 ::: {.light-content}
 ![La línea de Gemini en una celda, y los recuadros de colores.](img/guia/08_ejecutar.svg){fig-alt="Celda con hacer_mapa y recuadros verde, azul y amarillo"}
@@ -184,7 +191,7 @@ Gemini no es un buscador: es una **conversación**. Su primera respuesta es un p
 
 ::: {.callout-note}
 ## ¿Prefieres no ejecutar código del chat?
-El **Bloque 2** es un formulario que hace exactamente lo mismo: copia en cada campo los valores de la línea de Gemini (sin comillas) y presiona ▶. Solo son obligatorios los campos marcados con ★. Si un recuadro amarillo te pide corregir algo, cópiale el mensaje a Gemini y pídele la línea corregida.
+El **Bloque 6** es un formulario que hace exactamente lo mismo: copia en cada campo los valores de la línea de Gemini (sin comillas) y presiona ▶. Solo son obligatorios los campos marcados con ★. Si un recuadro amarillo te pide corregir algo, cópiale el mensaje a Gemini y pídele la línea corregida.
 :::
 
 ## Paso 5 · Tus resultados
@@ -199,14 +206,14 @@ En 1 o 2 minutos aparecen, debajo del bloque, el **mapa** y el **gráfico**, y s
 ![Los dos archivos del desafío.](img/guia_oscuro/09_resultado.svg){fig-alt="Dos archivos descargados: mapa y gráfico en JPEG"}
 :::
 
-¿Quieres probar otra variable u otro territorio? Cambia el formulario y ejecuta **solo el Bloque 2** las veces que quieras. El Bloque 1 se vuelve a ejecutar únicamente si Colab se desconectó.
+¿Quieres probar otra variable u otro territorio? Pega otra línea en el **Bloque 5** y vuelve a presionar ▶, las veces que quieras. Al final, el **Bloque 7** descarga todos tus mapas juntos en un zip. Los bloques 1 a 3 se vuelven a ejecutar solo si Colab se desconectó.
 
 ## Problemas frecuentes
 
 | Lo que ves | Qué significa | Qué hacer |
 |---|---|---|
-| «Sesión desconectada» o «Volver a conectar» | Colab apaga la "cocina" tras un rato sin uso | Ejecuta de nuevo el Bloque 1 y luego el Bloque 2 |
-| `NameError: name 'hacer_mapa' is not defined` | Colab se reinició o no ejecutaste el Bloque 1 | Ejecuta primero el Bloque 1 y luego la línea |
+| «Sesión desconectada» o «Volver a conectar» | Colab apaga la "cocina" tras un rato sin uso | Ejecuta de nuevo los bloques 1 a 3 y luego tu línea |
+| `NameError: name 'hacer_mapa' is not defined` | Colab se reinició o no ejecutaste los bloques 1 a 3 | Ejecútalos y luego vuelve a ejecutar tu línea |
 | Recuadro amarillo «No encontré '…' en la escala …» | El territorio está mal escrito o no corresponde a esa escala | Usa una de las sugerencias o escribe el código |
 | Recuadro amarillo «El campo variable 1: '…' no existe» | Gemini escribió un nombre que no está en la base | Cópiale el recuadro a Gemini y pídele la línea corregida |
 | Gemini escribe mucho código o instala paquetes | Se salió de la instrucción | No lo ejecutes. Escríbele: «Solo dame la línea hacer_mapa(...)» |
@@ -218,7 +225,7 @@ En 1 o 2 minutos aparecen, debajo del bloque, el **mapa** y el **gráfico**, y s
 
 1. Abre la [carpeta de datos del docente](https://drive.google.com/drive/folders/1qzYq0RzuFlMieopEV03JyfpTOxxxWjij) y descarga los archivos.
 2. En tu Google Drive, dentro de **Mi unidad**, crea una carpeta llamada **`censo2024`** y sube ahí los archivos.
-3. Ejecuta de nuevo el Bloque 1. Te pedirá permiso para acceder a tu Drive: acéptalo.
+3. Ejecuta de nuevo el Bloque 2. Te pedirá permiso para acceder a tu Drive: acéptalo.
 
 ## Pequeño glosario
 

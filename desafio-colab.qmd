@@ -5,12 +5,12 @@ subtitle: "Cualquier territorio de Chile, cualquier variable del Censo 2024, sin
 
 ::: {.callout-note}
 ## Para seguir aprendiendo
-Este desafío no es obligatorio ni se evalúa. Es para quien quiera ir más allá del [ejercicio aplicado](04-tarea.qmd) y construir su propia cartografía. Antes de empezar, revisa la [guía ilustrada de Colab y Gemini](guia-colab.qmd).
+Este desafío no es obligatorio ni se evalúa. Es para quien quiera ir más allá del [ejercicio aplicado](04-tarea.qmd) (ver también [Para seguir aprendiendo](seguir-aprendiendo.qmd)) y construir su propia cartografía. Antes de empezar, revisa la [guía ilustrada de Colab y Gemini](guia-colab.qmd).
 :::
 
 ## La idea
 
-Este desafío es **opcional**, para quien quiera llevar lo visto en clase a un territorio y una variable propios. No necesitas programar. El **Bloque 1** del notebook carga los datos y te muestra un **armador** donde respondes, con tus palabras, qué quieres mapear y dónde. **Gemini, dentro de Colab,** te devuelve una sola línea para ejecutar. La inteligencia artificial te ayuda a lo que antes exigía código: **traducir tu pregunta a variables del Censo**, usando el diccionario de variables del INE, y anticipar los problemas de los datos.
+Este desafío es **opcional**, para quien quiera llevar lo visto en clase a un territorio y una variable propios. No necesitas programar. El notebook tiene **7 bloques cortos**, cada uno con una tarjeta que explica qué hace: los primeros preparan los datos y el **Bloque 4** te muestra un **armador** donde respondes, con tus palabras, qué quieres mapear y dónde. **Gemini, dentro de Colab,** te devuelve una sola línea para ejecutar. La inteligencia artificial te ayuda a lo que antes exigía código: **traducir tu pregunta a variables del Censo**, usando el diccionario de variables del INE, y anticipar los problemas de los datos.
 
 Puedes trabajar **cualquier territorio de Chile**, a la escala que elijas:
 
@@ -47,21 +47,21 @@ Todo ocurre **dentro de Colab**: el notebook, el armador del mensaje y Gemini. L
 
 ::: {.panel-tabset}
 
-### 1 · Bloque 1
+### 1 · Bloques 1 a 3
 
-Abre el notebook, guarda una copia (*Archivo → Guardar una copia en Drive*) y ejecuta el **Bloque 1** con ▶. Al terminar aparece un recuadro verde **«Listo»** y, debajo, el **armador del mensaje para Gemini**.
+Abre el notebook, guarda una copia (*Archivo → Guardar una copia en Drive*) y ejecuta los **bloques 1, 2 y 3**, uno tras otro, con ▶. Cada uno termina con un recuadro verde.
 
-### 2 · Armador
+### 2 · Bloque 4
 
-Responde las preguntas con tus palabras: **qué quieres mapear** (o toca una idea), **dónde**, si lo **cruzas con otro tema**, tu pregunta (opcional) y tu nombre. Presiona **📋 Copiar mensaje para Gemini**: el mensaje ya incluye el diccionario de variables y los códigos de los territorios.
+Ejecuta el **Bloque 4**: aparece el armador. Responde las preguntas con tus palabras: **qué quieres mapear** (o toca una idea), **dónde**, si lo **cruzas con otro tema**, tu pregunta (opcional) y tu nombre. Presiona **📋 Copiar mensaje para Gemini**: el mensaje ya incluye el diccionario de variables y los códigos de los territorios.
 
 ### 3 · Gemini
 
 Abre **✦ Gemini** (arriba a la derecha de Colab), pega el mensaje (Ctrl + V) y presiona Enter. Gemini responde con **lo que entendió**, **una línea** `hacer_mapa(...)` y una **explicación simple**. **Revísala**: tú decides si la variable responde a tu pregunta.
 
-### 4 · Ejecutar
+### 4 · Bloque 5
 
-Ejecuta la línea con el botón **▶** del chat (o insértala como celda y presiona ▶). Antes del mapa aparece un recuadro verde con el **territorio elegido**: revisa que sea el que querías. Se descargan dos archivos: `mapa_….jpg` y `grafico_….jpg`. Si prefieres no ejecutar código, el **Bloque 2** es un formulario que hace lo mismo.
+Pega la línea en el **Bloque 5** (borra el ejemplo) y presiona **▶**. También puedes usar el botón ▶ del chat de Gemini. Antes del mapa aparece un recuadro verde con el **territorio elegido**: revisa que sea el que querías. Se descargan dos archivos: `mapa_….jpg` y `grafico_….jpg`. Si prefieres no pegar código, el **Bloque 6** es un formulario que hace lo mismo, y el **Bloque 7** descarga todos tus mapas en un zip.
 
 :::
 
@@ -73,7 +73,7 @@ Ejecuta la línea con el botón **▶** del chat (o insértala como celda y pres
 
 ## El mensaje para Gemini
 
-No tienes que escribir el mensaje: el **armador** que aparece al final del Bloque 1 lo arma con tus respuestas a cinco preguntas simples y le agrega el diccionario completo. Gemini se encarga de lo técnico: busca la variable, elige el denominador, encuentra el código del territorio y te entrega **una sola línea** para ejecutar:
+No tienes que escribir el mensaje: el **armador** del Bloque 4 lo arma con tus respuestas a cinco preguntas simples y le agrega el diccionario completo. Gemini se encarga de lo técnico: busca la variable, elige el denominador, encuentra el código del territorio y te entrega **una sola línea** para ejecutar:
 
 ```python
 hacer_mapa(escala="Comunal", territorio="13101", variable_1="n_viv_hacinadas",
@@ -87,7 +87,7 @@ Si la Parte 1 de su respuesta no es lo que querías, díselo con tus palabras y 
 ```{.text filename="Prompt 1 · Configurar el mapa"}
 Hola Gemini. Estoy en Google Colab haciendo un ejercicio con datos del Censo 2024 de Chile. No sé programar: explícame todo en palabras simples.
 
-Ya ejecuté el Bloque 1 de este notebook: cargó los datos y dejó lista la función hacer_mapa(). NO escribas otro código, NO instales paquetes y NO cargues datos: solo necesito que prepares UNA línea que use esa función.
+Ya ejecuté los bloques 1 a 3 de este notebook: cargaron los datos y dejaron lista la función hacer_mapa(). NO escribas otro código, NO instales paquetes y NO cargues datos: solo necesito que prepares UNA línea que use esa función.
 
 LO QUE QUIERO
 - ¿Qué quiero mapear?: [¿qué quieres mapear? dilo con tus palabras]
@@ -144,7 +144,7 @@ Es opcional: si haces el desafío, puedes enviar tu mapa y tu gráfico al correo
 | Recuadro amarillo "El campo variable 1: '…' no existe" | Cópiale el recuadro a Gemini y pídele la línea corregida |
 | Gemini escribe mucho código o instala paquetes | No lo ejecutes. Escríbele: «Solo dame la línea hacer_mapa(...)» |
 | Recuadro amarillo "Solo hay N unidades con datos" | Muy pocas comunas para clasificar: agrega `unidad="Manzana"` a la línea (o cámbialo en el formulario) o elige una escala mayor |
-| `NameError: name 'hacer_mapa' is not defined` | No ejecutaste el Bloque 1 o la sesión se reinició: ejecútalo y luego vuelve a ejecutar la línea |
+| `NameError: name 'hacer_mapa' is not defined` | No ejecutaste los bloques 1 a 3 o la sesión se reinició: ejecútalos y luego vuelve a ejecutar la línea |
 | La descarga de datos falla | Ver [la guía de Colab](guia-colab.qmd#si-la-descarga-falla) |
 
 ::: {.callout-note collapse="true"}

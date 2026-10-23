@@ -66,11 +66,16 @@ cuerpo_1 = f'''
 '''
 
 cuerpo_2 = f'''
-<p>El Bloque 1 descarga los datos del Censo y prepara todo. <b>No tienes que cambiar nada</b>: solo ejecutarlo.</p>
+<p>El notebook está ordenado en <b>7 bloques</b>, de arriba hacia abajo. Cada uno tiene arriba una tarjeta que dice <b>qué hace, qué debes ver y cuánto tarda</b>. Los tres primeros preparan todo: <b>no tienes que cambiar nada</b>, solo ejecutarlos en orden.</p>
+<div class="tabla"><table><thead><tr><th>Bloque</th><th>Qué hace</th><th>Tiempo</th></tr></thead><tbody>
+<tr><td>1</td><td>Prepara Colab</td><td>30 s</td></tr>
+<tr><td>2</td><td>Descarga los datos del Censo</td><td>1–3 min</td></tr>
+<tr><td>3</td><td>Prepara el diccionario y la herramienta de mapas</td><td>10 s</td></tr>
+</tbody></table></div>
 <ol class="pasitos">
-  <li>Pasa el mouse sobre el bloque: a la izquierda aparece el botón <kbd>▶</kbd>. Haz clic.</li>
-  <li>Espera. Mientras trabaja, el botón gira. La primera vez tarda <b>1 a 3 minutos</b>.</li>
-  <li>Al terminar aparece un <b>✓ verde</b> y un recuadro verde que dice <b>«Listo»</b>. Debajo aparece el <b>armador del mensaje para Gemini</b> (paso 3).</li>
+  <li>Pasa el mouse sobre el <b>Bloque 1</b>: a la izquierda aparece el botón <kbd>▶</kbd>. Haz clic.</li>
+  <li>Espera el recuadro <b>verde</b> («Bloque 1 listo») y repite con el <b>Bloque 2</b> y el <b>Bloque 3</b>.</li>
+  <li>Si te saltas un bloque, no pasa nada: el siguiente te avisará con un recuadro amarillo cuál falta.</li>
 </ol>
 {figura("04_ejecutar", "Los tres estados de un bloque.", "Un bloque antes, durante y después de ejecutarse")}
 <p>La primera vez, Colab muestra esta advertencia. Es normal: aparece con cualquier notebook que no fue creado por Google. Presiona <kbd>Ejecutar de todos modos</kbd>.</p>
@@ -81,10 +86,10 @@ cuerpo_2 = f'''
 cuerpo_3 = f'''
 <p>Todo ocurre <b>dentro de Colab</b>: no necesitas otra pestaña ni adjuntar archivos.</p>
 <ol class="pasitos">
-  <li>Baja hasta el <b>armador del mensaje para Gemini</b>, al final del resultado del Bloque 1. Responde con tus palabras: <b>qué quieres mapear</b> (o toca una de las ideas), <b>dónde</b>, si lo quieres <b>cruzar con otro tema</b>, tu pregunta (opcional) y <b>tu nombre</b>.</li>
+  <li>Ejecuta el <b>Bloque 4</b>: aparece el <b>armador del mensaje para Gemini</b>. Responde con tus palabras: <b>qué quieres mapear</b> (o toca una de las ideas), <b>dónde</b>, si lo quieres <b>cruzar con otro tema</b>, tu pregunta (opcional) y <b>tu nombre</b>.</li>
   <li>Presiona <kbd>📋 Copiar mensaje para Gemini</kbd>. El mensaje ya incluye el diccionario de variables y los códigos de los territorios.</li>
 </ol>
-{figura("06_armador", "El armador aparece al final del Bloque 1.", "Armador del mensaje para Gemini con ideas, preguntas y botón Copiar")}
+{figura("06_armador", "El armador del Bloque 4.", "Armador del mensaje para Gemini con ideas, preguntas y botón Copiar")}
 <ol class="pasitos" start="3">
   <li>Haz clic en <kbd>✦ Gemini</kbd>, arriba a la derecha de Colab: se abre un chat al costado. Pega el mensaje (<kbd>Ctrl</kbd> + <kbd>V</kbd>) y presiona <kbd>Enter</kbd>.</li>
   <li>Gemini responde en tres partes: <b>lo que entendió</b> (confirma que es lo que querías), <b>una línea</b> <code>hacer_mapa(...)</code> lista para ejecutar y una <b>explicación simple</b>. Si no entendió bien, díselo con tus palabras y pídele que corrija la línea.</li>
@@ -105,44 +110,45 @@ cuerpo_3 = f'''
   <li><b>Verifica</b> en la Parte 1 que entendió bien el tema y el territorio. Gemini puede equivocarse o inventar nombres.</li>
   <li>Si Gemini propone escribir <b>otro código</b> (instalar cosas, cargar datos, hacer su propio mapa), no lo ejecutes: pídele solo la línea <code>hacer_mapa(...)</code>.</li>
   <li><b>No compartas datos personales</b> (tuyos ni de terceros) en el chat.</li>
-  <li><b>Guarda la conversación</b> (copia el texto en un documento): la necesitas para el anexo de uso de IA del informe.</li>
+  <li><b>Guarda la conversación</b> (copia el texto en un documento).</li>
 </ol></div></aside>
 '''
 
 cuerpo_4 = f'''
 <ol class="pasitos">
-  <li>Junto a la línea <code>hacer_mapa(...)</code>, Gemini muestra botones para usar el código: <b>▶ Ejecutar</b> o <b>+ Insertar</b> (agrega la línea como una celda nueva). Los nombres pueden variar un poco.</li>
-  <li>Si la insertaste, presiona <kbd>▶</kbd> en esa celda nueva. Si no ves botones, copia la línea, crea una celda con <kbd>+ Código</kbd> (arriba a la izquierda), pégala y presiona <kbd>▶</kbd>.</li>
+  <li>En el <b>Bloque 5</b>, borra la línea de ejemplo y <b>pega la línea</b> <code>hacer_mapa(...)</code> que te dio Gemini. Presiona <kbd>▶</kbd>.</li>
+  <li>Si Gemini te muestra un botón para usar el código (<b>▶ Ejecutar</b> o <b>+ Insertar</b>), también puedes usarlo: hace lo mismo.</li>
   <li>Lee los recuadros de colores que aparecen: <b>verde</b> confirma el territorio, <b>azul</b> te dice qué se completó solo y <b>amarillo</b> te dice qué revisar.</li>
+  <li>¿Aún no tienes tu línea? Presiona <kbd>▶</kbd> igual: el Bloque 5 trae un <b>ejemplo</b> para que veas cómo funciona.</li>
 </ol>
 {figura("08_ejecutar", "La línea de Gemini en una celda, y los recuadros de colores.", "Celda con hacer_mapa y recuadros verde, azul y amarillo")}
-{caja("info", "¿Prefieres no ejecutar código del chat?", "El <b>Bloque 2</b> es un formulario que hace exactamente lo mismo: copia en cada campo los valores de la línea de Gemini (sin comillas) y presiona ▶. Solo son obligatorios los campos marcados con ★.")}
+{caja("info", "¿Prefieres no ejecutar código del chat?", "El <b>Bloque 6</b> es un formulario que hace exactamente lo mismo: copia en cada campo los valores de la línea de Gemini (sin comillas) y presiona ▶. Solo son obligatorios los campos marcados con ★.")}
 {caja("ok", "Si un recuadro amarillo te pide corregir algo", "Cópiale el mensaje a Gemini y pídele la línea corregida, o corrige tú el valor en la línea y vuelve a presionar ▶.")}
 '''
 
 cuerpo_5 = f'''
 <p>En 1 o 2 minutos aparecen, debajo del bloque, el <b>mapa</b> y el <b>gráfico</b>, y se descargan solos a tu computador.</p>
 {figura("09_resultado", "Los dos archivos del desafío.", "Dos archivos descargados: mapa y gráfico en JPEG")}
-{caja("tip", "¿Otro mapa?", "Cambia el formulario y ejecuta <b>solo el Bloque 2</b> las veces que quieras. El Bloque 1 se vuelve a ejecutar únicamente si Colab se desconectó.")}
+{caja("tip", "¿Otro mapa?", "Pega otra línea en el <b>Bloque 5</b> y vuelve a presionar ▶, las veces que quieras. Al final, el <b>Bloque 7</b> descarga todos tus mapas juntos en un zip. Los bloques 1 a 3 se vuelven a ejecutar solo si Colab se desconectó.")}
 '''
 
 PASOS = [
     paso(1, "abrir", "Abrir el notebook y guardar tu copia", "2 min", cuerpo_1),
-    paso(2, "bloque1", "Ejecutar el Bloque 1", "3 min", cuerpo_2),
-    paso(3, "gemini", "Armar el mensaje y conversar con Gemini", "10 min", cuerpo_3),
-    paso(4, "ejecutar", "Ejecutar la línea de Gemini", "3 min", cuerpo_4),
+    paso(2, "bloque1", "Preparar: bloques 1, 2 y 3", "4 min", cuerpo_2),
+    paso(3, "gemini", "Bloque 4: armar el mensaje y conversar con Gemini", "10 min", cuerpo_3),
+    paso(4, "ejecutar", "Tu mapa: Bloque 5", "3 min", cuerpo_4),
     paso(5, "resultados", "Tus resultados", "2 min", cuerpo_5),
 ]
 
-TITULOS_NAV = [("abrir", "Abrir Colab"), ("bloque1", "Bloque 1"), ("gemini", "Gemini"),
-               ("ejecutar", "Ejecutar"), ("resultados", "Resultados")]
+TITULOS_NAV = [("abrir", "Abrir Colab"), ("bloque1", "Bloques 1–3"), ("gemini", "Gemini"),
+               ("ejecutar", "Bloque 5"), ("resultados", "Resultados")]
 
 NAV = "".join(f'<li><a href="#{i}"><span class="nav-n">{n}</span>{t}<span class="nav-ok">✓</span></a></li>'
               for n, (i, t) in enumerate(TITULOS_NAV, start=1))
 
 PROBLEMAS = [
-    ("«Sesión desconectada» o «Volver a conectar»", "Colab apaga la “cocina” tras un rato sin uso", "Ejecuta de nuevo el Bloque 1 y luego el Bloque 2"),
-    ("<code>NameError: name 'hacer_mapa' is not defined</code>", "Colab se reinició o no ejecutaste el Bloque 1", "Ejecuta primero el Bloque 1 y luego la línea"),
+    ("«Sesión desconectada» o «Volver a conectar»", "Colab apaga la “cocina” tras un rato sin uso", "Ejecuta de nuevo los bloques 1 a 3 y luego tu línea"),
+    ("<code>NameError: name 'hacer_mapa' is not defined</code>", "Colab se reinició o no ejecutaste los bloques 1 a 3", "Ejecútalos y luego vuelve a ejecutar tu línea"),
     ("Recuadro amarillo «No encontré '…' en la escala …»", "El territorio está mal escrito o no corresponde a esa escala", "Usa una de las sugerencias del aviso"),
     ("Recuadro amarillo «El campo variable 1: '…' no existe»", "Gemini escribió un nombre que no está en la base", "Cópiale el recuadro a Gemini y pídele la línea corregida"),
     ("Gemini escribe mucho código o instala paquetes", "Se salió de la instrucción", "No lo ejecutes. Escríbele: «Solo dame la línea hacer_mapa(...)»"),
@@ -351,7 +357,7 @@ HTML = f"""<!doctype html>
       <ol class="pasitos">
         <li>Abre la <a href="{DRIVE_DOCENTE}" target="_blank" rel="noopener">carpeta de datos del docente ↗</a> y descarga los archivos.</li>
         <li>En tu Google Drive, dentro de <b>Mi unidad</b>, crea una carpeta llamada <code>censo2024</code> y sube ahí los archivos.</li>
-        <li>Ejecuta de nuevo el Bloque 1. Te pedirá permiso para acceder a tu Drive: acéptalo.</li>
+        <li>Ejecuta de nuevo el Bloque 2. Te pedirá permiso para acceder a tu Drive: acéptalo.</li>
       </ol>
     </section>
     <section class="tarjeta-sec" id="glosario">

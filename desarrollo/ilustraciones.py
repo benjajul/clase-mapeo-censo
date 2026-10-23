@@ -65,9 +65,9 @@ def guardar(nombre, contenido):
 
 # ---------------------------------------------------------------- 0. Recorrido
 pasos = [("☁", "Abrir Colab", "desde el enlace", AZUL),
-         ("▶", "Bloque 1", "datos + armador", VERDE),
-         ("✦", "Gemini", "elige las variables", MORADO),
-         ("☰", "Ejecutar", "la línea de Gemini", VERDE),
+         ("▶", "Bloques 1–3", "preparar los datos", VERDE),
+         ("✦", "Bloque 4", "mensaje + Gemini", MORADO),
+         ("☰", "Bloque 5", "pegar la línea", VERDE),
          ("🗺", "Mapa y gráfico", "en JPEG", ACENTO)]
 c = ""
 for i, (ic, a, b, col) in enumerate(pasos):
@@ -181,9 +181,9 @@ c += resalte(430, 174, 186, 36) + num(626, 176, "✓")
 guardar("05_advertencia", svg(760, 250, c, "Advertencia de Colab: Ejecutar de todos modos"))
 
 # ---------------------------------------------------------------- 6. Armador en Colab
-c = ventana(10, 10, 740, 330, "Colab — resultado del Bloque 1")
-c += t(34, 62, "✓", 18, VERDE, "bold") + t(56, 60, "Bloque 1 · Preparar el entorno y cargar los datos", 12, TINTA, "bold")
-c += r(30, 72, 700, 30, "#e6f4ea", VERDE, 6, 1.2) + t(42, 92, "✓ Listo: datos cargados. Siguiente paso: el armador del mensaje para Gemini ↓", 12, VERDE, "bold")
+c = ventana(10, 10, 740, 330, "Colab — Bloque 4 · Arma tu mensaje para Gemini")
+c += t(34, 62, "✓", 18, VERDE, "bold") + t(56, 60, "▶ Bloque 4 · Arma tu mensaje para Gemini", 12, TINTA, "bold")
+c += r(30, 72, 700, 30, "#e6f4ea", VERDE, 6, 1.2) + t(42, 92, "✓ Bloques 1, 2 y 3 listos. Responde las preguntas y copia el mensaje ↓", 12, VERDE, "bold")
 c += r(30, 112, 700, 214, "white", "#adb5bd", 10)
 c += t(44, 134, "✦ Arma tu mensaje para Gemini", 13, TINTA, "bold")
 c += r(44, 144, 300, 34, FONDO, LINEA, 8)
@@ -231,7 +231,7 @@ guardar("07_gemini", svg(760, 420, c, "Gemini dentro de Colab: el mensaje pegado
 
 # ---------------------------------------------------------------- 8. Ejecutar la línea
 c = r(10, 10, 740, 300, "white", "#adb5bd", 10, 1.5)
-c += t(30, 40, "Celda nueva (la agrega Gemini, o la creas con + Código)", 13, GRIS, "bold")
+c += t(30, 40, "▶ Bloque 5 · Tu mapa: borra el ejemplo y pega la línea de Gemini", 13, GRIS, "bold")
 c += r(30, 52, 700, 66, FONDO, LINEA, 8)
 c += f'<circle cx="58" cy="85" r="15" fill="white" stroke="{TINTA}" stroke-width="1.5"/>' + f'<path d="M53,76 L66,85 L53,94 z" fill="{TINTA}"/>'
 c += resalte(39, 66, 38, 38) + num(36, 62, "▶")
@@ -242,7 +242,7 @@ c += r(30, 132, 700, 30, "#e6f4ea", VERDE, 6, 1.2) + t(42, 152, "✓ Territorio 
 c += r(30, 170, 700, 30, "#e7f1fb", AZUL, 6, 1.2) + t(42, 190, "i Completé automáticamente (según el diccionario del INE): DENOMINADOR_1 = n_vp_ocupada", 11.5, AZUL, "bold")
 c += r(30, 208, 700, 30, "#fff4d6", "#e67700", 6, 1.2) + t(42, 228, "! Si algo está mal, aparece un recuadro amarillo que te dice qué revisar.", 11.5, "#e67700", "bold")
 c += t(30, 266, "Luego aparecen el mapa y el gráfico, y se descargan solos.", 13, TINTA, "bold")
-c += t(30, 288, "¿Prefieres no usar código? El Bloque 2 es un formulario que hace lo mismo.", 12, GRIS)
+c += t(30, 288, "¿Prefieres no pegar código? El Bloque 6 es un formulario que hace lo mismo.", 12, GRIS)
 guardar("08_ejecutar", svg(760, 320, c, "Ejecutar la línea de Gemini y leer los recuadros de colores"))
 
 # ---------------------------------------------------------------- 9. Resultado

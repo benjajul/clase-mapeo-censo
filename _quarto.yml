@@ -26,6 +26,8 @@ website:
         text: "4 · Después de la clase"
       - text: "Para seguir aprendiendo"
         menu:
+          - href: seguir-aprendiendo.qmd
+            text: "Recurso CensoLab y desafío"
           - href: desafio-colab.qmd
             text: "Tu propio mapa con Colab + Gemini"
           - href: guia-colab.qmd

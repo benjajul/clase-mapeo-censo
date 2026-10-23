@@ -1,0 +1,35 @@
+---
+title: "Para seguir aprendiendo"
+subtitle: "Un recurso para explorar el Censo en la web y un desafío para hacer tu propio mapa"
+---
+
+Esta sección es **voluntaria** y no se evalúa. Es para quien quiera ir más allá del [ejercicio aplicado](04-tarea.qmd).
+
+| | Qué es | Para quién |
+|---|---|---|
+| [**Recurso: CensoLab**](#recurso-censolab) | Explorar mapas del Censo y hacerle preguntas a una plataforma web | Quien quiera explorar datos sin instalar nada |
+| [**Desafío: Colab + Gemini**](#desafio) | Construir tu propio mapa de cualquier territorio de Chile | Quien quiera un ejercicio más aplicado |
+
+## Recurso: explorar con CensoLab {#recurso-censolab}
+
+[CensoLab](http://censolab.cl) es una plataforma abierta para explorar datos geográficos y censales de Chile, desarrollada por Joshua Kunst y Matías Parra ([presentación en el grupo de usuari@s de R de Santiago](https://santiagorusers.github.io/posts/2026-08-26/)). Permite hacer **mapas interactivos**, revisar **perfiles territoriales** y hacerle **preguntas en lenguaje natural** a un asistente de inteligencia artificial, que responde con mapas, gráficos y tablas.
+
+Es un recurso para seguir explorando. Algunas ideas:
+
+- **Busca la variable que elegiste** en el [ejercicio aplicado](04-tarea.qmd) y mírala en CensoLab. CensoLab trabaja con datos públicos agregados (por ejemplo, por comuna), no por manzana: ¿qué cambia respecto de los mapas por manzana?
+- **Compara Recoleta con sus comunas vecinas** o con el promedio regional.
+- **Pregúntale al asistente**, por ejemplo: *«¿Qué comunas de la Región Metropolitana tienen mayor proporción de personas de 60 años o más?»* Luego verifica la respuesta en el mapa o la tabla que entrega.
+- **Míralo críticamente**, como en clase: ¿qué unidad territorial usa?, ¿qué indicador?, ¿cómo clasifica los colores?, ¿de dónde vienen los datos?
+
+::: {.callout-tip}
+Lo que encuentres en CensoLab puede servirte como dato de apoyo en el ejercicio aplicado. Si lo usas, cítalo.
+:::
+
+## Desafío: tu propio mapa con Colab + Gemini {#desafio}
+
+¿Te quedaste con ganas de hacer tu propio mapa? Con un notebook de Google Colab y el asistente Gemini puedes cartografiar **cualquier variable del Censo 2024**, en **cualquier región, provincia o comuna de Chile**, sin programar: respondes unas preguntas con tus palabras y Gemini te entrega una línea lista para ejecutar.
+
+[Ver el desafío](desafio-colab.qmd){.btn .btn-warning role="button"}
+[Guía ilustrada de Colab y Gemini](guia-colab.qmd){.btn .btn-outline-secondary role="button"}
+
+Es opcional y no forma parte de la evaluación. Si lo haces, puedes usar tu mapa como complemento en el ejercicio aplicado.

@@ -1,17 +1,9 @@
 ---
 title: "4 · Después de la clase"
-subtitle: "Un ejercicio aplicado, un recurso para explorar y un desafío para seguir aprendiendo"
+subtitle: "Un ejercicio para hacer y enviar después de la clase"
 ---
 
-Lo que viene después de la clase tiene tres partes. Solo la primera se entrega.
-
-| | Qué es | ¿Se entrega? |
-|---|---|---|
-| [**1 · Ejercicio aplicado**](#ejercicio-aplicado) | Analizar críticamente dos cartografías: una del Gran Santiago y una de Pudahuel | **Sí**, por correo |
-| [**2 · Recurso: CensoLab**](#recurso-censolab) | Explorar mapas del Censo y hacerle preguntas a una plataforma web | No |
-| [**3 · Desafío para seguir aprendiendo**](#desafio) | Construir tu propio mapa de cualquier territorio con Colab + Gemini | Opcional |
-
-## 1 · Ejercicio aplicado: leer críticamente una cartografía {#ejercicio-aplicado}
+## Ejercicio aplicado: leer críticamente una cartografía {#ejercicio-aplicado}
 
 ::: {.callout-important}
 ## Entrega
@@ -23,7 +15,7 @@ En clase hicimos mapas. Ahora toca **leerlos**: mirar qué muestran, sospechar d
 ### Qué tienes que hacer
 
 1. Escoge **un mapa del Gran Santiago** de los tres de abajo.
-2. Escoge **un mapa de la comuna de Pudahuel** de los tres de abajo. Puede ser la **misma variable** o una distinta.
+2. Escoge **un mapa de la comuna de Recoleta** de los tres de abajo. Puede ser la **misma variable** o una distinta.
 3. Analiza críticamente ambos mapas siguiendo el [recorrido de preguntas guía](#preguntas-guia). Puedes apoyarte en datos, noticias, estudios o fenómenos conocidos (cita tus fuentes).
 4. Compara las dos escalas: ¿qué aporta cada una?
 5. Envía tu análisis al correo del docente.
@@ -56,27 +48,27 @@ Haz clic en un mapa para verlo en grande. Todos son cartografías **por manzana 
 
 :::
 
-#### Comuna de Pudahuel
+#### Comuna de Recoleta
 
 ::: {.panel-tabset}
 
 ### {{< var ejercicio.var1 >}}
 
-![{{< var ejercicio.var1 >}} por manzana, comuna de Pudahuel.](img/ejercicio/pudahuel_1.jpg){.lightbox group="pudahuel"}
+![{{< var ejercicio.var1 >}} por manzana, comuna de Recoleta.](img/ejercicio/recoleta_1.jpg){.lightbox group="recoleta"}
 
-[Descargar mapa](img/ejercicio/pudahuel_1.jpg){download="pudahuel_1.jpg" .btn .btn-outline-secondary .btn-sm}
+[Descargar mapa](img/ejercicio/recoleta_1.jpg){download="recoleta_1.jpg" .btn .btn-outline-secondary .btn-sm}
 
 ### {{< var ejercicio.var2 >}}
 
-![{{< var ejercicio.var2 >}} por manzana, comuna de Pudahuel.](img/ejercicio/pudahuel_2.jpg){.lightbox group="pudahuel"}
+![{{< var ejercicio.var2 >}} por manzana, comuna de Recoleta.](img/ejercicio/recoleta_2.jpg){.lightbox group="recoleta"}
 
-[Descargar mapa](img/ejercicio/pudahuel_2.jpg){download="pudahuel_2.jpg" .btn .btn-outline-secondary .btn-sm}
+[Descargar mapa](img/ejercicio/recoleta_2.jpg){download="recoleta_2.jpg" .btn .btn-outline-secondary .btn-sm}
 
 ### {{< var ejercicio.var3 >}}
 
-![{{< var ejercicio.var3 >}} por manzana, comuna de Pudahuel.](img/ejercicio/pudahuel_3.jpg){.lightbox group="pudahuel"}
+![{{< var ejercicio.var3 >}} por manzana, comuna de Recoleta.](img/ejercicio/recoleta_3.jpg){.lightbox group="recoleta"}
 
-[Descargar mapa](img/ejercicio/pudahuel_3.jpg){download="pudahuel_3.jpg" .btn .btn-outline-secondary .btn-sm}
+[Descargar mapa](img/ejercicio/recoleta_3.jpg){download="recoleta_3.jpg" .btn .btn-outline-secondary .btn-sm}
 
 :::
 
@@ -93,7 +85,7 @@ Las preguntas avanzan como un recorrido: parten de **lo que se ve**, pasan por *
 
 - ¿Hay **patrones de distribución**? Concentraciones, gradientes (centro–periferia, oriente–poniente), corredores, bordes marcados o "islas".
 - ¿Qué **contrastes** aparecen entre zonas vecinas? ¿Hay comportamientos llamativos o excepciones?
-- ¿Coincide el patrón con elementos que conoces del territorio: ejes viales, cerros, ríos, el aeropuerto, poblaciones, villas, condominios, zonas industriales?
+- ¿Coincide el patrón con elementos que conoces del territorio: ejes viales, cerros (como el San Cristóbal o el Blanco), ríos, mercados, cementerios, poblaciones, villas, condominios, zonas industriales?
 
 [Ya describiste el patrón. Antes de explicarlo, pregúntate cuánto puedes confiar en lo que ves.]{.ruta-puente}
 :::
@@ -116,9 +108,9 @@ Las preguntas avanzan como un recorrido: parten de **lo que se ve**, pasan por *
 
 #### Cambiar de escala: ¿qué aporta cada mirada? {.ruta-tit}
 
-- ¿Qué diferencia hay entre mostrar el fenómeno en el **Gran Santiago** y en **Pudahuel**? ¿Qué aporta cada escala?
+- ¿Qué diferencia hay entre mostrar el fenómeno en el **Gran Santiago** y en **Recoleta**? ¿Qué aporta cada escala?
 - ¿Se ve en el mapa metropolitano lo que aparece en el mapa comunal? ¿Qué se pierde y qué se gana al acercarse o alejarse?
-- ¿Cómo se ve Pudahuel en relación con su entorno metropolitano?
+- ¿Cómo se ve Recoleta en relación con su entorno metropolitano?
 
 [Con el patrón claro en ambas escalas, toca preguntarse por qué el territorio es así. Empieza por el soporte físico.]{.ruta-puente}
 :::
@@ -132,7 +124,7 @@ El medio ambiente no es un actor, pero sí un **factor** que condiciona dónde s
 
 - ¿Qué condiciones del territorio podrían ayudar a explicar el patrón: **relieve y cerros, ríos y esteros, humedales, suelos agrícolas, disponibilidad de agua, clima**?
 - ¿**Hacia dónde crece la ciudad** y sobre qué suelos? ¿Qué se pierde cuando se urbaniza un borde rural o un humedal?
-- ¿Qué **riesgos** y molestias ambientales se distribuyen en el territorio: inundaciones, remoción en masa, incendios, islas de calor, contaminación del aire, ruido (por ejemplo, del aeropuerto), cercanía a industrias o vertederos?
+- ¿Qué **riesgos** y molestias ambientales se distribuyen en el territorio: inundaciones, remoción en masa, incendios, islas de calor, contaminación del aire, ruido, cercanía a industrias, bodegas o vertederos?
 - ¿Quiénes viven más expuestos a esos riesgos y quiénes en los entornos más favorables? ¿Qué **consecuencias** tiene eso para cada grupo?
 - ¿Es el entorno el que explica la localización de los grupos, o los grupos con más recursos eligen los mejores entornos?
 
@@ -176,7 +168,7 @@ Tu texto puede seguir el mismo recorrido:
 1. **Los mapas que elegiste** y por qué.
 2. **Lo que se ve:** patrones, contrastes y excepciones, en ambos mapas.
 3. **Lo que no se ve:** límites de la pregunta, de la variable y de la representación.
-4. **Comparación de escalas:** qué aporta el Gran Santiago y qué aporta Pudahuel.
+4. **Comparación de escalas:** qué aporta el Gran Santiago y qué aporta Recoleta.
 5. **Factores ambientales:** condiciones del medio, crecimiento de la ciudad, riesgos y consecuencias.
 6. **Actores:** quién ordena el territorio y por qué se forman esos grupos.
 7. **Síntesis integral:** tu interpretación final y las preguntas que abre.
@@ -194,26 +186,7 @@ Tu texto puede seguir el mismo recorrido:
 | Síntesis integral | Integra observación, límites, escala, factores y actores en una interpretación coherente, y plantea preguntas pertinentes |
 | Fundamentación y claridad | Se apoya en datos o fenómenos conocidos citados; escribe con claridad |
 
-## 2 · Recurso: explorar con CensoLab {#recurso-censolab}
-
-[CensoLab](http://censolab.cl) es una plataforma abierta para explorar datos geográficos y censales de Chile, desarrollada por Joshua Kunst y Matías Parra ([presentación en el grupo de usuari@s de R de Santiago](https://santiagorusers.github.io/posts/2026-08-26/)). Permite hacer **mapas interactivos**, revisar **perfiles territoriales** y hacerle **preguntas en lenguaje natural** a un asistente de inteligencia artificial, que responde con mapas, gráficos y tablas.
-
-No se entrega nada: es un recurso para seguir explorando. Algunas ideas:
-
-- **Busca la variable que elegiste** en el ejercicio 1 y mírala en CensoLab. CensoLab trabaja con datos públicos agregados (por ejemplo, por comuna), no por manzana: ¿qué cambia respecto de los mapas por manzana?
-- **Compara Pudahuel con sus comunas vecinas** o con el promedio regional.
-- **Pregúntale al asistente**, por ejemplo: *«¿Qué comunas de la Región Metropolitana tienen mayor proporción de personas de 60 años o más?»* Luego verifica la respuesta en el mapa o la tabla que entrega.
-- **Míralo críticamente**, como en clase: ¿qué unidad territorial usa?, ¿qué indicador?, ¿cómo clasifica los colores?, ¿de dónde vienen los datos?
-
 ::: {.callout-tip}
-Lo que encuentres en CensoLab puede servirte como dato de apoyo en el ejercicio 1. Si lo usas, cítalo.
+## ¿Quieres seguir aprendiendo?
+Si te interesa explorar más datos o hacer tus propios mapas, revisa la sección [Para seguir aprendiendo](seguir-aprendiendo.qmd): un recurso para explorar el Censo en la web (CensoLab) y un desafío para crear tu propio mapa con Colab + Gemini. Es voluntario y no se evalúa.
 :::
-
-## 3 · Desafío para seguir aprendiendo: tu propio mapa con Colab + Gemini {#desafio}
-
-¿Te quedaste con ganas de hacer tu propio mapa? Con un notebook de Google Colab y el asistente Gemini puedes cartografiar **cualquier variable del Censo 2024**, en **cualquier región, provincia o comuna de Chile**, sin programar: respondes unas preguntas con tus palabras y Gemini te entrega una línea lista para ejecutar.
-
-[Ver el desafío](desafio-colab.qmd){.btn .btn-warning role="button"}
-[Guía ilustrada de Colab y Gemini](guia-colab.qmd){.btn .btn-outline-secondary role="button"}
-
-Es opcional y no forma parte de la evaluación. Si lo haces, puedes usar tu mapa como complemento en el ejercicio 1.

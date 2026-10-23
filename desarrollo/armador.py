@@ -7,7 +7,7 @@ from pathlib import Path
 
 PLANTILLA = """Hola Gemini. Estoy en Google Colab haciendo un ejercicio con datos del Censo 2024 de Chile. No sé programar: explícame todo en palabras simples.
 
-Ya ejecuté el Bloque 1 de este notebook: cargó los datos y dejó lista la función hacer_mapa(). NO escribas otro código, NO instales paquetes y NO cargues datos: solo necesito que prepares UNA línea que use esa función.
+Ya ejecuté los bloques 1 a 3 de este notebook: cargaron los datos y dejaron lista la función hacer_mapa(). NO escribas otro código, NO instales paquetes y NO cargues datos: solo necesito que prepares UNA línea que use esa función.
 
 LO QUE QUIERO
 - ¿Qué quiero mapear?: {que}

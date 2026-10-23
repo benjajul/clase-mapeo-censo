@@ -4,22 +4,31 @@ sys.path.insert(0, str(Path(__file__).parent))
 import tarea_bloques as T
 from armador import widget
 REPO = Path("/home/claude/clase-mapeo-censo")
-def nb(path, reemplazos=None, params=None, extra=None):
+EJEMPLO_B5 = 'hacer_mapa(escala="Comunal", territorio="13101", variable_1="n_edad_60_mas", autor="Ejemplo")'
+
+def nb(path, reemplazos=None, params=None, extra=None, con_ejemplo=False):
+    import desafio_bloques as D
     n = nbformat.v4.new_notebook()
     n.metadata["kernelspec"] = {"name": "python3", "display_name": "Python 3", "language": "python"}
     n.metadata["colab"] = {"provenance": [], "toc_visible": True}
-    n.cells.append(nbformat.v4.new_markdown_cell(T.INTRO))
-    for tit, ex, code in ((T.TITULO_1, T.EXPL_1, T.CODIGO_1), (T.TITULO_2, T.EXPL_2, T.CODIGO_2)):
-        n.cells.append(nbformat.v4.new_markdown_cell(f"## {tit}\n\n{ex}"))
+    n.cells.append(nbformat.v4.new_markdown_cell(D.INTRO))
+    pruebas = reemplazos is not None
+    for clave, code, formulario in D.BLOQUES:
+        n.cells.append(nbformat.v4.new_markdown_cell(D.MD[clave]))
         code = code.replace("__ARMADOR_HTML__", widget())
+        if pruebas and clave == "B5" and not con_ejemplo:
+            code = code.replace(EJEMPLO_B5, "pass")
         for a, z in (reemplazos or {}).items(): code = code.replace(a, z)
         for k, v in (params or {}).items():
             code = re.sub(rf'^{k} = "[^"]*"', f'{k} = "{v}"', code, flags=re.M)
-        c = nbformat.v4.new_code_cell(code); c.metadata["cellView"] = "form"
+        c = nbformat.v4.new_code_cell(code)
+        if formulario:
+            c.metadata["cellView"] = "form"
         n.cells.append(c)
     if extra:
         n.cells.append(nbformat.v4.new_code_cell(extra))
     nbformat.write(n, path)
+
 if __name__ == "__main__":
     nb(REPO / "codigo" / "desafio_cartografia.ipynb")
     base = Path(__file__).parent / "prueba_tarea"
@@ -48,6 +57,7 @@ if __name__ == "__main__":
     }
     for k, p in casos.items():
         nb(base / f"{k}.ipynb", R, p)
+    nb(base / "ej.ipynb", {**R, "\nhacer_mapa(escala=ESCALA": "\n0 and hacer_mapa(escala=ESCALA"}, None, None, con_ejemplo=True)
     # Línea como la que entrega Gemini (sin usar el formulario)
     nb(base / "g1.ipynb", {**R, "\nhacer_mapa(escala=ESCALA": "\n0 and hacer_mapa(escala=ESCALA"}, None,
        'hacer_mapa(escala="Regional", territorio="05", variable_1="n_edad_60_mas", denominador_1="n_per", '
