@@ -1,0 +1,8 @@
+# Nombres de las variables de los mapas del ejercicio aplicado.
+# Edita solo el texto entre comillas: se actualiza en todo el sitio.
+ejercicio:
+  var1: "Población inmigrante internacional"
+  var2: "Viviendas hacinadas"
+  var3: "Hogares con jefatura femenina"
+  entrega: "por definir"
+  correo: "benjamin.julio@usach.cl"

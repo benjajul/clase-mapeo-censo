@@ -24,3 +24,24 @@ table { font-size: .92rem; }
 }
 .tarjeta p:last-child { margin-bottom: 0; }
 img[src*="img/guia/"] { border-radius: 8px; box-shadow: 0 1px 6px rgba(0,0,0,.12); background: white; }
+
+/* Ilustraciones según el tema del sitio */
+body.quarto-light .dark-content { display: none; }
+body.quarto-dark .light-content { display: none; }
+
+/* Recorrido de preguntas guía (ejercicio aplicado) */
+.ruta { position: relative; margin: 1.5rem 0 2rem; padding-left: 0; }
+.ruta::before { content: ""; position: absolute; left: 21px; top: 10px; bottom: 30px; width: 3px;
+  background: linear-gradient(#e8590c, #f59f00, #2f9e44); border-radius: 3px; opacity: .55; }
+.paso-ruta { position: relative; margin: 0 0 1.3rem 0; padding: 0.9rem 1.2rem 0.6rem 4rem;
+  border: 1px solid rgba(128,128,128,.25); border-radius: 12px; background: rgba(232,89,12,.035); }
+.paso-ruta .ruta-num { position: absolute; left: 6px; top: 12px; width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 800; color: #fff; background: #e8590c;
+  box-shadow: 0 0 0 4px var(--bs-body-bg, #fff); }
+.paso-ruta p:first-child { margin: 0; }
+.paso-ruta .ruta-tit, .paso-ruta h4 { margin: 0 0 .5rem; font-size: 1.1rem; font-weight: 700; }
+.ruta-puente { display: block; margin: .6rem 0 0; padding-top: .5rem; border-top: 1px dashed rgba(128,128,128,.35);
+  font-style: italic; color: var(--bs-secondary-color, #6c757d); font-size: .93rem; }
+.ruta-puente::before { content: "→ "; font-style: normal; color: #e8590c; font-weight: 700; }
+.ruta-final { background: rgba(47,158,68,.07); border-color: rgba(47,158,68,.45); }
+.ruta-final .ruta-num { background: #2f9e44; }

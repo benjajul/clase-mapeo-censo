@@ -1,164 +1,219 @@
 ---
-title: "4 · Ejercicio aplicado"
-subtitle: "Tu mapa del Censo 2024 en dos bloques, con apoyo de inteligencia artificial"
+title: "4 · Después de la clase"
+subtitle: "Un ejercicio aplicado, un recurso para explorar y un desafío para seguir aprendiendo"
 ---
+
+Lo que viene después de la clase tiene tres partes. Solo la primera se entrega.
+
+| | Qué es | ¿Se entrega? |
+|---|---|---|
+| [**1 · Ejercicio aplicado**](#ejercicio-aplicado) | Analizar críticamente dos cartografías: una del Gran Santiago y una de Pudahuel | **Sí**, por correo |
+| [**2 · Recurso: CensoLab**](#recurso-censolab) | Explorar mapas del Censo y hacerle preguntas a una plataforma web | No |
+| [**3 · Desafío para seguir aprendiendo**](#desafio) | Construir tu propio mapa de cualquier territorio con Colab + Gemini | Opcional |
+
+## 1 · Ejercicio aplicado: leer críticamente una cartografía {#ejercicio-aplicado}
 
 ::: {.callout-important}
 ## Entrega
-**Fecha:** _por definir_ · **Trabajo:** individual · **Formato:** un `.zip` con el informe (Word o PDF) y las dos imágenes JPEG generadas
+**Fecha:** {{< var ejercicio.entrega >}} · **Trabajo:** individual · **Enviar a:** [{{< var ejercicio.correo >}}](mailto:{{< var ejercicio.correo >}}) con el asunto *«Ejercicio cartografía – Apellido Nombre»* · **Formato sugerido:** PDF o Word de 2 a 3 páginas, con los dos mapas que elegiste.
 :::
 
-## La idea
+En clase hicimos mapas. Ahora toca **leerlos**: mirar qué muestran, sospechar de lo que no muestran y preguntarse para qué sirven. No necesitas programar ni producir mapas nuevos.
 
-No necesitas programar. El notebook de la tarea tiene **solo dos bloques**: el primero carga los datos y el segundo es un **formulario**. La inteligencia artificial (Gemini) te ayuda a lo que antes exigía código: **traducir tu pregunta a variables del Censo**, usando el diccionario de variables del INE, y anticipar los problemas de los datos.
+### Qué tienes que hacer
 
-Puedes trabajar **cualquier territorio de Chile**, a la escala que elijas:
+1. Escoge **un mapa del Gran Santiago** de los tres de abajo.
+2. Escoge **un mapa de la comuna de Pudahuel** de los tres de abajo. Puede ser la **misma variable** o una distinta.
+3. Analiza críticamente ambos mapas siguiendo el [recorrido de preguntas guía](#preguntas-guia). Puedes apoyarte en datos, noticias, estudios o fenómenos conocidos (cita tus fuentes).
+4. Compara las dos escalas: ¿qué aporta cada una?
+5. Envía tu análisis al correo del docente.
 
-| Escala | Territorio | Unidad que se mapea (automática) |
-|---|---|---|
-| Regional | Una región | Comunas |
-| Provincial | Una provincia | Comunas (o manzanas si la provincia tiene menos de 6 comunas) |
-| Comunal | Una comuna | Manzanas censales |
+### Los mapas
 
-Obtienes dos productos, listos para tu informe:
+Haz clic en un mapa para verlo en grande. Todos son cartografías **por manzana censal** del Censo 2024.
 
-1. **Un mapa profesional** en JPEG, de **una variable** (quintiles) o de **dos variables** (mapa bivariado 3 × 3).
-2. **Un gráfico complementario** elegido según el caso: *ranking* de comunas, *distribución* de las manzanas o *dispersión* entre dos variables.
-
-[Abrir el notebook de la tarea en Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/tarea_cartografia.ipynb){.btn .btn-warning role="button"}
-[Guía ilustrada: Colab y Gemini](guia-colab.qmd){.btn .btn-outline-secondary role="button"}
-
-## Paso a paso
+#### Gran Santiago
 
 ::: {.panel-tabset}
 
-### 1 · Bloque 1
+### {{< var ejercicio.var1 >}}
 
-Abre el notebook, guarda una copia (*Archivo → Guardar una copia en Drive*) y ejecuta el **Bloque 1** con ▶.
-Al terminar verás las regiones y provincias disponibles, las columnas de la base y una vista del diccionario.
+![{{< var ejercicio.var1 >}} por manzana, Gran Santiago.](img/ejercicio/gran_santiago_1.jpg){.lightbox group="gran-santiago"}
 
-En la carpeta 📁 de la izquierda aparece **`diccionario_para_IA.txt`**. Ábrelo con doble clic, selecciona todo (`Ctrl + A`) y cópialo (`Ctrl + C`).
+[Descargar mapa](img/ejercicio/gran_santiago_1.jpg){download="gran_santiago_1.jpg" .btn .btn-outline-secondary .btn-sm}
 
-### 2 · Gemini
+### {{< var ejercicio.var2 >}}
 
-Abre **Gemini** (botón ✦ de Colab, o [gemini.google.com](https://gemini.google.com/)). Copia el **prompt tipo** de abajo, completa los corchetes `[ ]` con tu pregunta y territorio, y pega al final el contenido del diccionario.
+![{{< var ejercicio.var2 >}} por manzana, Gran Santiago.](img/ejercicio/gran_santiago_2.jpg){.lightbox group="gran-santiago"}
 
-Gemini te devolverá los valores del formulario y una justificación. **Revísala**: tú decides si la variable responde a tu pregunta.
+[Descargar mapa](img/ejercicio/gran_santiago_2.jpg){download="gran_santiago_2.jpg" .btn .btn-outline-secondary .btn-sm}
 
-### 3 · Bloque 2
+### {{< var ejercicio.var3 >}}
 
-Escribe en el **formulario del Bloque 2** los valores que te propuso Gemini (a la derecha del bloque) y ejecútalo con ▶.
+![{{< var ejercicio.var3 >}} por manzana, Gran Santiago.](img/ejercicio/gran_santiago_3.jpg){.lightbox group="gran-santiago"}
 
-Si un nombre está mal escrito, el bloque te avisa y sugiere los más parecidos. Si quieres un mapa de una sola variable, deja vacía la `VARIABLE_2`.
-
-### 4 · Resultados
-
-Se descargan dos archivos: `mapa_….jpg` y `grafico_….jpg`. Puedes volver a ejecutar el Bloque 2 cuantas veces quieras con otros valores: no es necesario repetir el Bloque 1.
+[Descargar mapa](img/ejercicio/gran_santiago_3.jpg){download="gran_santiago_3.jpg" .btn .btn-outline-secondary .btn-sm}
 
 :::
 
-## Prompt tipo para Gemini
+#### Comuna de Pudahuel
 
-Cópialo completo (botón de copiar, arriba a la derecha) y completa lo que está entre corchetes.
+::: {.panel-tabset}
 
-```{.text filename="Prompt 1 · Elegir y traducir las variables"}
-Actúa como asesor(a) en análisis territorial y cartografía censal. Trabajo con la base por manzana del Censo de Población y Vivienda 2024 de Chile (INE). Al final te entrego la lista de columnas disponibles y el diccionario de variables.
+### {{< var ejercicio.var1 >}}
 
-MI PREGUNTA DE INVESTIGACIÓN: [escribe tu pregunta]
-ESCALA: [Regional / Provincial / Comunal]
-TERRITORIO: [nombre de la región, provincia o comuna]
-TIPO DE MAPA: [una variable / dos variables]
+![{{< var ejercicio.var1 >}} por manzana, comuna de Pudahuel.](img/ejercicio/pudahuel_1.jpg){.lightbox group="pudahuel"}
 
-Necesito completar un formulario de Google Colab que genera el mapa y el gráfico de forma automática. Sigue estas reglas:
-1. Usa SOLO nombres de columna que aparezcan textualmente en la lista de columnas. No inventes nombres. Si ninguna columna responde bien a mi pregunta, dímelo y propone la más cercana.
-2. Si la variable es un conteo (empieza con n_), propone un DENOMINADOR con el mismo universo para obtener un porcentaje. Usa la columna "Denominador sugerido" del diccionario como punto de partida. El denominador puede ser una suma o resta de columnas escrita sin espacios (por ejemplo n_ocupado+n_desocupado+n_fuera_fuerza_trabajo para personas de 15 años o más). Si la variable es un promedio (prom_), usa el denominador sugerido como ponderador o déjalo vacío. Si el diccionario no sugiere denominador, explícame por qué y propone uno.
-3. Explica en una frase qué mide cada variable y cuál es su universo (por ejemplo, "personas de 18 años y más").
-4. Anticipa los problemas de limpieza y procesamiento: datos suprimidos o negativos, números pequeños, universos que no coinciden entre numerador y denominador, variables que solo aplican a una parte de la población y la cobertura urbana/rural de las manzanas.
-5. Si son dos variables, que no sean redundantes (una no debe contener a la otra) y que su cruce tenga sentido para mi pregunta.
-6. Responde primero con este bloque, exactamente en este formato, para copiarlo al formulario:
+[Descargar mapa](img/ejercicio/pudahuel_1.jpg){download="pudahuel_1.jpg" .btn .btn-outline-secondary .btn-sm}
 
-ESCALA =
-TERRITORIO =
-UNIDAD = Automática
-VARIABLE_1 =
-DENOMINADOR_1 =
-NOMBRE_1 = (etiqueta breve en español, máximo 40 caracteres)
-VARIABLE_2 = (vacío si es una sola variable)
-DENOMINADOR_2 =
-NOMBRE_2 =
-TITULO = (un título que plantee la pregunta, sin afirmar resultados que aún no conocemos)
+### {{< var ejercicio.var2 >}}
 
-Después agrega: (a) justificación de la elección en máximo 5 líneas; (b) advertencias de limpieza y procesamiento; (c) qué gráfico complementario se generará (ranking de comunas, distribución de manzanas o dispersión entre dos variables) y cómo leerlo.
+![{{< var ejercicio.var2 >}} por manzana, comuna de Pudahuel.](img/ejercicio/pudahuel_2.jpg){.lightbox group="pudahuel"}
 
-LISTA DE COLUMNAS Y DICCIONARIO:
-[pega aquí todo el contenido de diccionario_para_IA.txt]
-```
+[Descargar mapa](img/ejercicio/pudahuel_2.jpg){download="pudahuel_2.jpg" .btn .btn-outline-secondary .btn-sm}
 
-Cuando tengas el mapa y el gráfico, puedes usar este segundo prompt para **discutir** tus resultados. En [gemini.google.com](https://gemini.google.com/) puedes adjuntar las dos imágenes JPEG.
+### {{< var ejercicio.var3 >}}
 
-```{.text filename="Prompt 2 · Discutir los resultados (opcional)"}
-Te adjunto el mapa y el gráfico que generé con [variable(s)] para [territorio], a escala [escala], con datos del Censo 2024. Mi pregunta era: [tu pregunta].
-1. Describe los patrones territoriales que se observan (dónde se concentran los valores altos y bajos, si hay agrupamientos o contrastes), sin inventar causas.
-2. Propón tres hipótesis que podrían explicar el patrón y qué dato adicional permitiría ponerlas a prueba.
-3. Señala los límites de esta lectura: problema de la unidad de área modificable (MAUP), falacia ecológica, números pequeños y lo que el Censo no mide sobre este fenómeno.
+![{{< var ejercicio.var3 >}} por manzana, comuna de Pudahuel.](img/ejercicio/pudahuel_3.jpg){.lightbox group="pudahuel"}
 
-No escribas mi interpretación: hazme preguntas que me ayuden a construirla.
-```
+[Descargar mapa](img/ejercicio/pudahuel_3.jpg){download="pudahuel_3.jpg" .btn .btn-outline-secondary .btn-sm}
 
-::: {.callout-warning}
-## La IA ayuda, pero la decisión es tuya
-Gemini puede equivocarse: confundir variables, inventar columnas o proponer denominadores con universos distintos. El Bloque 2 detecta los nombres inexistentes, pero **no puede saber si la variable responde a tu pregunta**. Esa evaluación, y la interpretación del mapa, son el centro de la tarea.
 :::
 
-## El informe
+### Preguntas guía: un recorrido en seis pasos {#preguntas-guia}
 
-Un documento breve (Word o PDF), pensado para alguien que debe **entender el territorio y tomar decisiones**.
+Las preguntas avanzan como un recorrido: parten de **lo que se ve**, pasan por **lo que el mapa oculta**, cambian de **escala**, buscan los **factores** y los **actores** que explican el patrón y terminan en un **análisis integral**. No tienes que responderlas todas: úsalas como hilo conductor de tu texto.
 
-| Elemento | Indicación |
+::: {.ruta}
+
+::: {.paso-ruta}
+[1]{.ruta-num}
+
+#### Observar: ¿qué se ve? {.ruta-tit}
+
+- ¿Hay **patrones de distribución**? Concentraciones, gradientes (centro–periferia, oriente–poniente), corredores, bordes marcados o "islas".
+- ¿Qué **contrastes** aparecen entre zonas vecinas? ¿Hay comportamientos llamativos o excepciones?
+- ¿Coincide el patrón con elementos que conoces del territorio: ejes viales, cerros, ríos, el aeropuerto, poblaciones, villas, condominios, zonas industriales?
+
+[Ya describiste el patrón. Antes de explicarlo, pregúntate cuánto puedes confiar en lo que ves.]{.ruta-puente}
+:::
+
+::: {.paso-ruta}
+[2]{.ruta-num}
+
+#### Sospechar: ¿qué NO se ve? {.ruta-tit}
+
+- **Por la estructura de la pregunta censal:** ¿cómo se preguntó?, ¿es autodeclarado?, ¿quién respondió?, ¿qué momento captura el Censo?
+- **Por la composición de la variable:** ¿qué cuenta el numerador?, ¿contra qué total se compara?, ¿qué categorías agrupa o deja fuera?
+- **Por la unidad y el diseño del mapa:** manzanas de distinto tamaño y densidad, manzanas sin datos o excluidas, cortes de la clasificación, colores.
+- ¿Qué aspectos del fenómeno **no mide** el Censo (calidad, trayectorias, percepciones, relaciones)?
+
+[Lo que se ve y lo que se oculta también depende de desde dónde miras.]{.ruta-puente}
+:::
+
+::: {.paso-ruta}
+[3]{.ruta-num}
+
+#### Cambiar de escala: ¿qué aporta cada mirada? {.ruta-tit}
+
+- ¿Qué diferencia hay entre mostrar el fenómeno en el **Gran Santiago** y en **Pudahuel**? ¿Qué aporta cada escala?
+- ¿Se ve en el mapa metropolitano lo que aparece en el mapa comunal? ¿Qué se pierde y qué se gana al acercarse o alejarse?
+- ¿Cómo se ve Pudahuel en relación con su entorno metropolitano?
+
+[Con el patrón claro en ambas escalas, toca preguntarse por qué el territorio es así. Empieza por el soporte físico.]{.ruta-puente}
+:::
+
+::: {.paso-ruta}
+[4]{.ruta-num}
+
+#### Los factores: el medio físico y ambiental {.ruta-tit}
+
+El medio ambiente no es un actor, pero sí un **factor** que condiciona dónde se puede vivir, hacia dónde crece la ciudad y con qué consecuencias.
+
+- ¿Qué condiciones del territorio podrían ayudar a explicar el patrón: **relieve y cerros, ríos y esteros, humedales, suelos agrícolas, disponibilidad de agua, clima**?
+- ¿**Hacia dónde crece la ciudad** y sobre qué suelos? ¿Qué se pierde cuando se urbaniza un borde rural o un humedal?
+- ¿Qué **riesgos** y molestias ambientales se distribuyen en el territorio: inundaciones, remoción en masa, incendios, islas de calor, contaminación del aire, ruido (por ejemplo, del aeropuerto), cercanía a industrias o vertederos?
+- ¿Quiénes viven más expuestos a esos riesgos y quiénes en los entornos más favorables? ¿Qué **consecuencias** tiene eso para cada grupo?
+- ¿Es el entorno el que explica la localización de los grupos, o los grupos con más recursos eligen los mejores entornos?
+
+[Los factores condicionan, pero no deciden solos: alguien decide cómo y para quién se usa ese territorio.]{.ruta-puente}
+:::
+
+::: {.paso-ruta}
+[5]{.ruta-num}
+
+#### Los actores: ¿quién ordena el territorio? {.ruta-tit}
+
+Viendo y analizando las distintas distribuciones, fenómenos y grupos dentro del territorio, según tu opinión y análisis:
+
+- ¿**Quién ordena** el territorio?
+- ¿Quién **planifica** dónde debe ir cada cosa, con o sin instrumentos de planificación (planes reguladores, políticas de vivienda, decisiones de inversión)?
+- ¿Cuáles son los **actores** que hacen que el territorio se organice de esa forma (Estado, municipios, mercado inmobiliario, empresas, organizaciones, las propias comunidades)?
+- ¿Por qué tienden a **armarse grupos** ordenados de esa forma?
+- ¿Cómo se relacionan esas decisiones con los factores ambientales del paso anterior: quién decide urbanizar zonas de riesgo, y quién termina viviendo en ellas?
+
+[Ahora junta las piezas.]{.ruta-puente}
+:::
+
+::: {.paso-ruta .ruta-final}
+[6]{.ruta-num}
+
+#### Síntesis: un análisis integral {.ruta-tit}
+
+Integra los pasos anteriores en una interpretación propia:
+
+- **Patrón + límites + escala + factores + actores:** ¿por qué el territorio que observaste se organiza así?
+- ¿Qué **preguntas** permite responder este análisis y qué preguntas **nuevas** abre?
+- ¿A quién le podría servir (política pública, organizaciones territoriales, investigación) y con qué otra información o método lo complementarías (trabajo de campo, entrevistas, otras fuentes)?
+:::
+
+:::
+
+### Estructura sugerida
+
+Tu texto puede seguir el mismo recorrido:
+
+1. **Los mapas que elegiste** y por qué.
+2. **Lo que se ve:** patrones, contrastes y excepciones, en ambos mapas.
+3. **Lo que no se ve:** límites de la pregunta, de la variable y de la representación.
+4. **Comparación de escalas:** qué aporta el Gran Santiago y qué aporta Pudahuel.
+5. **Factores ambientales:** condiciones del medio, crecimiento de la ciudad, riesgos y consecuencias.
+6. **Actores:** quién ordena el territorio y por qué se forman esos grupos.
+7. **Síntesis integral:** tu interpretación final y las preguntas que abre.
+8. **Referencias**, si usaste datos o fuentes externas (APA 7.ª edición).
+
+### Qué se valorará
+
+| Criterio | Qué se espera |
 |---|---|
-| Extensión | 2 a 3 páginas, sin contar portada ni anexo |
-| Formato | Carta, márgenes de 2,5 cm, Arial o Calibri 11, interlineado 1,15 |
-| Figuras | Numeradas ("Figura 1"), con título arriba y fuente abajo |
-| Referencias | APA 7.ª edición |
+| Observación | Describe patrones concretos, con lugares identificables en el mapa |
+| Lectura crítica | Distingue lo que el mapa muestra de lo que no puede mostrar, y explica por qué (pregunta, variable, unidad, diseño) |
+| Comparación de escalas | Explica qué aporta y qué oculta cada escala, con ejemplos de los mapas |
+| Factores ambientales | Relaciona el patrón con condiciones del medio físico, riesgos y sus consecuencias para distintos grupos |
+| Actores y ordenamiento | Reflexiona, con argumentos propios, sobre quiénes y qué procesos organizan el territorio de esa forma |
+| Síntesis integral | Integra observación, límites, escala, factores y actores en una interpretación coherente, y plantea preguntas pertinentes |
+| Fundamentación y claridad | Se apoya en datos o fenómenos conocidos citados; escribe con claridad |
 
-**Portada:** título que comunique el hallazgo, nombre, programa (Magíster en Metodologías Críticas para la Investigación Social), docente (Benjamín Julio) y fecha.
+## 2 · Recurso: explorar con CensoLab {#recurso-censolab}
 
-**Contenido:**
+[CensoLab](http://censolab.cl) es una plataforma abierta para explorar datos geográficos y censales de Chile, desarrollada por Joshua Kunst y Matías Parra ([presentación en el grupo de usuari@s de R de Santiago](https://santiagorusers.github.io/posts/2026-08-26/)). Permite hacer **mapas interactivos**, revisar **perfiles territoriales** y hacerle **preguntas en lenguaje natural** a un asistente de inteligencia artificial, que responde con mapas, gráficos y tablas.
 
-1. **Pregunta y justificación** (½ página): qué quieres saber, por qué en ese territorio y a esa escala, y por qué esas variables y ese denominador.
-2. **Resultados** (1 página): el mapa y el gráfico, con una descripción de los patrones que muestran.
-3. **Interpretación y reflexión crítica** (1 página): qué podría explicar el patrón, qué cambiaría a otra escala, qué no puede decir el mapa y qué voces o datos quedan fuera.
-4. **Anexo · Uso de IA**: copia de los prompts que usaste y de la respuesta de Gemini, y una línea sobre qué aceptaste, qué corregiste y por qué.
+No se entrega nada: es un recurso para seguir explorando. Algunas ideas:
 
-El `.zip` se llama `Apellido_Nombre_Tarea.zip` y contiene el informe y los dos archivos JPEG.
+- **Busca la variable que elegiste** en el ejercicio 1 y mírala en CensoLab. CensoLab trabaja con datos públicos agregados (por ejemplo, por comuna), no por manzana: ¿qué cambia respecto de los mapas por manzana?
+- **Compara Pudahuel con sus comunas vecinas** o con el promedio regional.
+- **Pregúntale al asistente**, por ejemplo: *«¿Qué comunas de la Región Metropolitana tienen mayor proporción de personas de 60 años o más?»* Luego verifica la respuesta en el mapa o la tabla que entrega.
+- **Míralo críticamente**, como en clase: ¿qué unidad territorial usa?, ¿qué indicador?, ¿cómo clasifica los colores?, ¿de dónde vienen los datos?
 
-## Rúbrica
-
-| Criterio | Peso | Logrado |
-|---|---|---|
-| Pregunta y elección de variables | 25 % | La pregunta es clara; variable, denominador, territorio y escala son coherentes con ella y están justificados |
-| Productos | 20 % | Mapa y gráfico correctos, legibles e integrados al texto con número, título y fuente |
-| Interpretación | 30 % | Describe patrones con evidencia del mapa y del gráfico; distingue descripción de explicación |
-| Reflexión crítica | 15 % | Discute escala, unidad de análisis y límites del dato censal |
-| Transparencia en el uso de IA | 10 % | Anexo completo; muestra criterio propio frente a las propuestas de la IA |
-
-## Si algo falla
-
-| Mensaje | Qué hacer |
-|---|---|
-| "No encontré '…' en la escala …" | Revisa el nombre con la lista del Bloque 1 o usa una de las sugerencias. Las tildes y mayúsculas no importan |
-| "El campo variable 1: '…' no existe" | Copia el nombre exacto de la lista de columnas. Pídele a Gemini que use solo esa lista |
-| "Solo hay N unidades con datos" | Muy pocas comunas para clasificar: cambia `UNIDAD` a `Manzana` o elige una escala mayor |
-| `NameError` (por ejemplo, `CATALOGO`) | No ejecutaste el Bloque 1 o la sesión se reinició: ejecútalo de nuevo |
-| La descarga de datos falla | Ver [la guía de Colab](guia-colab.qmd#si-la-descarga-falla) |
-
-::: {.callout-note collapse="true"}
-## Qué hace el Bloque 2 por dentro
-1. Filtra el territorio por su código comunal (CUT) y reproyecta a la zona UTM que corresponde.
-2. Convierte en vacío los valores negativos (datos suprimidos por el INE) y, a escala de manzana, excluye las manzanas con menos de 20 personas.
-3. Calcula la tasa como suma del numerador sobre suma del denominador (× 100); el denominador puede ser una suma o resta de columnas. Los promedios se agregan por comuna ponderados por su universo (el denominador) o, si no se indica, por población.
-4. Clasifica en quintiles (una variable) o terciles cruzados (dos variables) y dibuja el mapa con título, subtítulo, leyenda, escala, norte, grilla, fuente y proyección.
-5. Elige el gráfico: *ranking* (una variable por comuna), *histograma* coloreado con las clases del mapa (una variable por manzana) o *dispersión* con correlación de Pearson y terciles (dos variables).
-
-La base incluye manzanas urbanas y entidades rurales (`AREA_C`). Con `AREA = Solo urbana` se mapean solo las manzanas urbanas. Los registros comunales sin manzana asociada (`CONTENEDOR_COMUNAL`) se suman en los totales por comuna, pero no se dibujan a escala de manzana.
+::: {.callout-tip}
+Lo que encuentres en CensoLab puede servirte como dato de apoyo en el ejercicio 1. Si lo usas, cítalo.
 :::
+
+## 3 · Desafío para seguir aprendiendo: tu propio mapa con Colab + Gemini {#desafio}
+
+¿Te quedaste con ganas de hacer tu propio mapa? Con un notebook de Google Colab y el asistente Gemini puedes cartografiar **cualquier variable del Censo 2024**, en **cualquier región, provincia o comuna de Chile**, sin programar: respondes unas preguntas con tus palabras y Gemini te entrega una línea lista para ejecutar.
+
+[Ver el desafío](desafio-colab.qmd){.btn .btn-warning role="button"}
+[Guía ilustrada de Colab y Gemini](guia-colab.qmd){.btn .btn-outline-secondary role="button"}
+
+Es opcional y no forma parte de la evaluación. Si lo haces, puedes usar tu mapa como complemento en el ejercicio 1.

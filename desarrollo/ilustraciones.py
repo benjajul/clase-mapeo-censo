@@ -42,14 +42,32 @@ def flecha(x1, y1, x2, y2, curva=0):
 def resalte(x, y, w, h):
     return r(x - 3, y - 3, w + 6, h + 6, "none", ACENTO, 7, 3)
 
+OUT_OSCURO = OUT.parent / "guia_oscuro"
+OUT_OSCURO.mkdir(parents=True, exist_ok=True)
+OSCURO = {"#212529": "#e6e8eb", "#6c757d": "#9aa4b2", "#ced4da": "#3a414b", "#f8f9fa": "#232830",
+          "#adb5bd": "#4a525e", "#e9ecef": "#2a3038", "#f1f3f5": "#1f242b", "#fff4e6": "#3b2616",
+          "#f3f0ff": "#2a2440", "#495057": "#000000", "#1c7ed6": "#339af0", "#7048e8": "#9775fa",
+          "#2f9e44": "#51cf66", "#e6f4ea": "#173a24", "#e7f1fb": "#16304a", "#fff4d6": "#3d3012"}
+
+def a_oscuro(contenido):
+    import re
+    # Fondos blancos de rectángulos y círculos → superficie oscura (el texto blanco se mantiene)
+    contenido = re.sub(r'(<(?:rect|circle)[^>]*?)fill="white"', r'\1fill="#1b1f26"', contenido)
+    contenido = re.sub(r'<rect width="(\d+)" height="(\d+)" fill="#1b1f26"/>',
+                       r'<rect width="\1" height="\2" fill="#14181e"/>', contenido, count=1)
+    for claro, oscuro in OSCURO.items():
+        contenido = contenido.replace(claro, oscuro)
+    return contenido.replace('rgba(0,0,0,.15)', 'rgba(0,0,0,.5)').replace('rgba(0,0,0,.2)', 'rgba(0,0,0,.6)')
+
 def guardar(nombre, contenido):
     (OUT / f"{nombre}.svg").write_text(contenido, encoding="utf-8")
+    (OUT_OSCURO / f"{nombre}.svg").write_text(a_oscuro(contenido), encoding="utf-8")
 
 # ---------------------------------------------------------------- 0. Recorrido
-pasos = [("☁", "Habilitar Colab", "una sola vez", AZUL),
-         ("▶", "Bloque 1", "carga los datos", VERDE),
+pasos = [("☁", "Abrir Colab", "desde el enlace", AZUL),
+         ("▶", "Bloque 1", "datos + armador", VERDE),
          ("✦", "Gemini", "elige las variables", MORADO),
-         ("☰", "Bloque 2", "llenas el formulario", VERDE),
+         ("☰", "Ejecutar", "la línea de Gemini", VERDE),
          ("🗺", "Mapa y gráfico", "en JPEG", ACENTO)]
 c = ""
 for i, (ic, a, b, col) in enumerate(pasos):
@@ -100,8 +118,8 @@ c += t(380, 270, "✓ Listo: esto se hace una sola vez.", 13, VERDE, "bold")
 guardar("02_instalar_colab", svg(760, 320, c, "Buscar Colaboratory e instalar"))
 
 # ---------------------------------------------------------------- 3. Colab: Archivo → Guardar una copia en Drive
-c = ventana(10, 10, 740, 330, "colab.research.google.com — tarea_cartografia.ipynb")
-c += t(30, 66, "tarea_cartografia.ipynb", 16, TINTA, "bold")
+c = ventana(10, 10, 740, 330, "colab.research.google.com — desafio_cartografia.ipynb")
+c += t(30, 66, "desafio_cartografia.ipynb", 16, TINTA, "bold")
 menus = ["Archivo", "Editar", "Ver", "Insertar", "Entorno de ejecución", "Herramientas", "Ayuda"]
 x = 30
 for i, m in enumerate(menus):
@@ -120,7 +138,7 @@ c += t(350, 174, "El notebook original es del docente y es de", 13, GRIS)
 c += t(350, 194, "solo lectura. Tu copia queda en tu Drive", 13, GRIS)
 c += t(350, 214, "(carpeta Colab Notebooks) y guarda tus cambios.", 13, GRIS)
 c += t(350, 254, "Sabrás que funcionó porque el título", 13, TINTA)
-c += t(350, 274, "cambia a «Copia de tarea_cartografia».", 13, TINTA, "bold")
+c += t(350, 274, "cambia a «Copia de desafio_cartografia».", 13, TINTA, "bold")
 guardar("03_guardar_copia", svg(760, 350, c, "Colab: Archivo, Guardar una copia en Drive"))
 
 # ---------------------------------------------------------------- 4. Ejecutar un bloque: tres estados
@@ -162,74 +180,70 @@ c += r(430, 174, 186, 36, "white", "#adb5bd", 18) + t(523, 197, "Ejecutar de tod
 c += resalte(430, 174, 186, 36) + num(626, 176, "✓")
 guardar("05_advertencia", svg(760, 250, c, "Advertencia de Colab: Ejecutar de todos modos"))
 
-# ---------------------------------------------------------------- 6. Panel de archivos
-c = ventana(10, 10, 740, 300, "Colab — panel de archivos")
-c += r(10, 42, 52, 268, "#f1f3f5", "none", 0)
-for i, ic in enumerate(["☰", "🔍", "{x}", "🔑", "📁"]):
-    c += t(36, 74 + i * 42, ic, 17, TINTA if ic == "📁" else GRIS, "normal", "middle")
-c += resalte(18, 222, 36, 32) + num(18, 220, "1")
-c += r(62, 42, 290, 268, "white", LINEA, 0)
-c += t(78, 70, "Archivos", 15, TINTA, "bold")
-arbol = [("📁 ..", 0), ("📁 datos", 0), ("📁 resultados", 0), ("📁 sample_data", 0), ("📄 diccionario_para_IA.txt", 0)]
-for i, (n, _) in enumerate(arbol):
-    c += t(82, 104 + i * 30, n, 13, TINTA if "IA" in n else GRIS, "bold" if "IA" in n else "normal")
-c += resalte(76, 104 + 4 * 30 - 17, 230, 24) + num(318, 104 + 4 * 30 - 5, "2")
-c += r(390, 64, 340, 222, FONDO, LINEA, 8)
-c += t(406, 88, "diccionario_para_IA.txt", 13, TINTA, "bold")
-for i, l in enumerate(["COLUMNAS DISPONIBLES EN LA BASE…", "CUT, COMUNA, REGION, n_per, …", "",
-                       "DICCIONARIO DE VARIABLES (Variable |", "Tipo | Descripción | Universo | …)",
-                       "n_per|Frecuencia|Personas|…|n_per", "n_edad_60_mas|Frecuencia|…"]):
-    c += t(406, 114 + i * 20, l, 11, GRIS)
-c += r(406, 252, 150, 24, "#fff4e6", ACENTO, 6) + t(481, 269, "Ctrl + A  →  Ctrl + C", 12, ACENTO, "bold", "middle")
-c += num(570, 264, "3")
-c += flecha(310, 210, 400, 170, 30)
-guardar("06_archivos", svg(760, 320, c, "Panel de archivos: abrir y copiar diccionario_para_IA.txt"))
+# ---------------------------------------------------------------- 6. Armador en Colab
+c = ventana(10, 10, 740, 330, "Colab — resultado del Bloque 1")
+c += t(34, 62, "✓", 18, VERDE, "bold") + t(56, 60, "Bloque 1 · Preparar el entorno y cargar los datos", 12, TINTA, "bold")
+c += r(30, 72, 700, 30, "#e6f4ea", VERDE, 6, 1.2) + t(42, 92, "✓ Listo: datos cargados. Siguiente paso: el armador del mensaje para Gemini ↓", 12, VERDE, "bold")
+c += r(30, 112, 700, 214, "white", "#adb5bd", 10)
+c += t(44, 134, "✦ Arma tu mensaje para Gemini", 13, TINTA, "bold")
+c += r(44, 144, 300, 34, FONDO, LINEA, 8)
+for i, ch in enumerate(["Personas mayores", "Hacinamiento", "Leña"]):
+    c += r(52 + i * 96, 151, 90, 20, "white" if i != 1 else "#fff4e6", ACENTO if i == 1 else LINEA, 10) + t(97 + i * 96, 165, ch, 10, ACENTO if i == 1 else GRIS, "normal", "middle")
+campos = [("1 ¿Qué quieres mapear?", "dónde hay más viviendas hacinadas"), ("2 ¿Dónde?", "Una comuna ▾   Santiago"),
+          ("3 ¿Cruzar con otro tema?", "No, un solo tema"), ("5 Tu nombre", "Camila Rojas")]
+for i, (k, v) in enumerate(campos):
+    y = 188 + i * 33
+    c += t(44, y + 8, k, 10.5, TINTA, "bold") + r(180, y - 6, 164, 22, FONDO, LINEA, 5) + t(186, y + 9, v, 10, TINTA)
+c += r(360, 144, 356, 130, FONDO, LINEA, 8)
+for i, l in enumerate(["Hola Gemini. Estoy en Google Colab…", "- ¿Qué quiero mapear?: dónde hay más viviendas…",
+                       "- ¿Dónde?: la comuna de Santiago", "…", "[+ diccionario y territorios: se agregan al copiar]"]):
+    c += t(372, 164 + i * 20, l, 10.5, GRIS if i == 4 else TINTA, "normal", "start", "italic" if i == 4 else "normal")
+c += r(360, 284, 230, 32, ACENTO, ACENTO, 9) + t(475, 305, "📋 Copiar mensaje para Gemini", 12, "white", "bold", "middle")
+c += resalte(360, 284, 230, 32) + num(604, 300, "2") + num(352, 148, "1")
+guardar("06_armador", svg(760, 350, c, "El armador del mensaje para Gemini al final del Bloque 1"))
 
-# ---------------------------------------------------------------- 7. Gemini
-c = ventana(10, 10, 740, 380, "Colab con el panel de Gemini abierto")
-c += r(26, 50, 380, 320, FONDO, LINEA, 8) + t(42, 76, "Tu notebook", 13, GRIS, "bold")
-for i in range(3):
-    c += r(42, 92 + i * 80, 348, 62, "white", LINEA, 6)
+# ---------------------------------------------------------------- 7. Gemini en Colab
+c = ventana(10, 10, 740, 400, "Colab con el panel de Gemini abierto")
 c += r(586, 18, 80, 24, "white", "#adb5bd", 12) + t(626, 35, "✦ Gemini", 12, MORADO, "bold", "middle")
 c += resalte(586, 18, 80, 24) + num(680, 30, "1")
-c += r(420, 50, 316, 320, "white", MORADO, 8, 1.5)
-c += t(436, 76, "✦ Gemini", 14, MORADO, "bold")
-c += r(500, 90, 222, 92, "#f3f0ff", "none", 12)
-for i, l in enumerate(["Actúa como asesor(a) en análisis", "territorial… MI PREGUNTA: ¿dónde", "se concentra…? ESCALA: Comunal",
-                       "[+ texto del diccionario]"]):
-    c += t(512, 110 + i * 19, l, 11, TINTA if i < 3 else MORADO, "normal", "start", "italic" if i == 3 else "normal")
-c += num(494, 92, "2")
-c += r(434, 196, 260, 120, FONDO, "none", 12)
-for i, l in enumerate(["ESCALA = Comunal", "TERRITORIO = Valparaíso", "VARIABLE_1 = n_edad_60_mas",
-                       "DENOMINADOR_1 = n_per", "NOMBRE_1 = Personas de 60+ …", "Justificación: …"]):
-    c += t(446, 216 + i * 18, l, 11, TINTA if i < 5 else GRIS, "bold" if i < 5 else "normal")
-c += num(700, 200, "3")
-c += r(434, 328, 288, 30, "white", "#adb5bd", 15) + t(450, 348, "Escribe aquí y presiona Enter…", 12, GRIS)
-guardar("07_gemini", svg(760, 400, c, "Panel de Gemini: pegar el prompt y recibir los valores"))
+c += r(26, 50, 300, 350, FONDO, LINEA, 8) + t(42, 76, "Tu notebook", 13, GRIS, "bold")
+for i in range(3):
+    c += r(42, 92 + i * 96, 268, 76, "white", LINEA, 6)
+c += r(340, 50, 396, 350, "white", MORADO, 8, 1.5)
+c += t(356, 74, "✦ Gemini", 14, MORADO, "bold")
+c += r(470, 84, 252, 50, "#f3f0ff", "none", 12)
+c += t(482, 104, "Hola Gemini. Estoy en Google Colab…", 11, TINTA) + t(482, 122, "[+ diccionario pegado]", 11, MORADO, "normal", "start", "italic")
+c += num(464, 86, "2")
+c += r(354, 144, 368, 210, FONDO, "none", 12)
+c += t(366, 164, "PARTE 1 · Lo que entendí", 11, MORADO, "bold")
+c += t(366, 180, "% de viviendas hacinadas, comuna de Santiago (13101)", 10.5, TINTA)
+c += t(366, 202, "PARTE 2 · La línea para ejecutar", 11, MORADO, "bold")
+c += r(366, 210, 344, 66, "#212529" if True else "", "none", 8)
+for i, l in enumerate(['hacer_mapa(escala="Comunal",', '  territorio="13101", variable_1="n_viv_hacinadas",', '  nombre_1="Viviendas hacinadas", autor="Camila Rojas")']):
+    c += t(376, 228 + i * 16, l, 10, "#e9ecef", "normal")
+c += r(612, 280, 98, 22, "white", "#adb5bd", 11) + t(661, 295, "▶ Ejecutar", 11, AZUL, "bold", "middle")
+c += r(520, 280, 86, 22, "white", "#adb5bd", 11) + t(563, 295, "+ Insertar", 11, AZUL, "bold", "middle")
+c += resalte(520, 280, 190, 22) + num(724, 291, "3")
+c += t(366, 324, "PARTE 3 · Explicación simple", 11, MORADO, "bold")
+c += t(366, 340, "Una vivienda está hacinada cuando…", 10.5, GRIS)
+c += r(354, 362, 368, 28, "white", "#adb5bd", 14) + t(368, 381, "Escribe aquí y presiona Enter…", 11, GRIS)
+guardar("07_gemini", svg(760, 420, c, "Gemini dentro de Colab: el mensaje pegado y la línea hacer_mapa lista para ejecutar"))
 
-# ---------------------------------------------------------------- 8. Formulario
-c = r(10, 10, 740, 330, "white", "#adb5bd", 10, 1.5)
-c += t(30, 40, "▶   Bloque 2 · Formulario del mapa", 15, TINTA, "bold")
-campos = [("ESCALA", "Comunal ▾"), ("TERRITORIO", "Valparaíso"), ("UNIDAD", "Automática ▾"),
-          ("AREA", "Urbana y rural ▾"), ("VARIABLE_1", "n_edad_60_mas"), ("DENOMINADOR_1", "n_per"),
-          ("NOMBRE_1", "Personas de 60 años y más"), ("VARIABLE_2", ""), ("AUTOR", "Tu nombre")]
-for i, (k, v) in enumerate(campos):
-    y = 66 + i * 29
-    c += t(46, y + 15, k + ":", 13, GRIS, "normal") + r(190, y, 250, 22, "white", "#adb5bd", 4)
-    c += t(198, y + 16, v, 12, TINTA if v else GRIS)
-    if not v:
-        c += t(198, y + 16, "(vacío = una sola variable)", 11, GRIS, "normal", "start", "italic")
-c += resalte(190, 66 + 4 * 29, 250, 22 + 29)
-c += r(490, 70, 240, 112, "#f3f0ff", MORADO, 10)
-c += t(504, 92, "Lo que respondió Gemini", 12, MORADO, "bold")
-for i, l in enumerate(["VARIABLE_1 = n_edad_60_mas", "DENOMINADOR_1 = n_per", "NOMBRE_1 = Personas de…"]):
-    c += t(504, 116 + i * 20, l, 11, TINTA)
-c += flecha(488, 140, 446, 190, -10)
-c += t(490, 220, "Copia cada valor en su campo:", 13, TINTA, "bold")
-c += t(490, 240, "sin comillas y sin el signo =.", 13, GRIS)
-c += t(490, 272, "Luego presiona ▶ (arriba a la", 13, GRIS) + t(490, 290, "izquierda del bloque).", 13, GRIS)
-c += num(30, 34, "▶")
-guardar("08_formulario", svg(760, 350, c, "Formulario del Bloque 2 con los valores de Gemini"))
+# ---------------------------------------------------------------- 8. Ejecutar la línea
+c = r(10, 10, 740, 300, "white", "#adb5bd", 10, 1.5)
+c += t(30, 40, "Celda nueva (la agrega Gemini, o la creas con + Código)", 13, GRIS, "bold")
+c += r(30, 52, 700, 66, FONDO, LINEA, 8)
+c += f'<circle cx="58" cy="85" r="15" fill="white" stroke="{TINTA}" stroke-width="1.5"/>' + f'<path d="M53,76 L66,85 L53,94 z" fill="{TINTA}"/>'
+c += resalte(39, 66, 38, 38) + num(36, 62, "▶")
+for i, l in enumerate(['hacer_mapa(escala="Comunal", territorio="13101", variable_1="n_viv_hacinadas",',
+                       '           nombre_1="Viviendas hacinadas", autor="Camila Rojas")']):
+    c += t(88, 80 + i * 20, l, 12, TINTA)
+c += r(30, 132, 700, 30, "#e6f4ea", VERDE, 6, 1.2) + t(42, 152, "✓ Territorio elegido: Comuna de Santiago (código 13101) · Provincia Santiago · Región Metropolitana", 11.5, VERDE, "bold")
+c += r(30, 170, 700, 30, "#e7f1fb", AZUL, 6, 1.2) + t(42, 190, "i Completé automáticamente (según el diccionario del INE): DENOMINADOR_1 = n_vp_ocupada", 11.5, AZUL, "bold")
+c += r(30, 208, 700, 30, "#fff4d6", "#e67700", 6, 1.2) + t(42, 228, "! Si algo está mal, aparece un recuadro amarillo que te dice qué revisar.", 11.5, "#e67700", "bold")
+c += t(30, 266, "Luego aparecen el mapa y el gráfico, y se descargan solos.", 13, TINTA, "bold")
+c += t(30, 288, "¿Prefieres no usar código? El Bloque 2 es un formulario que hace lo mismo.", 12, GRIS)
+guardar("08_ejecutar", svg(760, 320, c, "Ejecutar la línea de Gemini y leer los recuadros de colores"))
 
 # ---------------------------------------------------------------- 9. Resultado
 c = ""

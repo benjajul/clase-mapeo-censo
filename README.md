@@ -14,15 +14,20 @@ Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana
 ├── 01-conceptos.qmd     Conceptos geoespaciales + ecosistema técnico
 ├── 02-ejercicio.qmd     Ejercicio en Python, por bloques
 ├── 03-cartografia.qmd   Elementos cartográficos y lectura crítica
-├── 04-tarea.qmd         Ejercicio aplicado (2 bloques + prompt tipo para Gemini) y rúbrica
-├── guia-colab.qmd       Guía rápida: habilitar Colab y usar Gemini
+├── 04-tarea.qmd         Después de la clase: ejercicio aplicado (análisis crítico), CensoLab y desafío para seguir aprendiendo
+├── desafio-colab.qmd    Desafío para seguir aprendiendo: tu propio mapa con Colab + Gemini
+├── _variables.yml       Nombres de las variables de los mapas del ejercicio y fecha de entrega
+│                        (cómo generar los 6 mapas: desarrollo/mapas_ejercicio.md)
+├── guia-colab.qmd       Guía ilustrada en 5 pasos: Colab y Gemini (claro/oscuro)
+├── _catalogo_variables.qmd  23 ideas de variables y 5 cruces (se incluye en el desafío)
 ├── recursos.qmd         Datos, software, lecturas
 ├── codigo/
 │   ├── clase_censo_rm.ipynb   Notebook Python para Google Colab (21 bloques)
-│   ├── tarea_cartografia.ipynb Notebook de la tarea: Bloque 1 fijo + Bloque 2 formulario
+│   ├── desafio_cartografia.ipynb Notebook de la tarea: Bloque 1 fijo + Bloque 2 formulario
 │   └── clase_censo_rm.R       Script R para RStudio (opcional, de referencia)
-├── img/                 Imágenes de conceptos y resultados (resultado_*.png/jpg)
-├── datos/               Vacía: los datos se descargan del INE
+├── img/                 Imágenes de conceptos y resultados; img/ejercicio: mapas del ejercicio aplicado; img/guia y img/guia_oscuro: ilustraciones de la guía
+├── desarrollo/         Scripts que generan notebooks, guía e ilustraciones (no los usan los estudiantes)
+├── datos/               Diccionario de variables del INE (respaldo); los datos se descargan del Drive del docente
 └── .github/workflows/publish.yml   Publicación automática en GitHub Pages
 ```
 
@@ -30,10 +35,10 @@ Datos: INE, Censo de Población y Vivienda 2024 (cartografía y base por manzana
 
 La clase se trabaja en **Google Colab** (no requiere instalar nada).
 
-1. Habilita Google Colab en tu cuenta de Google (ver `recursos.qmd`).
-2. Abre el notebook en Colab (descarga los datos solo desde la carpeta compartida del docente):
-   `https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/clase_censo_rm.ipynb`
-3. Ejecuta los bloques en orden. El Bloque 20 descarga los resultados en un zip.
+- **Clase:** abre `codigo/clase_censo_rm.ipynb` en Colab y ejecuta los bloques en orden (el Bloque 20 descarga los resultados en un zip):
+  `https://colab.research.google.com/github/benjajul/clase-mapeo-censo/blob/main/codigo/clase_censo_rm.ipynb`
+- **Tarea:** sigue la guía `guia-colab.qmd` (5 pasos) y abre `codigo/desafio_cartografia.ipynb`:
+  `https://colab.research.google.com/github/benjajul/clase-mapeo-censo/blob/main/codigo/desafio_cartografia.ipynb`
 
 ## Publicar el sitio en GitHub Pages
 
@@ -50,8 +55,8 @@ Vista previa local (opcional, requiere [Quarto](https://quarto.org/docs/get-star
 
 - Los botones "Abrir en Colab" del sitio se completan solos con tu usuario y repositorio (`colab-link.html`). El repositorio debe ser **público** para que funcionen.
 - Los datos se descargan desde la carpeta pública de Drive del docente (`FUENTE = "docente"` en el Bloque 2). La carpeta debe seguir compartida como "Cualquier persona con el enlace".
-- **Diccionario de variables:** súbelo a la carpeta compartida de Drive con la palabra `diccionario` en el nombre (Excel o CSV de preferencia). El Bloque 1 de la tarea lo detecta, lo muestra y genera `diccionario_para_IA.txt`.
-- El notebook de la tarea busca regiones, provincias y comunas por nombre (sin importar tildes ni mayúsculas) y funciona para todo Chile.
+- **Diccionario de variables:** súbelo a la carpeta compartida de Drive con la palabra `diccionario` en el nombre (Excel o CSV de preferencia). El Bloque 1 del desafío lo detecta, lo muestra y genera `diccionario_para_IA.txt`.
+- El notebook del desafío busca regiones, provincias y comunas por nombre (sin importar tildes ni mayúsculas) y funciona para todo Chile.
 - El sitio **no ejecuta código** al renderizar: muestra los bloques como texto. Así se publica sin necesitar los datos.
 - `02-ejercicio.qmd` y el notebook comparten los mismos bloques; si editas uno, actualiza el otro.
 - El script R fue probado en sus bloques de procesamiento, gráfico, exportación y KMZ; la lectura con `arrow`, el mapa `leaflet` y el mapa base de `ggspatial` deben probarse con los datos reales.

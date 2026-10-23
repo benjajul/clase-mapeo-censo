@@ -50,7 +50,7 @@ Hoy les propongo recorrer ese mismo camino en dos horas: partir de una base cens
 | 30–40 | [Ecosistema técnico](01-conceptos.qmd#ecosistema-técnico) | Software, lenguajes y formatos de archivo |
 | 40–90 | [Ejercicio](02-ejercicio.qmd) | Del GeoParquet del INE al mapa, en bloques de código |
 | 90–110 | [Cartografía](03-cartografia.qmd) | Elementos de un mapa profesional y lectura crítica |
-| 110–120 | [Cierre y tarea](04-tarea.qmd) | Errores comunes y ejercicio aplicado: tu mapa en dos bloques, con apoyo de IA |
+| 110–120 | [Cierre y después de la clase](04-tarea.qmd) | Errores comunes. Ejercicio aplicado (análisis crítico de cartografías), recurso CensoLab y desafío para seguir aprendiendo con Colab + Gemini |
 
 ## Cómo usar este material
 
@@ -60,7 +60,7 @@ La clase se trabaja en **Google Colab**: Python en el navegador, sin instalar na
 |---|---|
 | El notebook de la clase | [Abrir en Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/clase_censo_rm.ipynb) · [descargar `.ipynb`](codigo/clase_censo_rm.ipynb) |
 | Los datos | El notebook los descarga solo desde la [carpeta compartida del docente](https://drive.google.com/drive/folders/1qzYq0RzuFlMieopEV03JyfpTOxxxWjij). Fuente original: [INE, resultados Censo 2024](https://censo2024.ine.gob.cl/resultados/) |
-| El notebook de la tarea (2 bloques) | [Abrir en Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/tarea_cartografia.ipynb) · [guía de Colab y Gemini](guia-colab.qmd) |
+| El notebook de la tarea (2 bloques) | [Abrir en Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/desafio_cartografia.ipynb) · [guía de Colab y Gemini](guia-colab.qmd) |
 | El código en R (opcional, de referencia) | [`codigo/clase_censo_rm.R`](codigo/clase_censo_rm.R), para RStudio. No se usa en clase |
 
 ## Resultados del ejercicio

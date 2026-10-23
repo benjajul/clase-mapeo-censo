@@ -1,0 +1,68 @@
+::: {.panel-tabset}
+
+### 👥 Población
+
+| Idea | Variable | Denominador sugerido |
+|---|---|---|
+| Personas mayores (60 años y más) | `n_edad_60_mas` | `n_per` |
+| Primera infancia (0 a 5 años) | `n_edad_0_5` | `n_per` |
+| Población inmigrante internacional | `n_inmigrantes` | `n_per` |
+| Pueblos originarios | `n_pueblos_orig` | `n_per` |
+| Población afrodescendiente | `n_afrodescendencia` | `n_per` |
+| Personas con discapacidad · *Universo: 5 años o más* | `n_discapacidad` | `n_per-n_edad_0_5` |
+
+### 🎓 Educación y trabajo
+
+| Idea | Variable | Denominador sugerido |
+|---|---|---|
+| Escolaridad promedio (18+) · *Ya es un promedio* | `prom_escolaridad18` | — |
+| Educación superior completa · *Discute si conviene otro denominador (por edad)* | `n_cine_terciaria_maestria_doctorado` | `n_per` |
+| Analfabetismo (15+) · *Universo: 15 años o más* | `n_analfabet` | `n_ocupado+n_desocupado+n_fuera_fuerza_trabajo` |
+| Desocupación · *Tasa sobre la fuerza de trabajo* | `n_desocupado` | `n_ocupado+n_desocupado` |
+| Jóvenes en educación superior (18–24) | `n_asistencia_superior` | `n_edad_18_24` |
+| Ocupaciones elementales | `n_ciuo_9` | `n_ocupado` |
+
+### 🚌 Movilidad
+
+| Idea | Variable | Denominador sugerido |
+|---|---|---|
+| Viaje al trabajo en transporte público · *El código lo calcula solo* | `n_transporte_publico` | (suma de n_transporte_*) |
+| Viaje al trabajo en bicicleta · *El código lo calcula solo* | `n_transporte_bicicleta` | (suma de n_transporte_*) |
+
+### 🏠 Hogares
+
+| Idea | Variable | Denominador sugerido |
+|---|---|---|
+| Jefatura de hogar femenina | `n_jefatura_mujer` | `n_hog` |
+| Hogares unipersonales | `n_hog_unipersonales` | `n_hog` |
+| Hogares solo de personas mayores | `n_hog_60` | `n_hog` |
+| Arriendo sin contrato | `n_tenencia_arrendada_sin_contrato` | `n_hog` |
+| Calefacción a leña | `n_comb_calefaccion_lena` | `n_hog` |
+| Acceso a internet | `n_internet` | `n_hog` |
+
+### 🧱 Vivienda
+
+| Idea | Variable | Denominador sugerido |
+|---|---|---|
+| Hacinamiento | `n_viv_hacinadas` | `n_vp_ocupada` |
+| Viviendas irrecuperables | `n_viv_irrecuperables` | `n_vp_ocupada` |
+| Agua por camión aljibe | `n_fuente_agua_camion` | `n_vp_ocupada` |
+
+### 🔀 Cruces
+
+Ideas para un mapa de **dos temas** (mapa bivariado):
+
+| Tema 1 | Tema 2 | Pregunta posible |
+|---|---|---|
+| Personas mayores | Hogares unipersonales | *¿Envejecer en soledad tiene una geografía?* |
+| Población inmigrante | Hacinamiento | *¿Coinciden migración y precariedad habitacional?* |
+| Calefacción a leña | Escolaridad promedio | *¿La leña es una cuestión de clima o de desigualdad?* |
+| Jefatura de hogar femenina | Arriendo sin contrato | *¿Dónde se cruzan género e inseguridad en la vivienda?* |
+| Transporte público | Ocupaciones elementales | *¿Quiénes dependen más del transporte público?* |
+
+:::
+
+::: {.callout-note}
+## ¿Quieres otra variable?
+Hay **189 variables** en total, sobre población, hogares y viviendas: estas son solo algunas ideas. Para ver todas: abre `diccionario_para_IA.txt` en Colab, descarga el [diccionario del INE en Excel](https://github.com/benjajul/clase-mapeo-censo/raw/main/datos/diccionario_variables_glosas_censo2024.xlsx), o pregúntale a Gemini: *«Con este diccionario, muéstrame todas las variables sobre [tema] y explícamelas en simple»*.
+:::

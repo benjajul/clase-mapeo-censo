@@ -23,9 +23,13 @@ website:
       - href: 03-cartografia.qmd
         text: "3 · Cartografía"
       - href: 04-tarea.qmd
-        text: "4 · Tarea"
-      - href: guia-colab.qmd
-        text: "Guía Colab"
+        text: "4 · Después de la clase"
+      - text: "Para seguir aprendiendo"
+        menu:
+          - href: desafio-colab.qmd
+            text: "Tu propio mapa con Colab + Gemini"
+          - href: guia-colab.qmd
+            text: "Guía ilustrada de Colab y Gemini"
       - href: recursos.qmd
         text: Recursos
   page-footer:

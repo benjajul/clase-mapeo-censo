@@ -1,0 +1,159 @@
+---
+title: "Desafío para seguir aprendiendo: tu propio mapa con Colab + Gemini"
+subtitle: "Cualquier territorio de Chile, cualquier variable del Censo 2024, sin programar"
+---
+
+::: {.callout-note}
+## Para seguir aprendiendo
+Este desafío no es obligatorio ni se evalúa. Es para quien quiera ir más allá del [ejercicio aplicado](04-tarea.qmd) y construir su propia cartografía. Antes de empezar, revisa la [guía ilustrada de Colab y Gemini](guia-colab.qmd).
+:::
+
+## La idea
+
+Este desafío es **opcional**, para quien quiera llevar lo visto en clase a un territorio y una variable propios. No necesitas programar. El **Bloque 1** del notebook carga los datos y te muestra un **armador** donde respondes, con tus palabras, qué quieres mapear y dónde. **Gemini, dentro de Colab,** te devuelve una sola línea para ejecutar. La inteligencia artificial te ayuda a lo que antes exigía código: **traducir tu pregunta a variables del Censo**, usando el diccionario de variables del INE, y anticipar los problemas de los datos.
+
+Puedes trabajar **cualquier territorio de Chile**, a la escala que elijas:
+
+| Escala | Territorio | Unidad que se mapea (automática) |
+|---|---|---|
+| Regional | Una región | Comunas |
+| Provincial | Una provincia | Comunas (o manzanas si la provincia tiene menos de 6 comunas) |
+| Comunal | Una comuna | Manzanas censales |
+
+::: {.callout-warning}
+## Nombres repetidos: ¿la comuna, la provincia o la región?
+Santiago, Valparaíso, Concepción, Talca y otras son a la vez **comuna** y **provincia** (y a veces **región**). Por eso Gemini usa **códigos** en `territorio`:
+
+| Nivel | Código | Ejemplo |
+|---|---|---|
+| Comuna | CUT de 5 dígitos | `13101` = comuna de Santiago |
+| Provincia | 3 dígitos | `131` = provincia de Santiago |
+| Región | 2 dígitos | `13` = Región Metropolitana de Santiago |
+
+El mensaje para Gemini ya incluye la lista completa de códigos, y Gemini los usa en la línea `hacer_mapa(...)`. La función también acepta nombres, pero siempre confirma cuál territorio usó y te avisa si el nombre existe en otro nivel.
+:::
+
+Obtienes dos productos:
+
+1. **Un mapa profesional** en JPEG, de **una variable** (quintiles) o de **dos variables** (mapa bivariado 3 × 3).
+2. **Un gráfico complementario** elegido según el caso: *ranking* de comunas, *distribución* de las manzanas o *dispersión* entre dos variables.
+
+[Abrir el notebook del desafío en Colab](https://colab.research.google.com/github/USUARIO/REPOSITORIO/blob/main/codigo/desafio_cartografia.ipynb){.btn .btn-warning role="button"}
+[Guía ilustrada: Colab y Gemini](guia-colab.qmd){.btn .btn-outline-secondary role="button"}
+
+## Paso a paso
+
+Todo ocurre **dentro de Colab**: el notebook, el armador del mensaje y Gemini. La [guía ilustrada](guia-colab.qmd) explica cada paso con imágenes.
+
+::: {.panel-tabset}
+
+### 1 · Bloque 1
+
+Abre el notebook, guarda una copia (*Archivo → Guardar una copia en Drive*) y ejecuta el **Bloque 1** con ▶. Al terminar aparece un recuadro verde **«Listo»** y, debajo, el **armador del mensaje para Gemini**.
+
+### 2 · Armador
+
+Responde las preguntas con tus palabras: **qué quieres mapear** (o toca una idea), **dónde**, si lo **cruzas con otro tema**, tu pregunta (opcional) y tu nombre. Presiona **📋 Copiar mensaje para Gemini**: el mensaje ya incluye el diccionario de variables y los códigos de los territorios.
+
+### 3 · Gemini
+
+Abre **✦ Gemini** (arriba a la derecha de Colab), pega el mensaje (Ctrl + V) y presiona Enter. Gemini responde con **lo que entendió**, **una línea** `hacer_mapa(...)` y una **explicación simple**. **Revísala**: tú decides si la variable responde a tu pregunta.
+
+### 4 · Ejecutar
+
+Ejecuta la línea con el botón **▶** del chat (o insértala como celda y presiona ▶). Antes del mapa aparece un recuadro verde con el **territorio elegido**: revisa que sea el que querías. Se descargan dos archivos: `mapa_….jpg` y `grafico_….jpg`. Si prefieres no ejecutar código, el **Bloque 2** es un formulario que hace lo mismo.
+
+:::
+
+## Ideas de variables para mapear
+
+¿No sabes por dónde partir? Estas son **23 ideas** del Censo 2024, ordenadas por tema. En el armador del prompt no necesitas escribir el nombre técnico: basta con la idea en tus palabras (por ejemplo, *«dónde hay más hogares que arriendan sin contrato»*).
+
+{{< include _catalogo_variables.qmd >}}
+
+## El mensaje para Gemini
+
+No tienes que escribir el mensaje: el **armador** que aparece al final del Bloque 1 lo arma con tus respuestas a cinco preguntas simples y le agrega el diccionario completo. Gemini se encarga de lo técnico: busca la variable, elige el denominador, encuentra el código del territorio y te entrega **una sola línea** para ejecutar:
+
+```python
+hacer_mapa(escala="Comunal", territorio="13101", variable_1="n_viv_hacinadas",
+           nombre_1="Viviendas hacinadas", autor="Camila Rojas")
+```
+
+Si la Parte 1 de su respuesta no es lo que querías, díselo con tus palabras y pídele que corrija la línea. Si Gemini propone escribir **otro código** (instalar paquetes, cargar datos, hacer su propio mapa), no lo ejecutes: pídele solo la línea `hacer_mapa(...)`.
+
+::: {.callout-tip collapse="true"}
+## Ver el mensaje completo que arma el armador
+```{.text filename="Prompt 1 · Configurar el mapa"}
+Hola Gemini. Estoy en Google Colab haciendo un ejercicio con datos del Censo 2024 de Chile. No sé programar: explícame todo en palabras simples.
+
+Ya ejecuté el Bloque 1 de este notebook: cargó los datos y dejó lista la función hacer_mapa(). NO escribas otro código, NO instales paquetes y NO cargues datos: solo necesito que prepares UNA línea que use esa función.
+
+LO QUE QUIERO
+- ¿Qué quiero mapear?: [¿qué quieres mapear? dilo con tus palabras]
+- ¿Dónde?: [la comuna / la provincia / la región] de [nombre]
+- ¿Lo cruzo con otro tema?: [No / Sí, con …]
+- Mi pregunta de investigación: [opcional]
+- Mi nombre (para el mapa): [tu nombre]
+
+LO QUE NECESITO DE TI
+1. Busca en el diccionario (al final de este mensaje) la variable que mejor representa lo que quiero mapear y, si corresponde, la del cruce. Usa solo nombres que aparezcan textualmente en el diccionario; no inventes nombres.
+2. Para cada variable usa como denominador el "denominador sugerido" del diccionario, salvo que haya una buena razón para cambiarlo (explícala).
+3. Busca el código del territorio en la lista "TERRITORIOS DE CHILE": 5 dígitos si es una comuna, 3 si es una provincia, 2 si es una región. Ojo: muchas comunas se llaman igual que su provincia o su región; usa el nivel que te indiqué.
+4. Si algo no está claro o hay más de una opción razonable, pregúntame antes de responder.
+
+RESPONDE EN TRES PARTES
+PARTE 1 · Lo que entendí: en 2 o 3 líneas simples, qué se va a mapear, dónde (nivel, nombre y código) y con qué cruce.
+PARTE 2 · La línea para ejecutar: una celda de código con UNA sola línea, con este formato exacto (deja "" en lo que no corresponda, por ejemplo la segunda variable si no hay cruce):
+hacer_mapa(escala="Comunal", territorio="05101", variable_1="...", denominador_1="...", nombre_1="...", variable_2="", denominador_2="", nombre_2="", titulo="...", autor="...")
+(escala puede ser "Regional", "Provincial" o "Comunal"; territorio es el código; nombre_1 y nombre_2 son etiquetas breves en español de máximo 40 caracteres; titulo es una pregunta corta que no adelante resultados.)
+PARTE 3 · Explicación simple: qué mide cada variable y a quiénes incluye, por qué ese denominador, qué cuidados tener al interpretar (datos faltantes, zonas con pocas personas, zonas rurales) y cómo leer el gráfico que se generará (ranking de comunas, distribución o dispersión).
+
+DICCIONARIO Y TERRITORIOS:
+[aquí va el contenido de diccionario_para_IA.txt]
+```
+:::
+
+Cuando tengas el mapa y el gráfico, puedes usar este segundo prompt para **discutir** tus resultados. En [gemini.google.com](https://gemini.google.com/) puedes adjuntar las dos imágenes JPEG.
+
+```{.text filename="Prompt 2 · Discutir los resultados (opcional)"}
+Te adjunto el mapa y el gráfico que generé con [variable(s)] para [territorio], a escala [escala], con datos del Censo 2024. Mi pregunta era: [tu pregunta].
+1. Describe los patrones territoriales que se observan (dónde se concentran los valores altos y bajos, si hay agrupamientos o contrastes), sin inventar causas.
+2. Propón tres hipótesis que podrían explicar el patrón y qué dato adicional permitiría ponerlas a prueba.
+3. Señala los límites de esta lectura: problema de la unidad de área modificable (MAUP), falacia ecológica, números pequeños y lo que el Censo no mide sobre este fenómeno.
+
+No escribas mi interpretación: hazme preguntas que me ayuden a construirla.
+```
+
+::: {.callout-warning}
+## La IA ayuda, pero la decisión es tuya
+Gemini puede equivocarse: confundir variables, inventar columnas o proponer denominadores con universos distintos. `hacer_mapa` detecta los nombres inexistentes, pero **no puede saber si la variable responde a tu pregunta**. Esa evaluación, y la interpretación del mapa, son el centro del desafío.
+:::
+
+## ¿Quieres compartir tu mapa?
+
+Es opcional: si haces el desafío, puedes enviar tu mapa y tu gráfico al correo del docente ([benjamin.julio@usach.cl](mailto:benjamin.julio@usach.cl)) con un párrafo sobre lo que te muestran y lo que no. Si usaste Gemini, cuenta brevemente qué te propuso y qué decidiste tú.
+
+## Si algo falla
+
+| Mensaje | Qué hacer |
+|---|---|
+| Recuadro amarillo "No encontré '…' en la escala …" | Usa una de las sugerencias o escribe el código del territorio. Las tildes y mayúsculas no importan |
+| Recuadro amarillo "Ojo: este nombre también existe en otro nivel" | No es un error: te avisa que hay una comuna, provincia o región con el mismo nombre. Si el mapa no es del nivel que querías, cambia `ESCALA` o escribe el código del territorio |
+| Recuadro amarillo "El código '…' no corresponde a la escala …" | El código no tiene los dígitos de esa escala: 5 para comuna, 3 para provincia, 2 para región |
+| Recuadro amarillo "El campo variable 1: '…' no existe" | Cópiale el recuadro a Gemini y pídele la línea corregida |
+| Gemini escribe mucho código o instala paquetes | No lo ejecutes. Escríbele: «Solo dame la línea hacer_mapa(...)» |
+| Recuadro amarillo "Solo hay N unidades con datos" | Muy pocas comunas para clasificar: agrega `unidad="Manzana"` a la línea (o cámbialo en el formulario) o elige una escala mayor |
+| `NameError: name 'hacer_mapa' is not defined` | No ejecutaste el Bloque 1 o la sesión se reinició: ejecútalo y luego vuelve a ejecutar la línea |
+| La descarga de datos falla | Ver [la guía de Colab](guia-colab.qmd#si-la-descarga-falla) |
+
+::: {.callout-note collapse="true"}
+## Qué hace `hacer_mapa` por dentro
+1. Filtra el territorio por su código comunal (CUT) y reproyecta a la zona UTM que corresponde.
+2. Convierte en vacío los valores negativos (datos suprimidos por el INE) y, a escala de manzana, excluye las manzanas con menos de 20 personas.
+3. Calcula la tasa como suma del numerador sobre suma del denominador (× 100); el denominador puede ser una suma o resta de columnas. Los promedios se agregan por comuna ponderados por su universo (el denominador) o, si no se indica, por población.
+4. Clasifica en quintiles (una variable) o terciles cruzados (dos variables) y dibuja el mapa con título, subtítulo, leyenda, escala, norte, grilla, fuente y proyección.
+5. Elige el gráfico: *ranking* (una variable por comuna), *histograma* coloreado con las clases del mapa (una variable por manzana) o *dispersión* con correlación de Pearson y terciles (dos variables).
+
+La base incluye manzanas urbanas y entidades rurales (`AREA_C`). Con `area="Solo urbana"` se mapean solo las manzanas urbanas. Los registros comunales sin manzana asociada (`CONTENEDOR_COMUNAL`) se suman en los totales por comuna, pero no se dibujan a escala de manzana.
+:::

@@ -6,7 +6,7 @@ Las rutas dentro de los scripts son las del entorno donde se desarrollaron (`/ho
 | Archivo | Genera |
 |---|---|
 | `bloques.py` + `build.py` | `codigo/clase_censo_rm.ipynb` y `02-ejercicio.qmd` (21 bloques de la clase) |
-| `tarea_bloques.py` + `tarea_build.py` | `codigo/tarea_cartografia.ipynb` (tarea en 2 bloques) y notebooks de prueba |
+| `tarea_bloques.py` + `tarea_build.py` | `codigo/desafio_cartografia.ipynb` (tarea en 2 bloques) y notebooks de prueba |
 | `ilustraciones.py` | `img/guia/*.svg` (ilustraciones de la guía de Colab y Gemini) |
 | `datos_prueba3.py`, `datos_tarea.py` | Datos sintéticos para probar los notebooks sin descargar el Censo |
 
